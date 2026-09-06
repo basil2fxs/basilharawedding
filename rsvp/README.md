@@ -3,14 +3,22 @@
 The RSVP form on basilharawedding.com posts every reply straight into a Google Form in Basil's
 Google account, so nothing runs on a server and there is nothing to maintain.
 
-- Form (edit / see replies): https://docs.google.com/forms/d/1hq1UgfEoUi_3nIemHt3VYKUbfvrEJSKwijK1EavSOYw/edit
-- Replies appear under the Form's **Responses** tab, and every reply also lands live in this
-  Google Sheet (linked to the Form): https://docs.google.com/spreadsheets/d/1xTVhJES-VaM8Z93CMZlghPSw7uhu_iulN6yd2R-oqp8/edit
-  The sheet is private to Basil's Google account and lives in Drive at
-  `My Drive/Basil's Brain/Wedding/Wedding RSVPs` (one level above this repo folder, so Drive
-  syncs it to the Mac as `Wedding/Wedding RSVPs.gsheet`; double-click that to open it).
-  Responses are deliberately NOT stored in this repo: the repo is public (it is the website), so
-  anything in it can be read by anyone. `.gsheet` stubs are git-ignored here as a safety net.
+Everything RSVP-related lives in one private Drive folder, `My Drive/Basil's Brain/Wedding/`
+(one level above this repo folder, so nothing private is ever inside the public repo):
+
+- `Wedding RSVP` (Google Form): https://docs.google.com/forms/d/1hq1UgfEoUi_3nIemHt3VYKUbfvrEJSKwijK1EavSOYw/edit
+  The website posts every reply straight into it. Replies show under its **Responses** tab.
+- `Wedding RSVPs` (Google Sheet, linked to the Form): https://docs.google.com/spreadsheets/d/1xTVhJES-VaM8Z93CMZlghPSw7uhu_iulN6yd2R-oqp8/edit
+  Every reply lands here live. On the Mac, Drive shows it as `Wedding/Wedding RSVPs.gsheet`
+  (double-click to open).
+- `Wedding RSVPs.csv`: a plain-text copy of the Sheet, rewritten by `Backup.gs` (an Apps Script
+  bound to the Sheet) on every reply and once a day. Drive syncs it to the Mac as a real file, so
+  **Save Brain commits the actual replies** to the private Brain repo, not just a shortcut.
+- This repo (`basilharawedding/`): the website itself, `index.html`, plus this folder.
+
+Responses are deliberately NOT stored in this repo: the repo is public (it is the website), so
+anything in it can be read by anyone. `.gsheet`/`.gdoc`/`.gform` stubs are git-ignored here as
+a safety net.
 - To get an email for each reply: Responses tab, three-dot menu, **Get email notifications for new responses**.
 
 The website side is the `RSVP_GFORM` block near the bottom of `index.html`: the Form's
@@ -28,6 +36,13 @@ it properly: change that question's type to Short answer, then put its `entry` i
 
 If the Form ever refuses a post (Google outage, form closed), the site opens the guest's mail app
 with the reply pre-filled, addressed to basil2fxs@gmail.com, so nothing is lost.
+
+## Backup.gs
+
+`Backup.gs` is the script attached to the Sheet (Extensions, Apps Script). It writes
+`Wedding RSVPs.csv` next to the Sheet in Drive. If it ever stops (for example after the Sheet is
+copied or the triggers are deleted), open the Sheet, Extensions, Apps Script, run
+`installTriggers` once and approve the permission prompt.
 
 ## Alternative: Google Sheet + Apps Script
 
