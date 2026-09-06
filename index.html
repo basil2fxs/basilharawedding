@@ -317,6 +317,16 @@ html.is-sealed .env-flap, html.is-sealed .letter, html.is-sealed .grow{ will-cha
   html.full-intro.play .sh-tight{ animation:shTight 1150ms var(--d0,320ms) both }
   html.full-intro.play .addr{ animation:riseZ 760ms var(--ease-veil) both; animation-delay:calc(var(--d0,320ms) + 1080ms) }
   html.full-intro.play.landed .env-unit, html.full-intro.play.landed .glide{ will-change:auto }
+  /* stacked on a phone: the lower envelope rises from the bottom edge, so the two never cross paths */
+  @media (max-width: 759px){
+    html.full-intro .env-unit[data-lang="el"]{ transform:translate3d(0,48vh,0) }
+    html.full-intro.play .env-unit[data-lang="el"]{ animation-name:dropUp }
+  }
+}
+@keyframes dropUp{
+  0%  { transform:translate3d(0,48vh,0); animation-timing-function:var(--ease-place) }
+  70% { transform:translate3d(0,-1.1%,0); animation-timing-function:var(--ease-settle) }
+  100%{ transform:translate3d(0,0,0) }
 }
 @media (prefers-reduced-motion: reduce){
   html.full-intro .addr{ opacity:0 }
