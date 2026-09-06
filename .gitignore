@@ -1,0 +1,5 @@
+# Google Drive shortcut files (the live RSVP sheet lives in Drive, never in the public repo)
+*.gsheet
+*.gdoc
+*.gform
+.DS_Store
