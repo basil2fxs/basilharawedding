@@ -1227,8 +1227,12 @@ var WEDDING_ISO   = '2027-02-27T15:00:00+08:00';   // ceremony start, Perth (AWS
 var RSVP_EMAIL    = 'basil2fxs@gmail.com';           // where the email fallback goes
 // Google Form that receives every reply. Leave 'action' empty to use the email fallback instead.
 var RSVP_GFORM = {
-  action: '',                                        // https://docs.google.com/forms/d/e/<FORM ID>/formResponse
-  fields: { names:'', attending:'', count:'', events:'', dietary:'', contact:'', song:'', message:'', language:'' }   // entry.NNNN ids
+  action: 'https://docs.google.com/forms/d/e/1FAIpQLScZZCBE_rbmHY8EJZAu_zCXrjFE_z2IUfmkhuG6Y9NipfLs1w/formResponse',
+  fields: {
+    names:'entry.2085478081', attending:'entry.963237031', count:'entry.1540423557', events:'entry.640011014',
+    dietary:'entry.1296270073', contact:'entry.185929963', song:'entry.311383381', message:'entry.334092317',
+    language:''   // the Form's Language question is still "multiple choice"; leave empty until it is a short-answer question
+  }
 };
 var RSVP_ENDPOINT = '';                              // alternative: a Formspree / Apps Script URL that returns {"result":"ok"}
 
