@@ -4,8 +4,10 @@ The RSVP form on basilharawedding.com posts every reply straight into a Google F
 Google account, so nothing runs on a server and there is nothing to maintain.
 
 - Form (edit / see replies): https://docs.google.com/forms/d/1hq1UgfEoUi_3nIemHt3VYKUbfvrEJSKwijK1EavSOYw/edit
-- Replies appear under the **Responses** tab. Click the green Sheets icon there once
-  ("Link to Sheets") and every reply also lands in a spreadsheet you can sort and share.
+- Replies appear under the Form's **Responses** tab, and every reply also lands live in this
+  Google Sheet (linked to the Form): https://docs.google.com/spreadsheets/d/1xTVhJES-VaM8Z93CMZlghPSw7uhu_iulN6yd2R-oqp8/edit
+  The sheet is private to Basil's Google account. Responses are deliberately NOT stored in this
+  repo: the repo is public (it is the website), so anything in it can be read by anyone.
 - To get an email for each reply: Responses tab, three-dot menu, **Get email notifications for new responses**.
 
 The website side is the `RSVP_GFORM` block near the bottom of `index.html`: the Form's
