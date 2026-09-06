@@ -269,6 +269,7 @@ em{ font-style:italic; }
 /* the letter's edge growing into the page (rect set by JS) */
 /* the desk dissolves to paper beneath the growing card, so no card edge can ever remain */
 .veil{ position:absolute; inset:-2%; background:var(--paper); opacity:0; pointer-events:none; }
+html.is-sealed .veil{ will-change:opacity; }
 .grow{ position:absolute; left:0; top:0; width:0; height:0; background:var(--paper); opacity:0; transform-origin:50% 50%; pointer-events:none; }
 
 /* Scoped layer promotion - only while sealed, only what moves */
@@ -1371,14 +1372,15 @@ function fastForward(){
 
 /* ---------- the open ---------- */
 var FLAP_KF = [
-  { transform:'translateZ(22px) rotateX(0deg)',    offset:0 },
-  { transform:'translateZ(22px) rotateX(-92deg)',  offset:0.5 },
-  { transform:'translateZ(-22px) rotateX(-92deg)', offset:0.501 },   // depth swap while edge-on
-  { transform:'translateZ(-22px) rotateX(-168deg)',offset:1 }        // never -180: z-fighting
+  { transform:'translateZ(22px) rotateX(0deg)',     offset:0 },
+  { transform:'translateZ(22px) rotateX(-78deg)',   offset:0.42 },
+  { transform:'translateZ(-22px) rotateX(-104deg)', offset:0.58 },   // depth crosses over while the flap is edge-on
+  { transform:'translateZ(-22px) rotateX(-168deg)', offset:1 }       // never -180: z-fighting
 ];
 var RISE_KF = [
-  { transform:'translateZ(1px) translateY(0%) rotateX(0deg)' },
-  { transform:'translateZ(1px) translateY(-95%) rotateX(3deg)' }
+  { transform:'translateZ(1px) translateY(0%) rotateX(0deg)',   offset:0 },
+  { transform:'translateZ(1px) translateY(-55%) rotateX(3deg)', offset:0.45 },
+  { transform:'translateZ(1px) translateY(-95%) rotateX(0deg)', offset:1 }
 ];
 var flipTop = null;   // the heading block that is travelling from the card to the page
 
@@ -1400,6 +1402,7 @@ function openEnvelope(lang, K){
       envBack = $('.env-back', unit), envFront = $('.env-front', unit), addr = $('.addr', unit), tilt = $('.tilt', unit);
   unit.classList.add('chosen');
   $$('.env-hit').forEach(function(b){ b.style.pointerEvents = 'none'; });
+  site.style.visibility = 'visible'; site.style.opacity = '1';   // paints now, hidden behind the curtain, not mid-flight
 
   if (RM || !envelope || !flap.animate || !realTop){
     // no 3D at all: a calm crossfade, which is the right answer, not a token gesture
@@ -1444,19 +1447,25 @@ function openEnvelope(lang, K){
 
   // 3. the paper becomes the page: the card fills the screen while the invitation's heading
   //    travels from the card to its place on the page, and the rest of the page develops around it
+  var host = document.createElement('div');
+  host.className = 'hero flip-host'; host.setAttribute('lang', lang); host.setAttribute('aria-hidden', 'true');
+  host.style.visibility = 'hidden';
+  (function(){
+    var t0 = realTop.getBoundingClientRect();
+    host.style.left = t0.left + 'px'; host.style.top = t0.top + 'px'; host.style.width = t0.width + 'px';
+    var inner = document.createElement('div'); inner.className = 'hero-in';
+    var clone = realTop.cloneNode(true);
+    $$('[id]', clone).forEach(function(el){ el.removeAttribute('id'); });
+    inner.appendChild(clone); host.appendChild(inner); body.appendChild(host);
+  })();
   var merged = false;
   function merge(){
     if (merged) return; merged = true;
     var miniTop = $('.mini .hero-top', unit);
     var m = miniTop.getBoundingClientRect(), t = realTop.getBoundingClientRect();
-    var host = document.createElement('div');
-    host.className = 'hero flip-host'; host.setAttribute('lang', lang); host.setAttribute('aria-hidden', 'true');
     host.style.left = t.left + 'px'; host.style.top = t.top + 'px'; host.style.width = t.width + 'px';
-    var inner = document.createElement('div'); inner.className = 'hero-in';
-    var clone = realTop.cloneNode(true);
-    $$('[id]', clone).forEach(function(el){ el.removeAttribute('id'); });
-    inner.appendChild(clone); host.appendChild(inner); body.appendChild(host);
     flipTop = realTop; html.classList.add('flipping');
+    host.style.visibility = 'visible';
     letterIn.style.visibility = 'hidden';
     var from = 'translate3d(' + (m.left - t.left).toFixed(2) + 'px,' + (m.top - t.top).toFixed(2) + 'px,0) scale(' + (m.width / t.width).toFixed(4) + ')';
     var flip = host.animate([{ transform:from }, { transform:'translate3d(0,0,0) scale(1)' }],
@@ -1473,7 +1482,6 @@ function openEnvelope(lang, K){
     if (veil) veil.animate([{ opacity:0 }, { opacity:1 }], { duration:d(1200), fill:'forwards', easing:'linear' }).id = 'open-veil';
 
     setTimeout(function(){
-      site.style.visibility = 'visible'; site.style.opacity = '1';
       site.removeAttribute('inert');
       prepareHeroStagger();
       initReveals();
