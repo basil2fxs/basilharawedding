@@ -14,6 +14,10 @@ Everything RSVP-related lives in one private Drive folder, `My Drive/Basil's Bra
 - `Wedding RSVPs.csv`: a plain-text copy of the Sheet, rewritten by `Backup.gs` (an Apps Script
   bound to the Sheet) on every reply and once a day. Drive syncs it to the Mac as a real file, so
   **Save Brain commits the actual replies** to the private Brain repo, not just a shortcut.
+- `Basil and Hara wedding photos` (Drive folder, anyone with the link can add files):
+  https://drive.google.com/drive/folders/1i0xxIpHFRsNDGSY-i67S7ZgnWNRXafpC
+  This is the album the website's Photographs section links to (the QR code on the page is this
+  link, drawn as vector art at build time). Guests need a Google account to upload.
 - This repo (`basilharawedding/`): the website itself, `index.html`, plus this folder.
 
 Responses are deliberately NOT stored in this repo: the repo is public (it is the website), so
