@@ -1224,8 +1224,13 @@ html.past-hero .nav-trigger, html.past-hero .rsvp-jump{ opacity:1; visibility:vi
    SETTINGS - the only lines you should need to touch
    ===================================================================== */
 var WEDDING_ISO   = '2027-02-27T15:00:00+08:00';   // ceremony start, Perth (AWST, no daylight saving)
-var RSVP_ENDPOINT = '';                              // e.g. a Formspree / Google Apps Script URL. Empty = email fallback.
 var RSVP_EMAIL    = 'basil2fxs@gmail.com';           // where the email fallback goes
+// Google Form that receives every reply. Leave 'action' empty to use the email fallback instead.
+var RSVP_GFORM = {
+  action: '',                                        // https://docs.google.com/forms/d/e/<FORM ID>/formResponse
+  fields: { names:'', attending:'', count:'', events:'', dietary:'', contact:'', song:'', message:'', language:'' }   // entry.NNNN ids
+};
+var RSVP_ENDPOINT = '';                              // alternative: a Formspree / Apps Script URL that returns {"result":"ok"}
 
 /* ===================================================================== */
 var html = document.documentElement, body = document.body;
@@ -1270,9 +1275,9 @@ var Sfx = (function(){
   }
   function crack(){                    // the wax gives: a short, dry snap with a little weight under it
     if (!ok()) return; var t = ctx.currentTime, src = noise(0.1), f = ctx.createBiquadFilter(), g = ctx.createGain();
-    f.type = 'bandpass'; f.frequency.value = 2400; f.Q.value = 0.9; shape(g, t, 0.004, 0.14, 0.09); src.connect(f); f.connect(g); g.connect(master); src.start(t); src.stop(t + 0.14);
+    f.type = 'bandpass'; f.frequency.value = 2200; f.Q.value = 0.9; shape(g, t, 0.004, 0.085, 0.09); src.connect(f); f.connect(g); g.connect(master); src.start(t); src.stop(t + 0.14);
     var o = ctx.createOscillator(), g2 = ctx.createGain(); o.type = 'sine'; o.frequency.setValueAtTime(170, t); o.frequency.exponentialRampToValueAtTime(65, t + 0.09);
-    shape(g2, t, 0.003, 0.1, 0.1); o.connect(g2); g2.connect(master); o.start(t); o.stop(t + 0.14);
+    shape(g2, t, 0.003, 0.06, 0.1); o.connect(g2); g2.connect(master); o.start(t); o.stop(t + 0.14);
   }
   function celebrate(){                // an RSVP goes through: three quick rising notes and a little glitter, quiet and short
     if (!ok()) return; var t = ctx.currentTime;
@@ -1720,7 +1725,7 @@ $$('form.rsvp').forEach(function(form){
     fd.append('language', lang);
     fd.append('submitted', new Date().toISOString());
     function done(){
-      Sfx.celebrate();
+      Sfx.paper(0.045, 0.8);
       wrap.classList.remove('is-mail'); wrap.classList.add('is-done');
       var d = $('.rsvp-done', wrap);
       wrap.scrollIntoView({ behavior:'auto', block:'center' });
@@ -1730,14 +1735,21 @@ $$('form.rsvp').forEach(function(form){
       var lines = [];
       fd.forEach(function(v, k){ if (v) lines.push(k + ': ' + v); });
       var subject = (lang === 'el' ? 'Επιβεβαίωση συμμετοχής - ' : 'RSVP - ') + names;
-      Sfx.celebrate();
+      Sfx.paper(0.045, 0.8);
       window.location.href = 'mailto:' + RSVP_EMAIL + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(lines.join('\n'));
       // the form stays, so the guest can retry if no mail app opened
       wrap.classList.add('is-mail'); btn.disabled = false;
       var n = $('.rsvp-mailnote', wrap);
       if (n){ n.scrollIntoView({ behavior:'auto', block:'center' }); try { n.focus({ preventScroll:true }); } catch(e){} }
     }
-    if (RSVP_ENDPOINT){
+    if (RSVP_GFORM && RSVP_GFORM.action){
+      // Google Forms accepts a plain form post; the browser cannot read the reply, so a reachable post counts as sent
+      var gf = new FormData();
+      Object.keys(RSVP_GFORM.fields).forEach(function(k){ var id = RSVP_GFORM.fields[k]; if (id) gf.append(id, fd.get(k) || ''); });
+      fetch(RSVP_GFORM.action, { method:'POST', mode:'no-cors', body:gf })
+        .then(function(){ done(); })
+        .catch(function(){ mailFallback(); });
+    } else if (RSVP_ENDPOINT){
       fetch(RSVP_ENDPOINT, { method:'POST', body:fd, headers:{ 'Accept':'application/json' } })
         .then(function(res){ if (!res.ok) throw new Error('rsvp'); return res.json(); })
         .then(function(j){ if (!j || j.result !== 'ok') throw new Error('rsvp'); done(); })
