@@ -215,18 +215,20 @@ em{ font-style:italic; }
 .sh-tight{ background:radial-gradient(50% 50% at 50% 50%,rgba(var(--shadow),.42),rgba(var(--shadow),0) 66%); filter:blur(3px); opacity:.62; }
 
 /* The 3D envelope. Never give .envelope overflow/opacity/filter/clip/mask. Children ordered by translateZ. */
-.envelope{ position:relative; width:100%; aspect-ratio:160/110; transform:translateZ(0) scale(1); transform-style:preserve-3d; }
+.envelope{ position:relative; width:100%; aspect-ratio:160/110; transform:translateZ(0) scale(1); transform-style:preserve-3d; transition:transform 220ms var(--ease-std); }
+.env-unit.pressing .envelope{ transform:translateZ(0) scale(.982); }
+@media (hover:hover){ .env-unit:hover .envelope{ transform:translateZ(0) scale(1.012); } }
 .env-back{ position:absolute; inset:0; background:var(--white); border-radius:2px; transform:translateZ(0); }
 .letter{
   position:absolute; left:6%; right:6%; top:8%; height:92%;
   background:var(--paper); box-shadow:0 1px 4px rgba(120,96,58,.12);
-  transform:translateZ(1px);
+  transform:translateZ(1px); overflow:hidden;   /* the printed heading can never hang below the envelope */
 }
-.letter-in{ position:absolute; inset:0; padding:5% 0 0; display:flex; flex-direction:column; align-items:center; text-align:center; }
+.letter-in{ position:absolute; inset:0; padding:4% 0 0; display:flex; flex-direction:column; align-items:center; text-align:center; }
 /* the card carries a half-size copy of the page's heading; on opening it travels to its place on the page */
 .hero-top{ display:flex; flex-direction:column; align-items:center; width:100%; }
 .mini.hero, .flip-host.hero{ min-height:0 !important; padding:0 !important; display:block !important; }
-.mini{ width:min(calc(100vw - 2 * var(--pad)), 34rem); transform:scale(.5); transform-origin:50% 0; flex:none; }
+.mini{ width:min(calc(100vw - 2 * var(--pad)), 34rem); transform:scale(.42); transform-origin:50% 0; flex:none; }
 .mini .hero-in, .flip-host .hero-in{ max-width:none; }
 .mini .rv, .mini .rv-names, .flip-host .rv, .flip-host .rv-names{ opacity:1 !important; transform:none !important; transition:none !important; }
 .flip-host{ position:fixed; z-index:9500; pointer-events:none; transform-origin:0 0; will-change:transform; }
@@ -596,6 +598,23 @@ html.past-hero .nav-trigger, html.past-hero .rsvp-jump{ opacity:1; visibility:vi
   html.js .rv, html.js .rv-names{ opacity:0; transition:opacity 400ms linear var(--rv-d,0ms); }
   html.js .rv.is-in, html.js .rv-names.is-in{ opacity:1; }
 }
+/* Every control answers the finger: a small, quick press, then release */
+.btn, .choice span, .nav-close, .nav-trigger, .rsvp-jump, .lang-switch button, .sound-toggle, .nav-list a, .faq summary{ transition-property:transform, opacity, background-color, color, border-color, box-shadow; transition-duration:180ms; transition-timing-function:var(--ease-std); }
+.btn:active, .choice:active span, .nav-close:active, .lang-switch button:active, .sound-toggle:active, .nav-list a:active{ transform:scale(.97); }
+.faq summary:active{ opacity:.7; }
+.choice span:hover{ border-color:var(--gold); }
+.sound-toggle{
+  background:none; border:0; cursor:pointer; padding:12px 10px; min-height:44px; margin-top:6px;
+  text-transform:uppercase; font-size:11px; letter-spacing:.24em; text-indent:.24em; color:var(--ink-soft);
+  touch-action:manipulation; -webkit-tap-highlight-color:transparent;
+}
+.sound-toggle:hover,.sound-toggle:focus-visible{ color:var(--ink); }
+.sound-toggle:focus-visible{ outline:1px solid var(--gold); outline-offset:2px; }
+#nav[open] .sound-toggle{ opacity:0; animation:navin 520ms var(--ease-place) 780ms both; }
+@media (prefers-reduced-motion: reduce){ #nav[open] .sound-toggle{ animation:none; opacity:1; } }
+/* on wide screens the page heading is at its largest, so the card's copy is a touch smaller */
+@media (min-width: 760px){ .mini{ transform:scale(.36); } }
+
 @supports (view-transition-name: none){
   ::view-transition-old(root),::view-transition-new(root){ animation-duration:260ms; animation-timing-function:var(--ease-std); }
 }
@@ -1081,6 +1100,7 @@ html.past-hero .nav-trigger, html.past-hero .rsvp-jump{ opacity:1; visibility:vi
         <button type="button" class="lang-en" lang="en" data-setlang="el">Read in Greek</button>
         <button type="button" class="lang-el" lang="el" data-setlang="en">Διαβάστε στα αγγλικά</button>
       </div>
+      <div><button type="button" class="sound-toggle" data-sound aria-pressed="true"><span class="lang-en" lang="en" data-on="Sound on" data-off="Sound off">Sound on</span><span class="lang-el" lang="el" data-on="Ήχος ενεργός" data-off="Ήχος ανενεργός">Ήχος ενεργός</span></button></div>
     </div>
   </div>
 </dialog>
@@ -1220,6 +1240,61 @@ var store = {
   sset: function(k,v){ if (!REMEMBER) return; try { sessionStorage.setItem(k,v); } catch(e){} }
 };
 
+/* ---------- sound: a few quiet paper and wax sounds, synthesised on the spot ---------- */
+var Sfx = (function(){
+  var ctx = null, master = null, enabled = true;
+  try { enabled = sessionStorage.getItem('bh.sound') !== '0'; } catch(e){}
+  function init(){
+    if (ctx){ if (ctx.state === 'suspended') ctx.resume().catch(function(){}); return true; }
+    var AC = window.AudioContext || window.webkitAudioContext; if (!AC) return false;
+    try { ctx = new AC(); master = ctx.createGain(); master.gain.value = 0.55; master.connect(ctx.destination); } catch(e){ return false; }
+    return true;
+  }
+  function ok(){ return enabled && ctx && ctx.state === 'running'; }
+  function noise(dur){ var n = Math.floor(ctx.sampleRate * dur), b = ctx.createBuffer(1, n, ctx.sampleRate), d = b.getChannelData(0); for (var i = 0; i < n; i++) d[i] = Math.random() * 2 - 1; var src = ctx.createBufferSource(); src.buffer = b; return src; }
+  function shape(g, t, attack, peak, decay){ g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(peak, t + attack); g.gain.exponentialRampToValueAtTime(0.0001, t + attack + decay); }
+  function paper(vol, dur){            // a sheet sliding: soft, filtered air
+    if (!ok()) return; dur = dur || 0.55; var t = ctx.currentTime, src = noise(dur + 0.1), f = ctx.createBiquadFilter(), g = ctx.createGain();
+    f.type = 'lowpass'; f.Q.value = 0.7; f.frequency.setValueAtTime(500, t); f.frequency.linearRampToValueAtTime(1900, t + dur * 0.4); f.frequency.linearRampToValueAtTime(400, t + dur);
+    shape(g, t, dur * 0.35, vol || 0.05, dur * 0.65); src.connect(f); f.connect(g); g.connect(master); src.start(t); src.stop(t + dur + 0.1);
+  }
+  function crack(){                    // the wax gives: a short, dry snap with a little weight under it
+    if (!ok()) return; var t = ctx.currentTime, src = noise(0.1), f = ctx.createBiquadFilter(), g = ctx.createGain();
+    f.type = 'bandpass'; f.frequency.value = 2400; f.Q.value = 0.9; shape(g, t, 0.004, 0.14, 0.09); src.connect(f); f.connect(g); g.connect(master); src.start(t); src.stop(t + 0.14);
+    var o = ctx.createOscillator(), g2 = ctx.createGain(); o.type = 'sine'; o.frequency.setValueAtTime(170, t); o.frequency.exponentialRampToValueAtTime(65, t + 0.09);
+    shape(g2, t, 0.003, 0.1, 0.1); o.connect(g2); g2.connect(master); o.start(t); o.stop(t + 0.14);
+  }
+  function bloom(){                    // the page arrives: three very quiet sine notes a fifth apart, slow swell, long fade
+    if (!ok()) return; var t = ctx.currentTime;
+    [[392, 0.04], [587.33, 0.026], [783.99, 0.012]].forEach(function(n, i){
+      var o = ctx.createOscillator(), g = ctx.createGain(); o.type = 'sine'; o.frequency.value = n[0];
+      shape(g, t + i * 0.08, 1.1, n[1], 2.6); o.connect(g); g.connect(master); o.start(t); o.stop(t + 4.2);
+    });
+  }
+  function tap(){                      // a fingertip on card stock
+    if (!ok()) return; var t = ctx.currentTime, src = noise(0.035), f = ctx.createBiquadFilter(), g = ctx.createGain();
+    f.type = 'highpass'; f.frequency.value = 1600; shape(g, t, 0.002, 0.05, 0.03); src.connect(f); f.connect(g); g.connect(master); src.start(t); src.stop(t + 0.06);
+  }
+  function set(on){ enabled = !!on; try { sessionStorage.setItem('bh.sound', on ? '1' : '0'); } catch(e){} }
+  return { init:init, paper:paper, crack:crack, bloom:bloom, tap:tap, set:set, on:function(){ return enabled; } };
+})();
+function syncSound(){
+  $$('[data-sound]').forEach(function(b){
+    b.setAttribute('aria-pressed', Sfx.on() ? 'true' : 'false');
+    $$('span[data-on]', b).forEach(function(sp){ sp.textContent = Sfx.on() ? sp.getAttribute('data-on') : sp.getAttribute('data-off'); });
+  });
+}
+syncSound();
+// every control gets the same quiet tap; the first gesture also wakes the audio engine
+document.addEventListener('click', function(e){
+  var c = e.target.closest('button, .btn, .nav-list a, .faq summary, .choice, .rsvp-jump');
+  if (!c) return;
+  Sfx.init();
+  var st = e.target.closest('[data-sound]');
+  if (st){ Sfx.set(!Sfx.on()); syncSound(); if (Sfx.on()) Sfx.tap(); return; }
+  Sfx.tap();
+}, true);
+
 /* ---------- language ---------- */
 function applyLanguage(lang){
   lang = lang === 'el' ? 'el' : 'en';
@@ -1354,7 +1429,7 @@ function openEnvelope(lang, K){
   store.sset('bh.opened', '1');            // first frame, so a mid-animation refresh never replays
   lang = applyLanguage(lang);
   store.set('bh.lang', lang);
-  setTimeout(unlock, 9000);                // unconditional safety net
+  setTimeout(unlock, 11000);               // unconditional safety net
 
   var unit = $('.env-unit[data-lang="' + lang + '"]');
   var other = $('.env-unit[data-lang="' + (lang === 'el' ? 'en' : 'el') + '"]');
@@ -1391,19 +1466,21 @@ function openEnvelope(lang, K){
     { duration:d(900), fill:'forwards', easing:'cubic-bezier(.16,1,.3,1)' }).id = 'open-untilt';
 
   // 2. the seal gives, the flap lifts, the card rises out
-  setTimeout(function(){ envelope.classList.add('cracked'); }, d(600));
-  var flapAnim = flap.animate(FLAP_KF, { duration:d(800), delay:d(800), fill:'forwards', easing:'cubic-bezier(.32,.72,0,1)' });
+  setTimeout(function(){ envelope.classList.add('cracked'); Sfx.crack(); }, d(420));
+  setTimeout(function(){ Sfx.paper(0.045, 0.7); }, d(760));
+  setTimeout(function(){ Sfx.paper(0.06, 1.0); }, d(1300));
+  var flapAnim = flap.animate(FLAP_KF, { duration:d(900), delay:d(760), fill:'forwards', easing:'cubic-bezier(.32,.72,0,1)' });
   flapAnim.id = 'open-flap';
-  var rise = letter.animate(RISE_KF, { duration:d(1000), delay:d(1300), fill:'forwards', easing:'cubic-bezier(.22,1,.36,1)' });
+  var rise = letter.animate(RISE_KF, { duration:d(1200), delay:d(1300), fill:'forwards', easing:'cubic-bezier(.22,1,.36,1)' });
   rise.id = 'open-rise';
   [envBack, envFront, addr].forEach(function(el){
-    el.animate([{ opacity:1 }, { opacity:0 }], { duration:d(500), delay:d(1900), fill:'forwards', easing:'linear' }).id = 'open-clear';
+    el.animate([{ opacity:1 }, { opacity:0 }], { duration:d(600), delay:d(2000), fill:'forwards', easing:'linear' }).id = 'open-clear';
   });
   $$('.sh', unit).forEach(function(el){
-    el.animate([{ opacity:getComputedStyle(el).opacity }, { opacity:0 }], { duration:d(500), delay:d(1900), fill:'forwards', easing:'linear' }).id = 'open-clear';
+    el.animate([{ opacity:getComputedStyle(el).opacity }, { opacity:0 }], { duration:d(600), delay:d(2000), fill:'forwards', easing:'linear' }).id = 'open-clear';
   });
   envelope.animate([{ transform:'translateZ(0) scale(1)' }, { transform:'translateZ(0) scale(1.02)' }],
-    { duration:d(500), delay:d(1900), fill:'forwards', easing:'cubic-bezier(.4,0,.2,1)' }).id = 'open-dolly';
+    { duration:d(600), delay:d(2000), fill:'forwards', easing:'cubic-bezier(.4,0,.2,1)' }).id = 'open-dolly';
 
   // 3. the paper becomes the page: the card fills the screen while the invitation's heading
   //    travels from the card to its place on the page, and the rest of the page develops around it
@@ -1421,27 +1498,28 @@ function openEnvelope(lang, K){
     inner.appendChild(clone); host.appendChild(inner); body.appendChild(host);
     flipTop = realTop; html.classList.add('flipping');
     letterIn.style.visibility = 'hidden';
+    Sfx.bloom();
     var from = 'translate3d(' + (m.left - t.left).toFixed(2) + 'px,' + (m.top - t.top).toFixed(2) + 'px,0) scale(' + (m.width / t.width).toFixed(4) + ')';
     var flip = host.animate([{ transform:from }, { transform:'translate3d(0,0,0) scale(1)' }],
-      { duration:d(1500), fill:'forwards', easing:'cubic-bezier(.16,1,.3,1)' });
+      { duration:d(2000), fill:'forwards', easing:'cubic-bezier(.16,1,.3,1)' });
     flip.id = 'open-flip';
 
     var r = letter.getBoundingClientRect(), W = window.innerWidth, H = window.innerHeight;
     grow.style.left = '0px'; grow.style.top = '0px'; grow.style.width = W + 'px'; grow.style.height = H + 'px';
     var gfrom = 'translate3d(' + ((r.left + r.width/2) - W/2).toFixed(2) + 'px,' + ((r.top + r.height/2) - H/2).toFixed(2) + 'px,0) scale(' +
                 (r.width/W).toFixed(4) + ',' + (r.height/H).toFixed(4) + ')';
-    grow.animate([{ opacity:0 }, { opacity:1 }], { duration:d(220), fill:'forwards', easing:'linear' }).id = 'open-growin';
+    grow.animate([{ opacity:0 }, { opacity:1 }], { duration:d(260), fill:'forwards', easing:'linear' }).id = 'open-growin';
     grow.animate([{ transform:gfrom }, { transform:'translate3d(0,0,0) scale(1.03,1.03)' }],
-      { duration:d(1300), fill:'forwards', easing:'cubic-bezier(.16,1,.3,1)' }).id = 'open-grow';
-    if (veil) veil.animate([{ opacity:0 }, { opacity:1 }], { duration:d(900), fill:'forwards', easing:'linear' }).id = 'open-veil';
+      { duration:d(1700), fill:'forwards', easing:'cubic-bezier(.16,1,.3,1)' }).id = 'open-grow';
+    if (veil) veil.animate([{ opacity:0 }, { opacity:1 }], { duration:d(1200), fill:'forwards', easing:'linear' }).id = 'open-veil';
 
     setTimeout(function(){
       site.style.visibility = 'visible'; site.style.opacity = '1';
       site.removeAttribute('inert');
       prepareHeroStagger();
       initReveals();
-      curtain.animate([{ opacity:0.999 }, { opacity:0 }], { duration:d(800), fill:'forwards', easing:'cubic-bezier(.4,0,.2,1)' }).id = 'open-fade';
-    }, d(700));
+      curtain.animate([{ opacity:0.999 }, { opacity:0 }], { duration:d(1000), fill:'forwards', easing:'cubic-bezier(.4,0,.2,1)' }).id = 'open-fade';
+    }, d(1000));
 
     var finish = function(){
       if (!html.classList.contains('flipping')) return;
@@ -1461,7 +1539,7 @@ function prepareHeroStagger(){
   $$('.lang-root').forEach(function(root){
     if (root.offsetParent === null) return;
     $$('.hero-in > .rv, .hero-in > .rv-names', root).forEach(function(el, i){
-      el.style.setProperty('--rv-d', (RM ? 30 : 90) * i + 'ms');
+      el.style.setProperty('--rv-d', (RM ? 30 : 120) * i + 'ms');
     });
   });
 }
@@ -1527,7 +1605,11 @@ if (TIER === 'C'){
     else if (!e.shiftKey && (idx === -1 || idx === f.length-1)){ e.preventDefault(); first.focus(); }
   });
   $$('.env-hit').forEach(function(b){
+    var unit = b.closest('.env-unit');
+    b.addEventListener('pointerdown', function(){ if (ready && unit) unit.classList.add('pressing'); });
+    ['pointerup', 'pointercancel', 'pointerleave'].forEach(function(ev){ b.addEventListener(ev, function(){ if (unit) unit.classList.remove('pressing'); }); });
     b.addEventListener('click', function(){
+      Sfx.init();
       if (!ready) fastForward();
       openEnvelope(b.getAttribute('data-lang'), 1);
     });
