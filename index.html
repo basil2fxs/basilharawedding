@@ -220,7 +220,7 @@ em{ font-style:italic; }
 .env-back{ position:absolute; inset:0; background:var(--white); border-radius:2px; transform:translateZ(0); }
 .letter{
   position:absolute; left:6%; right:6%; top:8%; height:92%;
-  background:var(--paper); box-shadow:inset 0 0 0 .75px var(--gold-hair);
+  background:var(--paper); box-shadow:0 1px 4px rgba(120,96,58,.12);
   transform:translateZ(1px);
 }
 .letter-in{ position:absolute; inset:0; padding:9% 6%; display:flex; flex-direction:column; align-items:center; text-align:center; }
@@ -258,6 +258,8 @@ em{ font-style:italic; }
 .env-hit:focus-visible{ outline:1px solid var(--gold); outline-offset:6px; }
 @media (hover:hover){ .env-unit:hover .addr .lbl::after{ opacity:.9; } }
 /* the letter's edge growing into the page (rect set by JS) */
+/* the desk dissolves to paper beneath the growing card, so no card edge can ever remain */
+.veil{ position:absolute; inset:-2%; background:var(--paper); opacity:0; pointer-events:none; }
 .grow{ position:absolute; left:0; top:0; width:0; height:0; background:var(--paper); opacity:0; transform-origin:50% 50%; pointer-events:none; }
 
 /* Scoped layer promotion — only while sealed, only what moves */
@@ -1183,6 +1185,7 @@ html.past-hero .nav-trigger, html.past-hero .rsvp-jump{ opacity:1; visibility:vi
       </div>
     </div>
   </div>
+  <div class="veil" aria-hidden="true"></div>
   <div class="grow" aria-hidden="true"></div>
 </div>
 
@@ -1356,7 +1359,7 @@ function openEnvelope(lang, K){
   store.sset('bh.opened', '1');            // first frame, so a mid-animation refresh never replays
   lang = applyLanguage(lang);
   store.set('bh.lang', lang);
-  setTimeout(unlock, 4500);                // unconditional safety net
+  setTimeout(unlock, 7000);                // unconditional safety net
 
   var unit = $('.env-unit[data-lang="' + lang + '"]');
   var other = $('.env-unit[data-lang="' + (lang === 'el' ? 'en' : 'el') + '"]');
@@ -1373,11 +1376,12 @@ function openEnvelope(lang, K){
     grow.style.left = '0px'; grow.style.top = '0px'; grow.style.width = W + 'px'; grow.style.height = H + 'px';
     var from = 'translate3d(' + ((r.left + r.width/2) - W/2).toFixed(2) + 'px,' + ((r.top + r.height/2) - H/2).toFixed(2) + 'px,0) scale(' +
                (r.width/W).toFixed(4) + ',' + (r.height/H).toFixed(4) + ')';
-    grow.animate([{ opacity:0 }, { opacity:1 }], { duration:d(120), fill:'forwards', easing:'linear' }).id = 'open-growin';
+    grow.animate([{ opacity:0 }, { opacity:1 }], { duration:d(200), fill:'forwards', easing:'linear' }).id = 'open-growin';
+    var veil = $('.veil'); if (veil) veil.animate([{ opacity:0 }, { opacity:1 }], { duration:d(720), fill:'forwards', easing:'linear' }).id = 'open-veil';
     var g = grow.animate([{ transform:from }, { transform:'translate3d(0,0,0) scale(1.03,1.03)' }],
-      { duration:d(560), fill:'forwards', easing:'cubic-bezier(.16,1,.3,1)' });
+      { duration:d(950), fill:'forwards', easing:'cubic-bezier(.16,1,.3,1)' });
     g.id = 'open-grow';
-    letterIn.animate([{ opacity:1 }, { opacity:0 }], { duration:d(200), fill:'forwards', easing:'linear' }).id = 'open-letterout';
+    letterIn.animate([{ opacity:1 }, { opacity:0 }], { duration:d(450), fill:'forwards', easing:'linear' }).id = 'open-letterout';
     var afterDone = false;
     var after = function(){
       if (afterDone) return; afterDone = true;
@@ -1386,12 +1390,12 @@ function openEnvelope(lang, K){
       prepareHeroStagger();
       initReveals();
       var fade = curtain.animate([{ opacity:0.999 }, { opacity:0 }],
-        { duration:d(360), fill:'forwards', easing:'cubic-bezier(.4,0,.2,1)' });
+        { duration:d(700), fill:'forwards', easing:'cubic-bezier(.4,0,.2,1)' });
       fade.id = 'open-fade';
       fade.finished.then(function(){ requestAnimationFrame(unlock); }).catch(unlock);
     };
     // the card covers ~90% of the screen well before it finishes: start developing the invitation then
-    setTimeout(after, d(340));
+    setTimeout(after, d(520));
     g.finished.then(after).catch(after);
   }
 
@@ -1406,7 +1410,7 @@ function openEnvelope(lang, K){
   // the other envelope slips away
   if (other){
     other.animate([{ opacity:1, transform:'translate3d(0,0,0)' }, { opacity:0, transform:'translate3d(0,26px,0)' }],
-      { duration:d(420), fill:'forwards', easing:'cubic-bezier(.4,0,.2,1)' }).id = 'open-other';
+      { duration:d(560), fill:'forwards', easing:'cubic-bezier(.4,0,.2,1)' }).id = 'open-other';
   }
   // the chosen one comes to the centre of the screen and squares up
   var r0 = envelope.getBoundingClientRect();
@@ -1414,25 +1418,25 @@ function openEnvelope(lang, K){
   var ty = window.innerHeight*0.45 - (r0.top + r0.height/2);
   var s  = Math.min(1.08, (window.innerWidth*0.9) / r0.width);
   unit.animate([{ transform:'translate3d(0,0,0) scale(1)' }, { transform:'translate3d(' + tx.toFixed(2) + 'px,' + ty.toFixed(2) + 'px,0) scale(' + s.toFixed(3) + ')' }],
-    { duration:d(620), fill:'forwards', easing:'cubic-bezier(.16,1,.3,1)' }).id = 'open-center';
+    { duration:d(860), fill:'forwards', easing:'cubic-bezier(.16,1,.3,1)' }).id = 'open-center';
   var tiltNow = getComputedStyle(tilt).transform;
   tilt.animate([{ transform: tiltNow === 'none' ? 'matrix(1,0,0,1,0,0)' : tiltNow }, { transform:'matrix(1,0,0,1,0,0)' }],
-    { duration:d(620), fill:'forwards', easing:'cubic-bezier(.16,1,.3,1)' }).id = 'open-untilt';
+    { duration:d(860), fill:'forwards', easing:'cubic-bezier(.16,1,.3,1)' }).id = 'open-untilt';
 
   // the seal gives
-  setTimeout(function(){ envelope.classList.add('cracked'); }, d(180));
-  var flapAnim = flap.animate(FLAP_KF, { duration:d(440), delay:d(400), fill:'forwards', easing:'cubic-bezier(.32,.72,0,1)' });
+  setTimeout(function(){ envelope.classList.add('cracked'); }, d(560));
+  var flapAnim = flap.animate(FLAP_KF, { duration:d(760), delay:d(760), fill:'forwards', easing:'cubic-bezier(.32,.72,0,1)' });
   flapAnim.id = 'open-flap';
-  var rise = letter.animate(RISE_KF, { duration:d(540), delay:d(680), fill:'forwards', easing:'cubic-bezier(.22,1,.36,1)' });
+  var rise = letter.animate(RISE_KF, { duration:d(920), delay:d(1240), fill:'forwards', easing:'cubic-bezier(.22,1,.36,1)' });
   rise.id = 'open-rise';
   [envBack, envFront, addr].forEach(function(el){
-    el.animate([{ opacity:1 }, { opacity:0 }], { duration:d(240), delay:d(1040), fill:'forwards', easing:'linear' }).id = 'open-clear';
+    el.animate([{ opacity:1 }, { opacity:0 }], { duration:d(460), delay:d(1900), fill:'forwards', easing:'linear' }).id = 'open-clear';
   });
   $$('.sh', unit).forEach(function(el){
-    el.animate([{ opacity:getComputedStyle(el).opacity }, { opacity:0 }], { duration:d(240), delay:d(1040), fill:'forwards', easing:'linear' }).id = 'open-clear';
+    el.animate([{ opacity:getComputedStyle(el).opacity }, { opacity:0 }], { duration:d(460), delay:d(1900), fill:'forwards', easing:'linear' }).id = 'open-clear';
   });
   envelope.animate([{ transform:'translateZ(0) scale(1)' }, { transform:'translateZ(0) scale(1.02)' }],
-    { duration:d(240), delay:d(1040), fill:'forwards', easing:'cubic-bezier(.4,0,.2,1)' }).id = 'open-dolly';
+    { duration:d(460), delay:d(1900), fill:'forwards', easing:'cubic-bezier(.4,0,.2,1)' }).id = 'open-dolly';
 
   rise.finished.then(finish).catch(finish);
 }
@@ -1442,7 +1446,7 @@ function prepareHeroStagger(){
   $$('.lang-root').forEach(function(root){
     if (root.offsetParent === null) return;
     $$('.hero-in > .rv, .hero-in > .rv-names', root).forEach(function(el, i){
-      el.style.setProperty('--rv-d', (RM ? 30 : 70) * i + 'ms');
+      el.style.setProperty('--rv-d', (RM ? 30 : 90) * i + 'ms');
     });
   });
 }
