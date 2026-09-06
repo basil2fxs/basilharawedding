@@ -1264,19 +1264,26 @@ var Sfx = (function(){
     var o = ctx.createOscillator(), g2 = ctx.createGain(); o.type = 'sine'; o.frequency.setValueAtTime(170, t); o.frequency.exponentialRampToValueAtTime(65, t + 0.09);
     shape(g2, t, 0.003, 0.1, 0.1); o.connect(g2); g2.connect(master); o.start(t); o.stop(t + 0.14);
   }
-  function bloom(){                    // the page arrives: three very quiet sine notes a fifth apart, slow swell, long fade
+  function celebrate(){                // an RSVP goes through: three quick rising notes and a little glitter, quiet and short
     if (!ok()) return; var t = ctx.currentTime;
-    [[392, 0.04], [587.33, 0.026], [783.99, 0.012]].forEach(function(n, i){
+    [[523.25, 0.035], [659.25, 0.035], [783.99, 0.045]].forEach(function(n, i){
       var o = ctx.createOscillator(), g = ctx.createGain(); o.type = 'sine'; o.frequency.value = n[0];
-      shape(g, t + i * 0.08, 1.1, n[1], 2.6); o.connect(g); g.connect(master); o.start(t); o.stop(t + 4.2);
+      shape(g, t + i * 0.09, 0.02, n[1], 0.7); o.connect(g); g.connect(master); o.start(t); o.stop(t + 1.2);
+      var o2 = ctx.createOscillator(), g2 = ctx.createGain(); o2.type = 'triangle'; o2.frequency.value = n[0] * 2;
+      shape(g2, t + i * 0.09, 0.02, n[1] * 0.25, 0.45); o2.connect(g2); g2.connect(master); o2.start(t); o2.stop(t + 1);
     });
+    for (var k = 0; k < 6; k++){
+      var f = 2200 + Math.random() * 2200, o3 = ctx.createOscillator(), g3 = ctx.createGain();
+      o3.type = 'sine'; o3.frequency.value = f; shape(g3, t + 0.25 + k * 0.07, 0.005, 0.012, 0.18);
+      o3.connect(g3); g3.connect(master); o3.start(t); o3.stop(t + 1.2);
+    }
   }
   function tap(){                      // a fingertip on card stock
     if (!ok()) return; var t = ctx.currentTime, src = noise(0.035), f = ctx.createBiquadFilter(), g = ctx.createGain();
     f.type = 'highpass'; f.frequency.value = 1600; shape(g, t, 0.002, 0.05, 0.03); src.connect(f); f.connect(g); g.connect(master); src.start(t); src.stop(t + 0.06);
   }
   function set(on){ enabled = !!on; try { sessionStorage.setItem('bh.sound', on ? '1' : '0'); } catch(e){} }
-  return { init:init, paper:paper, crack:crack, bloom:bloom, tap:tap, set:set, on:function(){ return enabled; } };
+  return { init:init, paper:paper, crack:crack, celebrate:celebrate, tap:tap, set:set, on:function(){ return enabled; } };
 })();
 function syncSound(){
   $$('[data-sound]').forEach(function(b){
@@ -1498,7 +1505,6 @@ function openEnvelope(lang, K){
     inner.appendChild(clone); host.appendChild(inner); body.appendChild(host);
     flipTop = realTop; html.classList.add('flipping');
     letterIn.style.visibility = 'hidden';
-    Sfx.bloom();
     var from = 'translate3d(' + (m.left - t.left).toFixed(2) + 'px,' + (m.top - t.top).toFixed(2) + 'px,0) scale(' + (m.width / t.width).toFixed(4) + ')';
     var flip = host.animate([{ transform:from }, { transform:'translate3d(0,0,0) scale(1)' }],
       { duration:d(2000), fill:'forwards', easing:'cubic-bezier(.16,1,.3,1)' });
@@ -1704,6 +1710,7 @@ $$('form.rsvp').forEach(function(form){
     fd.append('language', lang);
     fd.append('submitted', new Date().toISOString());
     function done(){
+      Sfx.celebrate();
       wrap.classList.remove('is-mail'); wrap.classList.add('is-done');
       var d = $('.rsvp-done', wrap);
       wrap.scrollIntoView({ behavior:'auto', block:'center' });
@@ -1713,6 +1720,7 @@ $$('form.rsvp').forEach(function(form){
       var lines = [];
       fd.forEach(function(v, k){ if (v) lines.push(k + ': ' + v); });
       var subject = (lang === 'el' ? 'Επιβεβαίωση συμμετοχής - ' : 'RSVP - ') + names;
+      Sfx.celebrate();
       window.location.href = 'mailto:' + RSVP_EMAIL + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(lines.join('\n'));
       // the form stays, so the guest can retry if no mail app opened
       wrap.classList.add('is-mail'); btn.disabled = false;
