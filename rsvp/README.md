@@ -1,7 +1,32 @@
 # Where the RSVPs go
 
-The RSVP form on basilharawedding.com posts every reply straight into a Google Form in Basil's
-Google account, so nothing runs on a server and there is nothing to maintain.
+The RSVP card on basilharawedding.com sends every reply to a small Apps Script web app in Basil's
+Google account (`Code.gs` in this folder, project "RSVP backup", bound to the Sheet). The script
+writes one row per guest into the **Responses** tab of the Sheet and answers `{"result":"ok"}`;
+the website shows "Thank you" only after it has read that answer. Nothing else runs on a server.
+
+How a reply cannot get lost:
+
+- The reply is saved in the guest's browser (localStorage) before the first attempt, and only
+  removed once the Sheet has confirmed it.
+- The site tries the endpoint three times (20 s each, short pauses between). While it waits the
+  button reads "Sending...".
+- If all three fail, the site posts a second, unconfirmed copy into the Google Form (the old
+  channel, see below), shows "Not sent yet" with **Try again** and **Send by email** (the mail app
+  opens with the whole reply pre-filled, addressed to basil2fxs@gmail.com), and keeps retrying
+  quietly whenever the page is open or the connection comes back. Opening the card later shows
+  the same screen for the saved reply.
+- Every reply carries an id; a retry that already landed is answered "ok" without a second row.
+- Every confirmed reply also refreshes `Wedding RSVPs.csv` next to the Sheet in Drive, so Save
+  Brain commits the replies to the private Brain repo.
+
+Endpoint URL (deployment "Website reply endpoint", 7 Sep 2026): the `RSVP_ENDPOINT` value near
+the bottom of `index.html`. After editing `doPost` in the Apps Script editor, publish a new
+version (Deploy > Manage deployments > pencil > Version: New) or the live endpoint keeps the old code.
+A "Test" tab in the Sheet holds rows written by test runs (payloads with `test: true`); delete it
+whenever you like.
+
+The Google Form below is now the fallback channel only.
 
 Everything RSVP-related lives in one private Drive folder, `My Drive/Basil's Brain/Wedding/`
 (one level above this repo folder, so nothing private is ever inside the public repo):
@@ -57,15 +82,11 @@ it properly: change that question's type to Short answer, then put its `entry` i
 If the Form ever refuses a post (Google outage, form closed), the site opens the guest's mail app
 with the reply pre-filled, addressed to basil2fxs@gmail.com, so nothing is lost.
 
-## Backup.gs
+## Code.gs
 
-`Backup.gs` is the script attached to the Sheet (Extensions, Apps Script). It writes
-`Wedding RSVPs.csv` next to the Sheet in Drive. If it ever stops (for example after the Sheet is
+`Code.gs` is the script attached to the Sheet (Extensions, Apps Script): the reply endpoint plus
+the CSV backup, which writes `Wedding RSVPs.csv` (Responses tab) and `Wedding RSVPs (form fallback).csv`
+next to the Sheet in Drive. If it ever stops (for example after the Sheet is
 copied or the triggers are deleted), open the Sheet, Extensions, Apps Script, run
 `installTriggers` once and approve the permission prompt.
 
-## Alternative: Google Sheet + Apps Script
-
-`Code.gs` in this folder is an alternative collector that appends replies to a Google Sheet and
-emails you; to use it instead, follow the comments in that file and put its web-app URL into
-`RSVP_ENDPOINT` (and empty `RSVP_GFORM.action`).
