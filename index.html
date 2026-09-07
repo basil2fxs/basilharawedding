@@ -635,6 +635,7 @@ html.is-sealed .env-flap, html.is-sealed .letter, html.is-sealed .grow{ will-cha
 .add-guest:focus-visible{ outline:none; }
 .add-guest[hidden]{ display:none; }
 .tally{ margin:14px 0 0; color:var(--ink-soft); }
+.rsvp-note{ margin-top:12px; font-style:italic; color:var(--ink-soft); text-wrap:balance; }
 .tally[hidden]{ display:none; }
 .guest-title{ color:var(--ink-soft); }
 .guest-remove{
@@ -977,7 +978,6 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
     <section class="band" id="en-rsvp" data-sec="rsvp" aria-labelledby="en-rsvp-h">
       <span class="orn rv"></span>
       <div class="sec-head rv"><h2 class="h-script" id="en-rsvp-h">RSVP</h2><p class="caps">Kindly reply by Friday 15 January 2027</p></div>
-      <p class="lede rv">Kindly reply once for everyone on your invitation.</p>
       <div class="rsvp-cta rv">
         <button class="btn btn-lg" type="button" data-rsvp-open>Reply</button>
         <p class="rsvp-received script-line">Thank you, we have your reply.</p>
@@ -990,6 +990,7 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
               <svg class="monogram rsvp-mono" viewBox="0 0 920 688" aria-hidden="true"><use href="#mono"/></svg>
               <h2 class="h-script" id="en-rsvp-dlg-h">RSVP</h2>
               <p class="caps">Kindly reply by Friday 15 January 2027</p>
+              <p class="rsvp-note">One reply for everyone on your invitation.</p>
             </div>
             <p class="rsvp-mailnote" tabindex="-1">Your mail app should have opened with your reply ready to send. Please press send there. If it did not open, email us at <a href="mailto:basil2fxs@gmail.com">basil2fxs@gmail.com</a>.</p>
             <form class="rsvp" novalidate>
@@ -1194,7 +1195,6 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
     <section class="band" id="el-rsvp" data-sec="rsvp" aria-labelledby="el-rsvp-h">
       <span class="orn rv"></span>
       <div class="sec-head rv"><h2 class="h-script" id="el-rsvp-h">Επιβεβαίωση συμμετοχής</h2><p class="caps">Παρακαλούμε απαντήστε μέχρι την Παρασκευή, 15 Ιανουαρίου 2027</p></div>
-      <p class="lede rv">Παρακαλούμε απαντήστε μία φορά για όλους όσοι αναγράφονται στο προσκλητήριό σας.</p>
       <div class="rsvp-cta rv">
         <button class="btn btn-lg" type="button" data-rsvp-open>Απαντήστε</button>
         <p class="rsvp-received script-line">Ευχαριστούμε, λάβαμε την απάντησή σας.</p>
@@ -1207,6 +1207,7 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
               <svg class="monogram rsvp-mono" viewBox="0 0 920 688" aria-hidden="true"><use href="#mono"/></svg>
               <h2 class="h-script" id="el-rsvp-dlg-h">Επιβεβαίωση συμμετοχής</h2>
               <p class="caps">Παρακαλούμε απαντήστε μέχρι την Παρασκευή, 15 Ιανουαρίου 2027</p>
+              <p class="rsvp-note">Μία απάντηση για όλους όσοι αναγράφονται στο προσκλητήριό σας.</p>
             </div>
             <p class="rsvp-mailnote" tabindex="-1">Η εφαρμογή ηλεκτρονικής αλληλογραφίας σας θα πρέπει να άνοιξε με την απάντηση έτοιμη. Παρακαλούμε πατήστε "αποστολή" εκεί. Αν δεν άνοιξε, γράψτε μας στο <a href="mailto:basil2fxs@gmail.com">basil2fxs@gmail.com</a>.</p>
             <form class="rsvp" novalidate>
