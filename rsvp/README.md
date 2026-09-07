@@ -28,6 +28,11 @@ whenever you like.
 
 The Google Form below is now the fallback channel only.
 
+Two files carry the replies in the Wedding folder: **Wedding RSVPs** (no extension on the Mac,
+a shortcut to the live Google Sheet; replies are in its first tab, "Responses") and
+**Wedding RSVPs.csv** (a plain copy of that tab, rewritten after every confirmed reply, which is
+what Save Brain commits). Open the Sheet to read or edit; the CSV is the backup.
+
 Everything RSVP-related lives in one private Drive folder, `My Drive/Basil's Brain/Wedding/`
 (one level above this repo folder, so nothing private is ever inside the public repo):
 
