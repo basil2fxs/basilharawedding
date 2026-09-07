@@ -306,7 +306,7 @@ html.is-sealed .env-flap, html.is-sealed .letter, html.is-sealed .grow{ will-cha
   100%{ transform:translateZ(-1px) scale(1,1);      opacity:.62 }
 }
 @keyframes riseZ{ from{opacity:0;transform:translateZ(21px) translate3d(0,7px,0)} to{opacity:1;transform:translateZ(21px)} }
-@media (prefers-reduced-motion: no-preference){
+@media all{
   html.full-intro .env-unit{ transform:translate3d(0,-48vh,0) }
   html.full-intro .env-unit[data-lang="en"] .glide{ transform:translate3d(-8vw,0,0) rotate(-5deg) scale(.972) }
   html.full-intro .env-unit[data-lang="el"] .glide{ transform:translate3d(8vw,0,0) rotate(5deg) scale(.972) }
@@ -330,7 +330,7 @@ html.is-sealed .env-flap, html.is-sealed .letter, html.is-sealed .grow{ will-cha
   70% { transform:translate3d(0,-1.1%,0); animation-timing-function:var(--ease-settle) }
   100%{ transform:translate3d(0,0,0) }
 }
-@media (prefers-reduced-motion: reduce){
+@media not all{
   html.full-intro .env-unit{ opacity:0 }
   html.full-intro.play .env-unit{ animation:fadein 1100ms var(--ease-fade) both; animation-delay:var(--d0,320ms); }
   html.full-intro .addr{ opacity:0 }
@@ -530,7 +530,7 @@ html.is-sealed .env-flap, html.is-sealed .letter, html.is-sealed .grow{ will-cha
   }
   .dlg-close{ top:12px; right:16px; }
 }
-@media (prefers-reduced-motion: no-preference){
+@media all{
   .rsvp-dlg[open]{ animation:dlgfade 320ms var(--ease-fade) both; }
   .rsvp-dlg[open]::backdrop{ animation:dlgfade 480ms var(--ease-fade) both; }
   .rsvp-dlg[open] .rsvp-card{ animation:cardrise 760ms var(--ease-place) both; }
@@ -549,7 +549,7 @@ html.is-sealed .env-flap, html.is-sealed .letter, html.is-sealed .grow{ will-cha
   @keyframes cardrise{ from{ transform:translate3d(0,30px,0) scale(.985) } to{ transform:none } }
   @keyframes ruledraw{ from{ transform:scaleX(0) } to{ transform:scaleX(1) } }
 }
-@media (prefers-reduced-motion: reduce){
+@media not all{
   .rsvp-dlg[open]{ animation:navfadein 400ms linear both; }
 }
 
@@ -572,7 +572,7 @@ html.is-sealed .env-flap, html.is-sealed .letter, html.is-sealed .grow{ will-cha
 .bank-note{ margin-top:clamp(18px,3vh,26px); font-style:italic; }
 .bank-close{ margin-top:clamp(22px,4vh,30px); }
 .gift-dlg[open] .bank, .gift-dlg[open] .bank-note, .gift-dlg[open] .bank-close{ --i:0; }
-@media (prefers-reduced-motion: no-preference){
+@media all{
   .gift-dlg[open] .bank{ opacity:0; animation:navin 680ms var(--ease-place) 300ms both; }
   .gift-dlg[open] .bank-note{ opacity:0; animation:navin 680ms var(--ease-place) 420ms both; }
   .gift-dlg[open] .bank-close{ opacity:0; animation:navin 680ms var(--ease-place) 520ms both; }
@@ -658,7 +658,7 @@ html.is-sealed .env-flap, html.is-sealed .letter, html.is-sealed .grow{ will-cha
 .btn-sm{ min-height:46px; padding:14px 26px 12px calc(26px + .28em); }
 [data-add-guest]{ margin-top:18px; }
 [data-add-guest][hidden]{ display:none; }
-@media (prefers-reduced-motion: no-preference){
+@media all{
   .guest.is-new{ animation:navin 520ms var(--ease-place) both; }
 }
 
@@ -671,7 +671,7 @@ html.is-sealed .env-flap, html.is-sealed .letter, html.is-sealed .grow{ will-cha
 .rsvp-wrap.is-fail form{ display:none; }
 .rsvp-wrap.is-fail .rsvp-fail{ display:block; }
 .rsvp .submit .btn[disabled]{ opacity:.7; }
-@media (prefers-reduced-motion: no-preference){
+@media all{
   .guest.is-shake{ animation:shake 520ms var(--ease-std) both; }
   @keyframes shake{ 0%,100%{ transform:translate3d(0,0,0) } 20%{ transform:translate3d(-6px,0,0) } 40%{ transform:translate3d(5px,0,0) } 60%{ transform:translate3d(-3px,0,0) } 80%{ transform:translate3d(2px,0,0) } }
 }
@@ -684,6 +684,10 @@ html.is-sealed .env-flap, html.is-sealed .letter, html.is-sealed .grow{ will-cha
 /* a party that is all regrets: no song, no contact needed, just a message if they like */
 .rsvp-wrap.all-declined .field[data-req="contact"], .rsvp-wrap.all-declined .field-song{ display:none; }
 .kv.fam dd.venue-name{ margin:2px auto 0; }
+
+/* two-part answers */
+.faq .a .faq-k{ display:block; font-size:clamp(.64rem,2.7vw,.7rem); letter-spacing:.22em; padding-inline-start:.22em; text-transform:uppercase; color:var(--ink-soft); line-height:1.8; margin-bottom:2px; }
+.faq .a p + p{ margin-top:14px; }
 
 /* RSVP validation */
 .rsvp .hint{ display:none; margin:8px 0 0; font-style:italic; font-size:.92em; color:#9B2226; text-align:center; }
@@ -710,7 +714,7 @@ html.is-sealed .env-flap, html.is-sealed .letter, html.is-sealed .grow{ will-cha
 .faq details[open] summary::after{ transform:translateY(-50%) rotate(0deg); opacity:0; }
 .faq summary:focus-visible{ outline:1px solid var(--gold); outline-offset:2px; }
 .faq .a{ padding:0 0 clamp(16px,3vh,24px); max-width:34ch; }
-@media (prefers-reduced-motion: no-preference){
+@media all{
   .faq details[open] .a{ animation:faqin 520ms var(--ease-settle) both; }
   @keyframes faqin{ from{opacity:0;transform:translate3d(0,6px,0)} to{opacity:1;transform:none} }
 }
@@ -791,7 +795,7 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
 }
 .nav-close:focus-visible{ outline:1px solid var(--gold); outline-offset:-6px; }
 .nav-rsvp{ margin-top:clamp(10px,2vh,18px); }
-@media (prefers-reduced-motion: no-preference){
+@media all{
   #nav[open]{ animation:navcurtain 520ms var(--ease-place) both; }
   #nav.closing{ animation:navfade 300ms var(--ease-std) both; }
   @keyframes navcurtain{ from{clip-path:inset(0 0 100% 0)} to{clip-path:inset(0 0 0 0)} }
@@ -802,7 +806,7 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
   #nav[open] .nav-rsvp{ animation-delay:660ms; }
   @keyframes navin{ from{opacity:0;transform:translate3d(0,12px,0)} to{opacity:1;transform:none} }
 }
-@media (prefers-reduced-motion: reduce){
+@media not all{
   #nav[open]{ animation:navfadein 400ms linear both; }
   @keyframes navfadein{ from{opacity:0} to{opacity:1} }
 }
@@ -810,7 +814,7 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
 /* ---------------------------------------------------------------------
    SCROLL REVEALS - IntersectionObserver + transitions. Fire once. Opt-in.
    --------------------------------------------------------------------- */
-@media (prefers-reduced-motion: no-preference){
+@media all{
   html.js .rv{
     opacity:0; transform:translate3d(0,var(--rv-y),0);
     transition:opacity var(--rv-fade) var(--ease-fade) var(--rv-d,0ms),
@@ -824,7 +828,7 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
   }
   html.js .rv-names.is-in{ opacity:1; transform:none; }
 }
-@media (prefers-reduced-motion: reduce){
+@media not all{
   html.js .rv, html.js .rv-names{ opacity:0; transition:opacity 400ms linear var(--rv-d,0ms); }
   html.js .rv.is-in, html.js .rv-names.is-in{ opacity:1; }
 }
@@ -841,7 +845,7 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
 .sound-toggle:hover,.sound-toggle:focus-visible{ color:var(--ink); }
 .sound-toggle:focus-visible{ outline:1px solid var(--gold); outline-offset:2px; }
 #nav[open] .sound-toggle{ opacity:0; animation:navin 520ms var(--ease-place) 780ms both; }
-@media (prefers-reduced-motion: reduce){ #nav[open] .sound-toggle{ animation:none; opacity:1; } }
+@media not all{ #nav[open] .sound-toggle{ animation:none; opacity:1; } }
 /* on wide screens the page heading is at its largest, so the card's copy is a touch smaller */
 @media (min-width: 760px){ .mini{ transform:scale(.36); } }
 
@@ -1017,7 +1021,7 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
     </section>
     <section class="band" id="en-photos" data-sec="photos" aria-labelledby="en-photos-h">
       <span class="orn rv"></span>
-      <div class="sec-head rv"><h2 class="h-script" id="en-photos-h">Photographs</h2></div>
+      <div class="sec-head rv"><h2 class="h-script" id="en-photos-h">Photographs and Videography</h2></div>
       <p class="prose rv">During the service we ask you to keep phones and cameras away and simply be with us. Our photographers and videographers will capture the ceremony and the reception, and we will share their pictures and films with you.</p>
       <p class="prose rv">At the reception, take as many as you like, and please share them with us: scan the code, or tap it, to add your photos and videos to our album.</p>
       <a class="qr rv" href="https://drive.google.com/drive/folders/1i0xxIpHFRsNDGSY-i67S7ZgnWNRXafpC" target="_blank" rel="noopener">
@@ -1116,8 +1120,8 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
         <details name="en-faq"><summary>What happens during the service?</summary><div class="a"><p>An Orthodox wedding has no spoken vows. Our rings are blessed, we are crowned with the <em>Stefana</em>, we share a common cup, and the priest leads us three times around the table. It takes about an hour and guests stand for most of it.</p></div></details>
         <details name="en-faq"><summary>What time should I arrive?</summary><div class="a"><p>Please arrive by 1:30 pm to be seated. The ceremony starts at 1:45 pm sharp and the doors close once it begins, so please do not be late.</p></div></details>
         <details name="en-faq"><summary>Who is the koumbaros?</summary><div class="a"><p>The <em>koumbaros</em> is our best man: he exchanges the rings and the crowns over our heads, and stays part of the family for life. Ours is Antoni Zeidan, Basil's best mate of many years.</p></div></details>
-        <details name="en-faq"><summary>Can I take photographs?</summary><div class="a"><p>Not during the service, please. Our photographers and videographers will cover both the ceremony and the reception, and we will share their pictures and videos with you. At the reception you are welcome to take your own as well, and please add them to our album (see Photographs above).</p></div></details>
-        <details name="en-faq"><summary>Can I bring a plus one?</summary><div class="a"><p>To the church, yes: the service is open to everyone, so bring whoever you like and simply add their names to your reply, marked Ceremony. The reception is by invitation only, for the people named on your invitation. We would love to host everyone, but we cannot.</p></div></details>
+        <details name="en-faq"><summary>Can I take photographs?</summary><div class="a"><p><span class="faq-k">During the service</span>Please no. Our photographers and videographers are recording everything, and we would rather not have phones in the pictures.</p><p><span class="faq-k">At the reception</span>Yes, as many as you like, and please add them to our album (see Photographs and Videography above).</p></div></details>
+        <details name="en-faq"><summary>Can I bring a plus one?</summary><div class="a"><p><span class="faq-k">The church service</span>Open to everyone. Bring whoever you like and simply add their names to your reply, marked Ceremony.</p><p><span class="faq-k">The reception</span>By invitation only, for the people named on your invitation. We would love to host everyone, but we cannot.</p></div></details>
         <details name="en-faq"><summary>Are children welcome?</summary><div class="a"><p>In the church, always. For the reception, please check the names on your invitation.</p></div></details>
       </div>
       <p class="lede rv faq-contact">Anything else? Email us at <a href="mailto:basil2fxs@gmail.com">basil2fxs@gmail.com</a> or text Basil on <a href="sms:+61422083274">0422 083 274</a>.</p>
@@ -1262,7 +1266,7 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
     </section>
     <section class="band" id="el-photos" data-sec="photos" aria-labelledby="el-photos-h">
       <span class="orn rv"></span>
-      <div class="sec-head rv"><h2 class="h-script" id="el-photos-h">Φωτογραφίες</h2></div>
+      <div class="sec-head rv"><h2 class="h-script" id="el-photos-h">Φωτογραφίες και Βίντεο</h2></div>
       <p class="prose rv">Στη διάρκεια του Μυστηρίου σας παρακαλούμε να αφήσετε στην άκρη κινητά και φωτογραφικές μηχανές και απλώς να είστε μαζί μας. Οι φωτογράφοι και οι βιντεογράφοι μας θα καλύψουν το Μυστήριο και τη δεξίωση, και θα μοιραστούμε τις φωτογραφίες και τα βίντεό τους μαζί σας.</p>
       <p class="prose rv">Στη δεξίωση βγάλτε όσες θέλετε και μοιραστείτε τις μαζί μας: σαρώστε τον κωδικό, ή πατήστε τον, για να προσθέσετε τις φωτογραφίες και τα βίντεό σας στο άλμπουμ μας.</p>
       <a class="qr rv" href="https://drive.google.com/drive/folders/1i0xxIpHFRsNDGSY-i67S7ZgnWNRXafpC" target="_blank" rel="noopener">
@@ -1361,8 +1365,8 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
         <details name="el-faq"><summary>Τι γίνεται στη διάρκεια του Μυστηρίου;</summary><div class="a"><p>Ο ορθόδοξος γάμος δεν έχει όρκους. Ευλογούνται τα δαχτυλίδια, στεφανωνόμαστε με τα Στέφανα, πίνουμε από το κοινό ποτήριο και ο ιερέας μας οδηγεί τρεις φορές γύρω από το τραπέζι. Κρατάει περίπου μία ώρα και οι καλεσμένοι είναι όρθιοι.</p></div></details>
         <details name="el-faq"><summary>Τι ώρα να έρθω;</summary><div class="a"><p>Να έχετε φτάσει μέχρι τις 13:30 για να καθίσετε. Το Μυστήριο ξεκινά ακριβώς στις 13:45 και οι πόρτες κλείνουν με την έναρξή του, οπότε παρακαλούμε μην αργήσετε.</p></div></details>
         <details name="el-faq"><summary>Ποιος είναι ο κουμπάρος;</summary><div class="a"><p>Ο κουμπάρος είναι αυτός που μας στεφανώνει: αλλάζει τα δαχτυλίδια και τα Στέφανα πάνω από τα κεφάλια μας και μένει για πάντα μέλος της οικογένειας. Κουμπάρος μας θα είναι ο Αντώνης Ζεϊντάν, ο κολλητός φίλος του Βασίλη εδώ και πολλά χρόνια.</p></div></details>
-        <details name="el-faq"><summary>Μπορώ να βγάλω φωτογραφίες;</summary><div class="a"><p>Όχι στη διάρκεια του Μυστηρίου, παρακαλούμε. Οι φωτογράφοι και οι βιντεογράφοι μας θα καλύψουν και το Μυστήριο και τη δεξίωση, και θα μοιραστούμε τις φωτογραφίες και τα βίντεό τους μαζί σας. Στη δεξίωση μπορείτε να βγάλετε και τις δικές σας, και παρακαλούμε προσθέστε τις στο άλμπουμ μας (δείτε την ενότητα Φωτογραφίες πιο πάνω).</p></div></details>
-        <details name="el-faq"><summary>Μπορώ να φέρω συνοδό;</summary><div class="a"><p>Στην εκκλησία, ναι: το Μυστήριο είναι ανοιχτό σε όλους, οπότε φέρτε όποιον θέλετε και απλώς προσθέστε τα ονόματα στην απάντησή σας, με την επιλογή Στο Μυστήριο. Η δεξίωση είναι μόνο με πρόσκληση, για τα άτομα που αναγράφονται στο προσκλητήριό σας. Θα θέλαμε να φιλοξενήσουμε όλους, αλλά δυστυχώς δεν γίνεται.</p></div></details>
+        <details name="el-faq"><summary>Μπορώ να βγάλω φωτογραφίες;</summary><div class="a"><p><span class="faq-k">Στη διάρκεια του Μυστηρίου</span>Όχι, σας παρακαλούμε. Οι φωτογράφοι και οι βιντεογράφοι μας καταγράφουν τα πάντα, και δεν θα θέλαμε κινητά μέσα στις φωτογραφίες.</p><p><span class="faq-k">Στη δεξίωση</span>Ναι, όσες θέλετε, και παρακαλούμε προσθέστε τις στο άλμπουμ μας (δείτε την ενότητα Φωτογραφίες και Βίντεο πιο πάνω).</p></div></details>
+        <details name="el-faq"><summary>Μπορώ να φέρω συνοδό;</summary><div class="a"><p><span class="faq-k">Το Μυστήριο στην εκκλησία</span>Ανοιχτό σε όλους. Φέρτε όποιον θέλετε και απλώς προσθέστε τα ονόματα στην απάντησή σας, με την επιλογή Στο Μυστήριο.</p><p><span class="faq-k">Η δεξίωση</span>Μόνο με πρόσκληση, για τα άτομα που αναγράφονται στο προσκλητήριό σας. Θα θέλαμε να φιλοξενήσουμε όλους, αλλά δυστυχώς δεν γίνεται.</p></div></details>
         <details name="el-faq"><summary>Μπορώ να φέρω τα παιδιά μου;</summary><div class="a"><p>Στην εκκλησία, πάντα. Για τη δεξίωση, δείτε τα ονόματα στο προσκλητήριό σας.</p></div></details>
       </div>
       <p class="lede rv faq-contact">Για οτιδήποτε άλλο, γράψτε μας στο <a href="mailto:basil2fxs@gmail.com">basil2fxs@gmail.com</a> ή στείλτε μήνυμα στον Βασίλη στο <a href="sms:+61422083274">0422 083 274</a>.</p>
@@ -1391,7 +1395,7 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
         <li style="--i:1"><a href="#en-reception">The Reception</a></li>
         <li style="--i:2"><a href="#en-schedule">The Day</a></li>
         <li style="--i:3"><a href="#en-travel">Travel &amp; Stay</a></li>
-        <li style="--i:4"><a href="#en-photos">Photographs</a></li>
+        <li style="--i:4"><a href="#en-photos">Photographs and Videography</a></li>
         <li style="--i:5"><a href="#en-faq">Questions</a></li>
       </ul>
       <ul class="nav-list lang-el" lang="el">
@@ -1399,7 +1403,7 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
         <li style="--i:1"><a href="#el-reception">Η Δεξίωση</a></li>
         <li style="--i:2"><a href="#el-schedule">Το πρόγραμμα</a></li>
         <li style="--i:3"><a href="#el-travel">Άφιξη &amp; Διαμονή</a></li>
-        <li style="--i:4"><a href="#el-photos">Φωτογραφίες</a></li>
+        <li style="--i:4"><a href="#el-photos">Φωτογραφίες και Βίντεο</a></li>
         <li style="--i:5"><a href="#el-faq">Ερωτήσεις</a></li>
       </ul>
       <div class="nav-rsvp"><button class="btn lang-en" lang="en" type="button" data-rsvp-open>RSVP</button><button class="btn lang-el" lang="el" type="button" data-rsvp-open>Επιβεβαίωση συμμετοχής</button></div>
@@ -1538,8 +1542,8 @@ var html = document.documentElement, body = document.body;
 var $  = function(s, r){ return (r||document).querySelector(s); };
 var $$ = function(s, r){ return Array.prototype.slice.call((r||document).querySelectorAll(s)); };
 
-var rmq = window.matchMedia('(prefers-reduced-motion: reduce)');
-var RM  = rmq.matches;
+var rmq = { matches:false, addEventListener:null };   // the choreography plays for everyone; Reduce Motion is not consulted
+var RM  = false;
 if (rmq.addEventListener) rmq.addEventListener('change', function(e){
   RM = e.matches;
   if (RM) $$('.rv, .rv-names').forEach(function(el){ el.classList.add('is-in'); });
