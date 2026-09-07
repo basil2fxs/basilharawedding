@@ -674,6 +674,8 @@ html.is-sealed .env-flap, html.is-sealed .letter, html.is-sealed .grow{ will-cha
   @keyframes shake{ 0%,100%{ transform:translate3d(0,0,0) } 20%{ transform:translate3d(-6px,0,0) } 40%{ transform:translate3d(5px,0,0) } 60%{ transform:translate3d(-3px,0,0) } 80%{ transform:translate3d(2px,0,0) } }
 }
 .tables-art svg{ width:100%; height:auto; }
+/* a party that is all regrets: no song, no contact needed, just a message if they like */
+.rsvp-wrap.all-declined .field[data-req="contact"], .rsvp-wrap.all-declined .field-song{ display:none; }
 .kv.fam dd.venue-name{ margin:2px auto 0; }
 
 /* RSVP validation */
@@ -1054,7 +1056,7 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
                 <input type="text" id="en-contact" name="contact" autocomplete="email" inputmode="email" required placeholder="So we can reach you">
                 <p class="hint"></p>
               </div>
-              <div class="field" style="--i:6">
+              <div class="field field-song" style="--i:6">
                 <label class="lbl" for="en-song">Song or songs to get you out of your seat <small>(optional)</small></label>
                 <input type="text" id="en-song" name="song">
               </div>
@@ -1284,7 +1286,7 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
                 <input type="text" id="el-contact" name="contact" autocomplete="email" inputmode="email" required placeholder="Για να επικοινωνήσουμε μαζί σας">
                 <p class="hint"></p>
               </div>
-              <div class="field" style="--i:6">
+              <div class="field field-song" style="--i:6">
                 <label class="lbl" for="el-song">Τραγούδι ή τραγούδια που θα σας σηκώσουν από το τραπέζι <small>(προαιρετικό)</small></label>
                 <input type="text" id="el-song" name="song">
               </div>
@@ -2195,6 +2197,11 @@ $$('form.rsvp').forEach(function(form){
     if (no) parts.push((no === 1 ? t.getAttribute('data-no-1') : t.getAttribute('data-no-n')).replace('{n}', no));
     t.textContent = parts.join(', '); t.hidden = false;
   }
+  function updateMode(){
+    var all = guests();
+    var allNo = all.length > 0 && all.every(function(g){ var a = $('input[data-name="att"]:checked', g); return a && a.getAttribute('data-att') === 'no'; });
+    wrap.classList.toggle('all-declined', allNo);
+  }
   function renumber(){
     var all = guests();
     all.forEach(function(g, i){
@@ -2206,7 +2213,7 @@ $$('form.rsvp').forEach(function(form){
       var rm = $('.guest-remove', g); if (rm) rm.hidden = all.length === 1;
     });
     var add = $('[data-add-guest]', form); if (add) add.hidden = all.length >= MAX;
-    updateTally();
+    updateTally(); updateMode();
   }
   function insist(g, kind){
     // the guest is not finished: say so in red, shake once, and put the finger on the missing piece
@@ -2263,7 +2270,7 @@ $$('form.rsvp').forEach(function(form){
     if (!$('.is-invalid', form)) wrap.classList.remove('has-err');
     if (g && e.target.type === 'radio' && e.target.getAttribute('data-name') === 'att') g.classList.toggle('is-declined', e.target.getAttribute('data-att') === 'no');
     if (g) updateGuest(g);
-    updateTally();
+    updateTally(); updateMode();
   }); });
   function readGuests(){
     return guests().map(function(g){
@@ -2287,7 +2294,8 @@ $$('form.rsvp').forEach(function(form){
       var h = $('.hint', g.el); if (h) h.textContent = msg;
       if (msg) bad.push(g.el);
     });
-    var cf = $('.field[data-req="contact"]', form), cv = (fd.get('contact') || '').trim(), cok = !!cv && (isEmail(cv) || isPhone(cv));
+    var anyYes = gs.some(function(g){ return g.yes; });
+    var cf = $('.field[data-req="contact"]', form), cv = (fd.get('contact') || '').trim(), cok = anyYes ? (!!cv && (isEmail(cv) || isPhone(cv))) : (!cv || isEmail(cv) || isPhone(cv));
     cf.classList.toggle('is-invalid', !cok);
     var chh = $('.hint', cf); if (chh) chh.textContent = cok ? '' : cf.getAttribute('data-err');
     if (!cok) bad.push(cf);
