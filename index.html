@@ -674,7 +674,9 @@ html.is-sealed .env-flap, html.is-sealed .letter, html.is-sealed .grow{ will-cha
   @keyframes shake{ 0%,100%{ transform:translate3d(0,0,0) } 20%{ transform:translate3d(-6px,0,0) } 40%{ transform:translate3d(5px,0,0) } 60%{ transform:translate3d(-3px,0,0) } 80%{ transform:translate3d(2px,0,0) } }
 }
 .church-art svg.art{ width:100%; height:auto; }
-.details .off-l{ margin-top:clamp(14px,2.6vh,20px); color:var(--ink-soft); }
+/* the officiants sit apart from the address: a breath of space and a short rule between them */
+.details .caps.off-l{ position:relative; margin-top:clamp(28px,5vh,44px); padding-top:clamp(16px,2.8vh,22px); color:var(--ink-soft); }
+.details .caps.off-l::before{ content:""; position:absolute; left:50%; top:0; width:28px; height:.75px; background:var(--gold); opacity:.55; transform:translateX(-50%); }
 .details .officiants{ margin-top:6px; }
 /* a party that is all regrets: no song, no contact needed, just a message if they like */
 .rsvp-wrap.all-declined .field[data-req="contact"], .rsvp-wrap.all-declined .field-song{ display:none; }
