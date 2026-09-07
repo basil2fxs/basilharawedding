@@ -133,7 +133,7 @@ html.await-script .name, html.await-script .h-script, html.await-script .script-
    TYPE - every centred tracked line carries text-indent = letter-spacing
    --------------------------------------------------------------------- */
 .caps{
-  text-transform:uppercase; font-weight:400; color:var(--ink);
+  text-transform:uppercase; font-weight:400; color:var(--ink); text-wrap:balance;
   font-size:clamp(.72rem,3.1vw,.8125rem);
   letter-spacing:.25em; text-indent:.25em; line-height:2.1;
 }
@@ -156,7 +156,7 @@ html.await-script .name, html.await-script .h-script, html.await-script .script-
 }
 .join i{ display:block; width:clamp(28px,8vw,44px); height:.75px; background:var(--gold); opacity:.6; }
 .join i:last-child{ margin-left:-.32em; }
-.script-line{ font-family:var(--script); font-size:clamp(1.9rem,8.5vw,2.75rem); line-height:1.1; color:var(--gold); }
+.script-line{ font-family:var(--script-h); font-size:clamp(2rem,8.8vw,2.85rem); line-height:1.15; color:var(--gold); }
 [lang="el"] .script-line{ font-family:var(--serif); font-style:italic; font-size:clamp(1.5rem,6.2vw,2.1rem); letter-spacing:.02em; }
 .h-script{ font-family:var(--script-h); font-weight:400; color:var(--gold); font-size:clamp(2.9rem,12vw,4.75rem); line-height:1.05; letter-spacing:.01em; }
 [lang="el"] .h-script{ font-family:var(--serif); font-style:italic; font-size:clamp(2rem,8.2vw,3.2rem); letter-spacing:.02em; line-height:1.15; }
@@ -168,7 +168,7 @@ html.await-script .name, html.await-script .h-script, html.await-script .script-
 }
 [lang="el"] .date-word{ font-size:clamp(.625rem,2.8vw,.75rem); letter-spacing:.2em; text-indent:.2em; }
 .date-num{ font-size:clamp(2.5rem,13vw,4.5rem); line-height:1; letter-spacing:.04em; text-indent:.04em; color:var(--gold); font-variant-numeric:lining-nums; }
-.prose{ max-width:34ch; margin-inline:auto; text-align:left; text-wrap:pretty; }
+.prose{ max-width:34ch; margin-inline:auto; text-align:center; text-wrap:balance; }
 .prose + .prose{ margin-top:1.1em; }
 .lede{ text-align:center; max-width:30ch; margin-inline:auto; text-wrap:balance; }
 em{ font-style:italic; }
@@ -396,7 +396,7 @@ html.is-sealed .env-flap, html.is-sealed .letter, html.is-sealed .grow{ will-cha
 .portrait img{ width:100%; height:auto; clip-path:inset(0 round 999px 999px 0 0); }
 .portrait::after{ content:""; position:absolute; inset:-11px; border:.75px solid var(--gold-soft); border-radius:999px 999px 0 0; pointer-events:none; }
 @media (min-width: 760px){ .portrait{ max-width:17rem; } }
-.prose.arrive{ font-style:italic; }
+.prose.arrive{ font-style:normal; }
 
 /* Countdown */
 .cd{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:clamp(6px,2vw,18px); max-width:28rem; margin-inline:auto; }
@@ -430,12 +430,12 @@ html.is-sealed .env-flap, html.is-sealed .letter, html.is-sealed .grow{ will-cha
 /* Dress code line */
 .ruled-line{ display:flex; align-items:center; justify-content:center; gap:clamp(12px,3vw,22px); margin:0 auto clamp(20px,4vh,30px); }
 .ruled-line i{ display:block; flex:0 0 clamp(24px,7vw,44px); height:.75px; background:var(--gold); opacity:.55; }
-.ruled-line span{ font-style:italic; font-size:clamp(1.1rem,4.6vw,1.3rem); color:var(--ink); }
+.ruled-line span{ font-style:italic; font-size:clamp(1.1rem,4.6vw,1.3rem); color:var(--ink); text-wrap:balance; }
 
 /* Travel */
-.kv{ text-align:left; max-width:34ch; margin-inline:auto; }
+.kv{ text-align:center; max-width:34ch; margin-inline:auto; }
 .kv dt{ font-size:clamp(.66rem,2.8vw,.72rem); letter-spacing:.24em; text-transform:uppercase; line-height:2; margin-top:1.1em; color:var(--ink-soft); }
-.kv dd{ text-wrap:pretty; }
+.kv dd{ text-wrap:balance; }
 .kv a{ border-bottom:.75px solid var(--gold-soft); }
 
 /* RSVP */
@@ -559,13 +559,41 @@ html.is-sealed .env-flap, html.is-sealed .letter, html.is-sealed .grow{ will-cha
 .qr:focus-visible{ outline:1px solid var(--gold); outline-offset:8px; }
 
 /* Questions: how to reach us */
-.faq-contact{ margin-top:clamp(26px,4vh,36px); }
+.faq-contact{ margin-top:clamp(26px,4vh,36px); max-width:36ch; }
 .faq-contact a{ border-bottom:.75px solid var(--gold-soft); white-space:nowrap; }
 .rsvp-mailnote{ display:none; font-style:italic; margin:0 auto clamp(18px,3vh,26px); max-width:30ch; }
 .rsvp-mailnote:focus{ outline:none; }
 .rsvp-wrap.is-mail .rsvp-mailnote{ display:block; }
 .rsvp-err{ display:none; margin-top:14px; font-style:italic; text-align:center; }
 .rsvp-wrap.has-err .rsvp-err{ display:block; }
+
+/* RSVP: one block per named guest */
+.guests-field > .lbl{ margin-bottom:4px; }
+.guest{ position:relative; padding:6px 0 4px; }
+.guest + .guest{ margin-top:14px; padding-top:18px; border-top:.75px dashed var(--gold-soft); }
+.guest-head{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:8px; }
+.guest-title{ color:var(--ink-soft); }
+.guest-remove{
+  background:none; border:0; cursor:pointer; padding:10px 0 10px 14px; min-height:44px;
+  text-transform:uppercase; font-size:10.5px; letter-spacing:.24em; color:var(--ink-soft);
+  touch-action:manipulation; -webkit-tap-highlight-color:transparent; transition:color 200ms;
+}
+.guest-remove:hover,.guest-remove:focus-visible{ color:var(--ink); }
+.guest-remove:focus-visible{ outline:1px solid var(--gold); outline-offset:2px; }
+.guest-row{ margin-top:14px; }
+.lbl-sm{ display:block; font-size:clamp(.64rem,2.7vw,.7rem); letter-spacing:.2em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:8px; line-height:1.6; }
+.guest .guest-row + input[type=text]{ margin-top:16px; }
+.guest.is-declined .guest-ev{ display:none; }
+.guest.err-name input[data-name=name]{ border-color:#B3282E; box-shadow:0 0 0 3px rgba(155,34,38,.10); }
+.guest.err-att .guest-att .choice span{ border-color:#B3282E; }
+.guest.err-ev .guest-ev .choice span{ border-color:#B3282E; }
+.guest.is-invalid .hint{ display:block; margin:0 0 10px; }
+.btn-sm{ min-height:46px; padding:14px 26px 12px; }
+[data-add-guest]{ margin-top:18px; }
+[data-add-guest][hidden]{ display:none; }
+@media (prefers-reduced-motion: no-preference){
+  .guest.is-new{ animation:navin 520ms var(--ease-place) both; }
+}
 
 /* RSVP validation */
 .rsvp .hint{ display:none; margin:8px 0 0; font-style:italic; font-size:.92em; color:#9B2226; }
@@ -793,7 +821,6 @@ html.past-hero .nav-trigger, html.past-hero .rsvp-jump{ opacity:1; visibility:vi
         <p class="venue-name">Greek Orthodox Cathedral of Saints Constantine and Helene</p>
         <span class="caps"><a href="https://maps.google.com/?q=Greek+Orthodox+Cathedral+of+Saints+Constantine+and+Helene,+Parker+Street,+Northbridge+WA+6003" target="_blank" rel="noopener">Cnr Parker &amp; Francis Streets, Northbridge</a></span>
       </div>
-      <p class="prose rv">An Orthodox wedding has no spoken vows. Our rings are blessed, we are crowned with the <em>Stefana</em>, we share a common cup, and the priest leads us three times around the table. It takes about an hour and guests stand for most of it.</p>
       <p class="prose rv arrive">Please be inside the church by 2:45 pm. The service begins at 3:00 pm sharp and, out of respect for the sacrament, there is strictly no entry once it has started.</p>
     </section>
     <section class="band" id="en-reception" data-sec="reception" aria-labelledby="en-reception-h">
@@ -853,7 +880,7 @@ html.past-hero .nav-trigger, html.past-hero .rsvp-jump{ opacity:1; visibility:vi
     <section class="band" id="en-rsvp" data-sec="rsvp" aria-labelledby="en-rsvp-h">
       <span class="orn rv"></span>
       <div class="sec-head rv"><h2 class="h-script" id="en-rsvp-h">RSVP</h2><p class="caps">Kindly reply by Friday 15 January 2027</p></div>
-      <p class="lede rv">Please reply once for everyone named on your invitation.</p>
+      <p class="lede rv">Add everyone named on your invitation, and tell us for each person whether they can be with us, and for which part of the day.</p>
       <div class="rsvp-cta rv">
         <button class="btn btn-lg" type="button" data-rsvp-open>Reply</button>
         <p class="rsvp-received script-line">Thank you, we have your reply.</p>
@@ -869,36 +896,30 @@ html.past-hero .nav-trigger, html.past-hero .rsvp-jump{ opacity:1; visibility:vi
             </div>
             <p class="rsvp-mailnote" tabindex="-1">Your mail app should have opened with your reply ready to send. Please press send there. If it did not open, email us at <a href="mailto:basil2fxs@gmail.com">basil2fxs@gmail.com</a>.</p>
             <form class="rsvp" novalidate>
-              <div class="field" style="--i:0" data-req="names" data-err="Please tell us who is replying">
-                <label class="lbl" for="en-names">Full name(s)</label>
-                <input type="text" id="en-names" name="names" autocomplete="name" required placeholder="Everyone on the invitation">
-                <p class="hint"></p>
-              </div>
-              <div class="field" style="--i:1" data-req="attending" data-err="Please choose one">
-                <span class="lbl" id="en-att-l">Will you be joining us?</span>
-                <div class="choices" role="radiogroup" aria-labelledby="en-att-l">
-                  <label class="choice"><input type="radio" name="attending" value="Joyfully accepts" required><span>Joyfully accepts</span></label>
-                  <label class="choice"><input type="radio" name="attending" value="Regretfully declines"><span>Regretfully declines</span></label>
+              <div class="field guests-field" style="--i:0" data-req="guests" data-err-name="Please add this guest's name" data-err-att="Please tell us whether this guest can come" data-err-ev="Please choose which part of the day">
+                <span class="lbl">Your party</span>
+                <div class="guests" data-guests>
+                  <div class="guest">
+                    <div class="guest-head"><span class="caps-sm guest-title">Guest <span class="guest-n">1</span></span><button type="button" class="guest-remove" hidden>Remove</button></div>
+                    <p class="hint"></p>
+                    <input type="text" data-name="name" data-label="Guest" aria-label="Guest 1" autocomplete="off" placeholder="Full name">
+                    <div class="guest-row guest-att"><span class="lbl-sm">Joining us?</span>
+                      <div class="choices">
+                        <label class="choice"><input type="radio" data-name="att" name="att_en_1" value="Accepts" data-att="yes"><span>Accepts</span></label>
+                        <label class="choice"><input type="radio" data-name="att" name="att_en_1" value="Declines" data-att="no"><span>Declines</span></label>
+                      </div>
+                    </div>
+                    <div class="guest-row guest-ev"><span class="lbl-sm">For</span>
+                      <div class="choices">
+                        <label class="choice"><input type="radio" data-name="ev" name="ev_en_1" value="Ceremony"><span>Ceremony</span></label>
+                        <label class="choice"><input type="radio" data-name="ev" name="ev_en_1" value="Reception"><span>Reception</span></label>
+                        <label class="choice"><input type="radio" data-name="ev" name="ev_en_1" value="Both" checked data-default><span>Both</span></label>
+                      </div>
+                    </div>
+                    <input type="text" data-name="diet" aria-label="Dietary requirements or allergies (optional)" placeholder="Dietary requirements or allergies (optional)">
+                  </div>
                 </div>
-                <p class="hint"></p>
-              </div>
-              <div class="field" style="--i:2" data-req="count" data-err="Please enter how many of you are coming">
-                <label class="lbl" for="en-count">Number attending</label>
-                <input type="number" id="en-count" name="count" min="1" max="12" inputmode="numeric" required value="1">
-                <p class="hint"></p>
-              </div>
-              <div class="field" style="--i:3" data-req="events" data-err="Please choose one">
-                <span class="lbl" id="en-which-l">Joining us for</span>
-                <div class="choices" role="radiogroup" aria-labelledby="en-which-l">
-                  <label class="choice"><input type="radio" name="events" value="Ceremony"><span>Ceremony</span></label>
-                  <label class="choice"><input type="radio" name="events" value="Reception"><span>Reception</span></label>
-                  <label class="choice"><input type="radio" name="events" value="Both" checked><span>Both</span></label>
-                </div>
-                <p class="hint"></p>
-              </div>
-              <div class="field" style="--i:4">
-                <label class="lbl" for="en-diet">Dietary requirements or allergies</label>
-                <input type="text" id="en-diet" name="dietary" placeholder="None">
+                <button type="button" class="btn btn-ghost btn-sm" data-add-guest>Add another guest</button>
               </div>
               <div class="field" style="--i:5" data-req="contact" data-err="Please enter a valid email address or mobile number">
                 <label class="lbl" for="en-contact">Email or mobile</label>
@@ -931,6 +952,7 @@ html.past-hero .nav-trigger, html.past-hero .rsvp-jump{ opacity:1; visibility:vi
       <div class="sec-head rv"><h2 class="h-script" id="en-faq-h">Questions</h2></div>
       <div class="faq rv">
         <details><summary>I have never been to an Orthodox wedding. Is there anything I need to do?</summary><div class="a"><p>Nothing at all. Stand when everyone stands, follow the people around you, and enjoy it. You do not need to be Orthodox and you will not be asked to take part in anything.</p></div></details>
+        <details><summary>What happens during the service?</summary><div class="a"><p>An Orthodox wedding has no spoken vows. Our rings are blessed, we are crowned with the <em>Stefana</em>, we share a common cup, and the priest leads us three times around the table. It takes about an hour and guests stand for most of it.</p></div></details>
         <details><summary>What time should I arrive?</summary><div class="a"><p>Please be seated by 2:45 pm. The service starts at 3:00 pm sharp and the doors close once it begins, so please do not be late.</p></div></details>
         <details><summary>Who is the koumbaros?</summary><div class="a"><p>The <em>koumbaros</em> is the couple's sponsor: he exchanges the rings and the crowns over our heads, and stays part of the family for life. Ours is Antoni Zeidan, Basil's best mate of many years.</p></div></details>
         <details><summary>Can I take photographs?</summary><div class="a"><p>Not during the service, please. Our photographers will cover the ceremony and we will share their pictures. At the reception, yes, as many as you like, and please add them to our album (see Photographs above).</p></div></details>
@@ -987,7 +1009,6 @@ html.past-hero .nav-trigger, html.past-hero .rsvp-jump{ opacity:1; visibility:vi
         <p class="venue-name">Ιερός Καθεδρικός Ναός Αγίων Κωνσταντίνου και Ελένης</p>
         <span class="caps"><a href="https://maps.google.com/?q=Greek+Orthodox+Cathedral+of+Saints+Constantine+and+Helene,+Parker+Street,+Northbridge+WA+6003" target="_blank" rel="noopener">Γωνία Πάρκερ &amp; Φράνσις, Νόρθμπριτζ</a></span>
       </div>
-      <p class="prose rv">Ο ορθόδοξος γάμος δεν έχει όρκους. Ευλογούνται τα δαχτυλίδια, στεφανωνόμαστε με τα Στέφανα, πίνουμε από το κοινό ποτήριο και ο ιερέας μας οδηγεί τρεις φορές γύρω από το τραπέζι. Κρατάει περίπου μία ώρα και οι καλεσμένοι είναι όρθιοι.</p>
       <p class="prose rv arrive">Παρακαλούμε να είστε μέσα στην εκκλησία μέχρι τις 14:45. Το Μυστήριο ξεκινά ακριβώς στις 15:00 και, από σεβασμό προς το Μυστήριο, δεν επιτρέπεται η είσοδος μετά την έναρξή του.</p>
     </section>
     <section class="band" id="el-reception" data-sec="reception" aria-labelledby="el-reception-h">
@@ -1016,7 +1037,7 @@ html.past-hero .nav-trigger, html.past-hero .rsvp-jump{ opacity:1; visibility:vi
     <section class="band" id="el-dress" data-sec="dress" aria-labelledby="el-dress-h">
       <span class="orn rv"></span>
       <div class="sec-head rv"><h2 class="h-script" id="el-dress-h">Ενδυματολογικός κώδικας</h2></div>
-      <div class="ruled-line rv"><i></i><span>Επίσημη ένδυση, το σμόκιν προαιρετικό</span><i></i></div>
+      <div class="ruled-line rv"><i></i><span>Επίσημη ένδυση</span><i></i></div>
       <p class="lede rv">Σκούρο κοστούμι με γραβάτα, ή σμόκιν αν θέλετε. Μακρύ ή κοκτέιλ φόρεμα, με καλυμμένους ώμους μέσα στην εκκλησία.</p>
     </section>
     <section class="band" id="el-travel" data-sec="travel" aria-labelledby="el-travel-h">
@@ -1041,13 +1062,13 @@ html.past-hero .nav-trigger, html.past-hero .rsvp-jump{ opacity:1; visibility:vi
       <p class="prose rv">Στη δεξίωση βγάλτε όσες θέλετε και μοιραστείτε τις μαζί μας: σαρώστε τον κωδικό, ή πατήστε τον, για να προσθέσετε τις φωτογραφίες και τα βίντεό σας στο άλμπουμ μας.</p>
       <a class="qr rv" href="https://drive.google.com/drive/folders/1i0xxIpHFRsNDGSY-i67S7ZgnWNRXafpC" target="_blank" rel="noopener">
         <span class="qr-frame" role="img" aria-label="Κωδικός που οδηγεί στο κοινό μας άλμπουμ"><svg viewBox="0 0 37 37" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><path d="M0 0h1v1h-1zM1 0h1v1h-1zM2 0h1v1h-1zM3 0h1v1h-1zM4 0h1v1h-1zM5 0h1v1h-1zM6 0h1v1h-1zM8 0h1v1h-1zM9 0h1v1h-1zM11 0h1v1h-1zM12 0h1v1h-1zM14 0h1v1h-1zM15 0h1v1h-1zM17 0h1v1h-1zM19 0h1v1h-1zM20 0h1v1h-1zM21 0h1v1h-1zM22 0h1v1h-1zM27 0h1v1h-1zM30 0h1v1h-1zM31 0h1v1h-1zM32 0h1v1h-1zM33 0h1v1h-1zM34 0h1v1h-1zM35 0h1v1h-1zM36 0h1v1h-1zM0 1h1v1h-1zM6 1h1v1h-1zM10 1h1v1h-1zM11 1h1v1h-1zM12 1h1v1h-1zM16 1h1v1h-1zM19 1h1v1h-1zM21 1h1v1h-1zM22 1h1v1h-1zM24 1h1v1h-1zM30 1h1v1h-1zM36 1h1v1h-1zM0 2h1v1h-1zM2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM6 2h1v1h-1zM9 2h1v1h-1zM13 2h1v1h-1zM14 2h1v1h-1zM15 2h1v1h-1zM16 2h1v1h-1zM17 2h1v1h-1zM21 2h1v1h-1zM26 2h1v1h-1zM30 2h1v1h-1zM32 2h1v1h-1zM33 2h1v1h-1zM34 2h1v1h-1zM36 2h1v1h-1zM0 3h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM6 3h1v1h-1zM8 3h1v1h-1zM9 3h1v1h-1zM10 3h1v1h-1zM11 3h1v1h-1zM12 3h1v1h-1zM14 3h1v1h-1zM15 3h1v1h-1zM16 3h1v1h-1zM18 3h1v1h-1zM23 3h1v1h-1zM25 3h1v1h-1zM26 3h1v1h-1zM27 3h1v1h-1zM28 3h1v1h-1zM30 3h1v1h-1zM32 3h1v1h-1zM33 3h1v1h-1zM34 3h1v1h-1zM36 3h1v1h-1zM0 4h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM6 4h1v1h-1zM8 4h1v1h-1zM9 4h1v1h-1zM12 4h1v1h-1zM13 4h1v1h-1zM14 4h1v1h-1zM15 4h1v1h-1zM17 4h1v1h-1zM18 4h1v1h-1zM21 4h1v1h-1zM23 4h1v1h-1zM24 4h1v1h-1zM25 4h1v1h-1zM26 4h1v1h-1zM27 4h1v1h-1zM28 4h1v1h-1zM30 4h1v1h-1zM32 4h1v1h-1zM33 4h1v1h-1zM34 4h1v1h-1zM36 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM8 5h1v1h-1zM9 5h1v1h-1zM11 5h1v1h-1zM13 5h1v1h-1zM15 5h1v1h-1zM17 5h1v1h-1zM19 5h1v1h-1zM28 5h1v1h-1zM30 5h1v1h-1zM36 5h1v1h-1zM0 6h1v1h-1zM1 6h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h1v1h-1zM24 6h1v1h-1zM26 6h1v1h-1zM28 6h1v1h-1zM30 6h1v1h-1zM31 6h1v1h-1zM32 6h1v1h-1zM33 6h1v1h-1zM34 6h1v1h-1zM35 6h1v1h-1zM36 6h1v1h-1zM8 7h1v1h-1zM9 7h1v1h-1zM10 7h1v1h-1zM11 7h1v1h-1zM12 7h1v1h-1zM15 7h1v1h-1zM19 7h1v1h-1zM20 7h1v1h-1zM21 7h1v1h-1zM22 7h1v1h-1zM23 7h1v1h-1zM24 7h1v1h-1zM26 7h1v1h-1zM0 8h1v1h-1zM4 8h1v1h-1zM6 8h1v1h-1zM7 8h1v1h-1zM8 8h1v1h-1zM9 8h1v1h-1zM10 8h1v1h-1zM11 8h1v1h-1zM12 8h1v1h-1zM16 8h1v1h-1zM20 8h1v1h-1zM21 8h1v1h-1zM22 8h1v1h-1zM23 8h1v1h-1zM25 8h1v1h-1zM28 8h1v1h-1zM29 8h1v1h-1zM30 8h1v1h-1zM31 8h1v1h-1zM32 8h1v1h-1zM33 8h1v1h-1zM36 8h1v1h-1zM0 9h1v1h-1zM1 9h1v1h-1zM3 9h1v1h-1zM4 9h1v1h-1zM7 9h1v1h-1zM9 9h1v1h-1zM10 9h1v1h-1zM12 9h1v1h-1zM14 9h1v1h-1zM18 9h1v1h-1zM19 9h1v1h-1zM27 9h1v1h-1zM30 9h1v1h-1zM32 9h1v1h-1zM34 9h1v1h-1zM35 9h1v1h-1zM1 10h1v1h-1zM3 10h1v1h-1zM5 10h1v1h-1zM6 10h1v1h-1zM7 10h1v1h-1zM8 10h1v1h-1zM10 10h1v1h-1zM13 10h1v1h-1zM14 10h1v1h-1zM15 10h1v1h-1zM17 10h1v1h-1zM18 10h1v1h-1zM19 10h1v1h-1zM21 10h1v1h-1zM23 10h1v1h-1zM25 10h1v1h-1zM26 10h1v1h-1zM27 10h1v1h-1zM32 10h1v1h-1zM34 10h1v1h-1zM0 11h1v1h-1zM2 11h1v1h-1zM3 11h1v1h-1zM4 11h1v1h-1zM5 11h1v1h-1zM7 11h1v1h-1zM10 11h1v1h-1zM12 11h1v1h-1zM13 11h1v1h-1zM15 11h1v1h-1zM16 11h1v1h-1zM17 11h1v1h-1zM19 11h1v1h-1zM20 11h1v1h-1zM21 11h1v1h-1zM22 11h1v1h-1zM24 11h1v1h-1zM26 11h1v1h-1zM27 11h1v1h-1zM28 11h1v1h-1zM29 11h1v1h-1zM31 11h1v1h-1zM32 11h1v1h-1zM34 11h1v1h-1zM35 11h1v1h-1zM0 12h1v1h-1zM2 12h1v1h-1zM6 12h1v1h-1zM7 12h1v1h-1zM10 12h1v1h-1zM11 12h1v1h-1zM13 12h1v1h-1zM14 12h1v1h-1zM16 12h1v1h-1zM17 12h1v1h-1zM20 12h1v1h-1zM21 12h1v1h-1zM22 12h1v1h-1zM23 12h1v1h-1zM24 12h1v1h-1zM27 12h1v1h-1zM29 12h1v1h-1zM30 12h1v1h-1zM31 12h1v1h-1zM33 12h1v1h-1zM34 12h1v1h-1zM35 12h1v1h-1zM36 12h1v1h-1zM0 13h1v1h-1zM1 13h1v1h-1zM5 13h1v1h-1zM9 13h1v1h-1zM13 13h1v1h-1zM14 13h1v1h-1zM15 13h1v1h-1zM18 13h1v1h-1zM22 13h1v1h-1zM23 13h1v1h-1zM25 13h1v1h-1zM26 13h1v1h-1zM27 13h1v1h-1zM28 13h1v1h-1zM29 13h1v1h-1zM32 13h1v1h-1zM33 13h1v1h-1zM36 13h1v1h-1zM0 14h1v1h-1zM2 14h1v1h-1zM5 14h1v1h-1zM6 14h1v1h-1zM7 14h1v1h-1zM11 14h1v1h-1zM12 14h1v1h-1zM13 14h1v1h-1zM14 14h1v1h-1zM15 14h1v1h-1zM17 14h1v1h-1zM21 14h1v1h-1zM22 14h1v1h-1zM23 14h1v1h-1zM24 14h1v1h-1zM25 14h1v1h-1zM27 14h1v1h-1zM28 14h1v1h-1zM31 14h1v1h-1zM32 14h1v1h-1zM33 14h1v1h-1zM34 14h1v1h-1zM0 15h1v1h-1zM1 15h1v1h-1zM8 15h1v1h-1zM10 15h1v1h-1zM15 15h1v1h-1zM16 15h1v1h-1zM17 15h1v1h-1zM18 15h1v1h-1zM19 15h1v1h-1zM20 15h1v1h-1zM21 15h1v1h-1zM24 15h1v1h-1zM26 15h1v1h-1zM29 15h1v1h-1zM31 15h1v1h-1zM32 15h1v1h-1zM34 15h1v1h-1zM35 15h1v1h-1zM0 16h1v1h-1zM1 16h1v1h-1zM2 16h1v1h-1zM6 16h1v1h-1zM8 16h1v1h-1zM9 16h1v1h-1zM13 16h1v1h-1zM14 16h1v1h-1zM15 16h1v1h-1zM18 16h1v1h-1zM19 16h1v1h-1zM21 16h1v1h-1zM22 16h1v1h-1zM23 16h1v1h-1zM24 16h1v1h-1zM26 16h1v1h-1zM27 16h1v1h-1zM29 16h1v1h-1zM30 16h1v1h-1zM31 16h1v1h-1zM32 16h1v1h-1zM33 16h1v1h-1zM34 16h1v1h-1zM1 17h1v1h-1zM2 17h1v1h-1zM3 17h1v1h-1zM5 17h1v1h-1zM8 17h1v1h-1zM9 17h1v1h-1zM11 17h1v1h-1zM12 17h1v1h-1zM14 17h1v1h-1zM16 17h1v1h-1zM19 17h1v1h-1zM20 17h1v1h-1zM25 17h1v1h-1zM27 17h1v1h-1zM28 17h1v1h-1zM30 17h1v1h-1zM32 17h1v1h-1zM35 17h1v1h-1zM2 18h1v1h-1zM6 18h1v1h-1zM9 18h1v1h-1zM10 18h1v1h-1zM12 18h1v1h-1zM14 18h1v1h-1zM16 18h1v1h-1zM17 18h1v1h-1zM18 18h1v1h-1zM20 18h1v1h-1zM22 18h1v1h-1zM23 18h1v1h-1zM24 18h1v1h-1zM25 18h1v1h-1zM26 18h1v1h-1zM27 18h1v1h-1zM29 18h1v1h-1zM31 18h1v1h-1zM32 18h1v1h-1zM33 18h1v1h-1zM34 18h1v1h-1zM2 19h1v1h-1zM8 19h1v1h-1zM10 19h1v1h-1zM11 19h1v1h-1zM17 19h1v1h-1zM18 19h1v1h-1zM21 19h1v1h-1zM22 19h1v1h-1zM24 19h1v1h-1zM26 19h1v1h-1zM27 19h1v1h-1zM29 19h1v1h-1zM30 19h1v1h-1zM34 19h1v1h-1zM35 19h1v1h-1zM1 20h1v1h-1zM2 20h1v1h-1zM3 20h1v1h-1zM4 20h1v1h-1zM6 20h1v1h-1zM7 20h1v1h-1zM8 20h1v1h-1zM9 20h1v1h-1zM11 20h1v1h-1zM12 20h1v1h-1zM13 20h1v1h-1zM14 20h1v1h-1zM15 20h1v1h-1zM17 20h1v1h-1zM19 20h1v1h-1zM20 20h1v1h-1zM21 20h1v1h-1zM22 20h1v1h-1zM24 20h1v1h-1zM27 20h1v1h-1zM29 20h1v1h-1zM30 20h1v1h-1zM31 20h1v1h-1zM0 21h1v1h-1zM1 21h1v1h-1zM2 21h1v1h-1zM9 21h1v1h-1zM10 21h1v1h-1zM11 21h1v1h-1zM13 21h1v1h-1zM14 21h1v1h-1zM15 21h1v1h-1zM16 21h1v1h-1zM17 21h1v1h-1zM23 21h1v1h-1zM25 21h1v1h-1zM26 21h1v1h-1zM27 21h1v1h-1zM31 21h1v1h-1zM32 21h1v1h-1zM35 21h1v1h-1zM2 22h1v1h-1zM4 22h1v1h-1zM6 22h1v1h-1zM7 22h1v1h-1zM8 22h1v1h-1zM10 22h1v1h-1zM12 22h1v1h-1zM14 22h1v1h-1zM15 22h1v1h-1zM18 22h1v1h-1zM20 22h1v1h-1zM23 22h1v1h-1zM24 22h1v1h-1zM25 22h1v1h-1zM26 22h1v1h-1zM27 22h1v1h-1zM31 22h1v1h-1zM32 22h1v1h-1zM33 22h1v1h-1zM34 22h1v1h-1zM1 23h1v1h-1zM4 23h1v1h-1zM8 23h1v1h-1zM12 23h1v1h-1zM13 23h1v1h-1zM14 23h1v1h-1zM15 23h1v1h-1zM16 23h1v1h-1zM19 23h1v1h-1zM20 23h1v1h-1zM21 23h1v1h-1zM22 23h1v1h-1zM26 23h1v1h-1zM27 23h1v1h-1zM30 23h1v1h-1zM31 23h1v1h-1zM32 23h1v1h-1zM34 23h1v1h-1zM35 23h1v1h-1zM0 24h1v1h-1zM3 24h1v1h-1zM6 24h1v1h-1zM14 24h1v1h-1zM16 24h1v1h-1zM20 24h1v1h-1zM21 24h1v1h-1zM22 24h1v1h-1zM25 24h1v1h-1zM29 24h1v1h-1zM30 24h1v1h-1zM33 24h1v1h-1zM34 24h1v1h-1zM0 25h1v1h-1zM1 25h1v1h-1zM3 25h1v1h-1zM4 25h1v1h-1zM10 25h1v1h-1zM11 25h1v1h-1zM13 25h1v1h-1zM18 25h1v1h-1zM19 25h1v1h-1zM21 25h1v1h-1zM22 25h1v1h-1zM27 25h1v1h-1zM29 25h1v1h-1zM30 25h1v1h-1zM32 25h1v1h-1zM34 25h1v1h-1zM4 26h1v1h-1zM6 26h1v1h-1zM7 26h1v1h-1zM8 26h1v1h-1zM9 26h1v1h-1zM10 26h1v1h-1zM15 26h1v1h-1zM19 26h1v1h-1zM21 26h1v1h-1zM22 26h1v1h-1zM23 26h1v1h-1zM26 26h1v1h-1zM27 26h1v1h-1zM29 26h1v1h-1zM30 26h1v1h-1zM32 26h1v1h-1zM33 26h1v1h-1zM34 26h1v1h-1zM2 27h1v1h-1zM5 27h1v1h-1zM7 27h1v1h-1zM8 27h1v1h-1zM11 27h1v1h-1zM13 27h1v1h-1zM14 27h1v1h-1zM15 27h1v1h-1zM16 27h1v1h-1zM17 27h1v1h-1zM19 27h1v1h-1zM20 27h1v1h-1zM21 27h1v1h-1zM24 27h1v1h-1zM27 27h1v1h-1zM28 27h1v1h-1zM34 27h1v1h-1zM35 27h1v1h-1zM0 28h1v1h-1zM1 28h1v1h-1zM3 28h1v1h-1zM4 28h1v1h-1zM6 28h1v1h-1zM7 28h1v1h-1zM10 28h1v1h-1zM16 28h1v1h-1zM17 28h1v1h-1zM20 28h1v1h-1zM21 28h1v1h-1zM22 28h1v1h-1zM23 28h1v1h-1zM24 28h1v1h-1zM27 28h1v1h-1zM28 28h1v1h-1zM29 28h1v1h-1zM30 28h1v1h-1zM31 28h1v1h-1zM32 28h1v1h-1zM8 29h1v1h-1zM9 29h1v1h-1zM11 29h1v1h-1zM15 29h1v1h-1zM20 29h1v1h-1zM22 29h1v1h-1zM23 29h1v1h-1zM26 29h1v1h-1zM28 29h1v1h-1zM32 29h1v1h-1zM35 29h1v1h-1zM0 30h1v1h-1zM1 30h1v1h-1zM2 30h1v1h-1zM3 30h1v1h-1zM4 30h1v1h-1zM5 30h1v1h-1zM6 30h1v1h-1zM8 30h1v1h-1zM9 30h1v1h-1zM11 30h1v1h-1zM14 30h1v1h-1zM15 30h1v1h-1zM17 30h1v1h-1zM20 30h1v1h-1zM21 30h1v1h-1zM22 30h1v1h-1zM23 30h1v1h-1zM25 30h1v1h-1zM28 30h1v1h-1zM30 30h1v1h-1zM32 30h1v1h-1zM0 31h1v1h-1zM6 31h1v1h-1zM10 31h1v1h-1zM11 31h1v1h-1zM12 31h1v1h-1zM17 31h1v1h-1zM18 31h1v1h-1zM20 31h1v1h-1zM21 31h1v1h-1zM22 31h1v1h-1zM24 31h1v1h-1zM28 31h1v1h-1zM32 31h1v1h-1zM33 31h1v1h-1zM34 31h1v1h-1zM35 31h1v1h-1zM0 32h1v1h-1zM2 32h1v1h-1zM3 32h1v1h-1zM4 32h1v1h-1zM6 32h1v1h-1zM8 32h1v1h-1zM9 32h1v1h-1zM13 32h1v1h-1zM15 32h1v1h-1zM18 32h1v1h-1zM19 32h1v1h-1zM20 32h1v1h-1zM22 32h1v1h-1zM23 32h1v1h-1zM24 32h1v1h-1zM28 32h1v1h-1zM29 32h1v1h-1zM30 32h1v1h-1zM31 32h1v1h-1zM32 32h1v1h-1zM33 32h1v1h-1zM34 32h1v1h-1zM36 32h1v1h-1zM0 33h1v1h-1zM2 33h1v1h-1zM3 33h1v1h-1zM4 33h1v1h-1zM6 33h1v1h-1zM9 33h1v1h-1zM10 33h1v1h-1zM11 33h1v1h-1zM12 33h1v1h-1zM13 33h1v1h-1zM14 33h1v1h-1zM16 33h1v1h-1zM19 33h1v1h-1zM20 33h1v1h-1zM23 33h1v1h-1zM25 33h1v1h-1zM26 33h1v1h-1zM28 33h1v1h-1zM29 33h1v1h-1zM30 33h1v1h-1zM31 33h1v1h-1zM33 33h1v1h-1zM36 33h1v1h-1zM0 34h1v1h-1zM2 34h1v1h-1zM3 34h1v1h-1zM4 34h1v1h-1zM6 34h1v1h-1zM10 34h1v1h-1zM13 34h1v1h-1zM16 34h1v1h-1zM20 34h1v1h-1zM23 34h1v1h-1zM24 34h1v1h-1zM26 34h1v1h-1zM28 34h1v1h-1zM30 34h1v1h-1zM33 34h1v1h-1zM0 35h1v1h-1zM6 35h1v1h-1zM9 35h1v1h-1zM12 35h1v1h-1zM14 35h1v1h-1zM17 35h1v1h-1zM18 35h1v1h-1zM19 35h1v1h-1zM21 35h1v1h-1zM22 35h1v1h-1zM24 35h1v1h-1zM26 35h1v1h-1zM28 35h1v1h-1zM29 35h1v1h-1zM32 35h1v1h-1zM34 35h1v1h-1zM35 35h1v1h-1zM0 36h1v1h-1zM1 36h1v1h-1zM2 36h1v1h-1zM3 36h1v1h-1zM4 36h1v1h-1zM5 36h1v1h-1zM6 36h1v1h-1zM8 36h1v1h-1zM9 36h1v1h-1zM13 36h1v1h-1zM15 36h1v1h-1zM17 36h1v1h-1zM18 36h1v1h-1zM19 36h1v1h-1zM20 36h1v1h-1zM21 36h1v1h-1zM22 36h1v1h-1zM24 36h1v1h-1zM26 36h1v1h-1zM27 36h1v1h-1zM29 36h1v1h-1zM31 36h1v1h-1zM33 36h1v1h-1zM35 36h1v1h-1zM36 36h1v1h-1z" fill="currentColor"/></svg></span>
-        <span class="btn">Προσθέστε τις φωτογραφίες σας</span>
+        <span class="btn">Προσθήκη φωτογραφιών</span>
       </a>
     </section>
     <section class="band" id="el-rsvp" data-sec="rsvp" aria-labelledby="el-rsvp-h">
       <span class="orn rv"></span>
       <div class="sec-head rv"><h2 class="h-script" id="el-rsvp-h">Επιβεβαίωση συμμετοχής</h2><p class="caps">Παρακαλούμε απαντήστε μέχρι την Παρασκευή, 15 Ιανουαρίου 2027</p></div>
-      <p class="lede rv">Παρακαλούμε απαντήστε μία φορά για όλα τα άτομα που αναγράφονται στο προσκλητήριό σας.</p>
+      <p class="lede rv">Προσθέστε όλα τα άτομα που αναγράφονται στο προσκλητήριό σας και πείτε μας για το καθένα αν θα είναι μαζί μας, και σε ποιο μέρος της ημέρας.</p>
       <div class="rsvp-cta rv">
         <button class="btn btn-lg" type="button" data-rsvp-open>Απαντήστε</button>
         <p class="rsvp-received script-line">Ευχαριστούμε, λάβαμε την απάντησή σας.</p>
@@ -1063,36 +1084,30 @@ html.past-hero .nav-trigger, html.past-hero .rsvp-jump{ opacity:1; visibility:vi
             </div>
             <p class="rsvp-mailnote" tabindex="-1">Η εφαρμογή ηλεκτρονικής αλληλογραφίας σας θα πρέπει να άνοιξε με την απάντηση έτοιμη. Παρακαλούμε πατήστε "αποστολή" εκεί. Αν δεν άνοιξε, γράψτε μας στο <a href="mailto:basil2fxs@gmail.com">basil2fxs@gmail.com</a>.</p>
             <form class="rsvp" novalidate>
-              <div class="field" style="--i:0" data-req="names" data-err="Παρακαλούμε γράψτε ποιος απαντά">
-                <label class="lbl" for="el-names">Ονοματεπώνυμο</label>
-                <input type="text" id="el-names" name="names" autocomplete="name" required placeholder="Όλα τα άτομα του προσκλητηρίου">
-                <p class="hint"></p>
-              </div>
-              <div class="field" style="--i:1" data-req="attending" data-err="Παρακαλούμε επιλέξτε">
-                <span class="lbl" id="el-att-l">Θα είστε μαζί μας;</span>
-                <div class="choices" role="radiogroup" aria-labelledby="el-att-l">
-                  <label class="choice"><input type="radio" name="attending" value="Θα είμαστε εκεί" required><span>Θα είμαστε εκεί</span></label>
-                  <label class="choice"><input type="radio" name="attending" value="Δυστυχώς δεν θα μπορέσουμε"><span>Δυστυχώς δεν θα μπορέσουμε</span></label>
+              <div class="field guests-field" style="--i:0" data-req="guests" data-err-name="Παρακαλούμε γράψτε το όνομα" data-err-att="Παρακαλούμε πείτε μας αν θα έρθει" data-err-ev="Παρακαλούμε επιλέξτε πού">
+                <span class="lbl">Τα άτομα του προσκλητηρίου</span>
+                <div class="guests" data-guests>
+                  <div class="guest">
+                    <div class="guest-head"><span class="caps-sm guest-title">Άτομο <span class="guest-n">1</span></span><button type="button" class="guest-remove" hidden>Αφαίρεση</button></div>
+                    <p class="hint"></p>
+                    <input type="text" data-name="name" data-label="Άτομο" aria-label="Άτομο 1" autocomplete="off" placeholder="Ονοματεπώνυμο">
+                    <div class="guest-row guest-att"><span class="lbl-sm">Θα έρθει;</span>
+                      <div class="choices">
+                        <label class="choice"><input type="radio" data-name="att" name="att_el_1" value="Ναι" data-att="yes"><span>Ναι</span></label>
+                        <label class="choice"><input type="radio" data-name="att" name="att_el_1" value="Δυστυχώς όχι" data-att="no"><span>Δυστυχώς όχι</span></label>
+                      </div>
+                    </div>
+                    <div class="guest-row guest-ev"><span class="lbl-sm">Πού</span>
+                      <div class="choices">
+                        <label class="choice"><input type="radio" data-name="ev" name="ev_el_1" value="Στο Μυστήριο"><span>Στο Μυστήριο</span></label>
+                        <label class="choice"><input type="radio" data-name="ev" name="ev_el_1" value="Στη δεξίωση"><span>Στη δεξίωση</span></label>
+                        <label class="choice"><input type="radio" data-name="ev" name="ev_el_1" value="Και στα δύο" checked data-default><span>Και στα δύο</span></label>
+                      </div>
+                    </div>
+                    <input type="text" data-name="diet" aria-label="Διατροφικές ανάγκες ή αλλεργίες (προαιρετικό)" placeholder="Διατροφικές ανάγκες ή αλλεργίες (προαιρετικό)">
+                  </div>
                 </div>
-                <p class="hint"></p>
-              </div>
-              <div class="field" style="--i:2" data-req="count" data-err="Παρακαλούμε γράψτε πόσοι θα έρθετε">
-                <label class="lbl" for="el-count">Αριθμός ατόμων</label>
-                <input type="number" id="el-count" name="count" min="1" max="12" inputmode="numeric" required value="1">
-                <p class="hint"></p>
-              </div>
-              <div class="field" style="--i:3" data-req="events" data-err="Παρακαλούμε επιλέξτε">
-                <span class="lbl" id="el-which-l">Θα παρευρεθείτε</span>
-                <div class="choices" role="radiogroup" aria-labelledby="el-which-l">
-                  <label class="choice"><input type="radio" name="events" value="Στο Μυστήριο"><span>Στο Μυστήριο</span></label>
-                  <label class="choice"><input type="radio" name="events" value="Στη δεξίωση"><span>Στη δεξίωση</span></label>
-                  <label class="choice"><input type="radio" name="events" value="Και στα δύο" checked><span>Και στα δύο</span></label>
-                </div>
-                <p class="hint"></p>
-              </div>
-              <div class="field" style="--i:4">
-                <label class="lbl" for="el-diet">Διατροφικοί περιορισμοί ή αλλεργίες</label>
-                <input type="text" id="el-diet" name="dietary" placeholder="Κανένας">
+                <button type="button" class="btn btn-ghost btn-sm" data-add-guest>Προσθήκη ατόμου</button>
               </div>
               <div class="field" style="--i:5" data-req="contact" data-err="Παρακαλούμε γράψτε μια έγκυρη ηλεκτρονική διεύθυνση ή έναν αριθμό κινητού">
                 <label class="lbl" for="el-contact">Ηλεκτρονική διεύθυνση ή κινητό</label>
@@ -1125,6 +1140,7 @@ html.past-hero .nav-trigger, html.past-hero .rsvp-jump{ opacity:1; visibility:vi
       <div class="sec-head rv"><h2 class="h-script" id="el-faq-h">Συχνές ερωτήσεις</h2></div>
       <div class="faq rv">
         <details><summary>Δεν έχω ξαναπάει σε ορθόδοξο γάμο. Χρειάζεται να κάνω κάτι;</summary><div class="a"><p>Απολύτως τίποτα. Σηκώνεστε όταν σηκώνονται όλοι, ακολουθείτε τους διπλανούς σας και το απολαμβάνετε. Δεν χρειάζεται να είστε ορθόδοξοι και δεν θα σας ζητηθεί να συμμετάσχετε σε τίποτα.</p></div></details>
+        <details><summary>Τι γίνεται στη διάρκεια του Μυστηρίου;</summary><div class="a"><p>Ο ορθόδοξος γάμος δεν έχει όρκους. Ευλογούνται τα δαχτυλίδια, στεφανωνόμαστε με τα Στέφανα, πίνουμε από το κοινό ποτήριο και ο ιερέας μας οδηγεί τρεις φορές γύρω από το τραπέζι. Κρατάει περίπου μία ώρα και οι καλεσμένοι είναι όρθιοι.</p></div></details>
         <details><summary>Τι ώρα να έρθω;</summary><div class="a"><p>Να είστε στις θέσεις σας μέχρι τις 14:45. Το Μυστήριο ξεκινά ακριβώς στις 15:00 και οι πόρτες κλείνουν με την έναρξή του, οπότε παρακαλούμε μην αργήσετε.</p></div></details>
         <details><summary>Ποιος είναι ο κουμπάρος;</summary><div class="a"><p>Ο κουμπάρος είναι ο παράνυμφος του ζευγαριού: αλλάζει τα δαχτυλίδια και τα Στέφανα πάνω από τα κεφάλια μας και μένει για πάντα μέλος της οικογένειας. Κουμπάρος μας θα είναι ο Αντώνης Ζεϊντάν, ο κολλητός φίλος του Βασίλη εδώ και πολλά χρόνια.</p></div></details>
         <details><summary>Μπορώ να βγάλω φωτογραφίες;</summary><div class="a"><p>Όχι στη διάρκεια του Μυστηρίου, παρακαλούμε. Οι φωτογράφοι μας θα καλύψουν την τελετή και θα μοιραστούμε τις φωτογραφίες τους μαζί σας. Στη δεξίωση, ναι, όσες θέλετε, και παρακαλούμε προσθέστε τις στο άλμπουμ μας (δείτε την ενότητα Φωτογραφίες πιο πάνω).</p></div></details>
@@ -1290,7 +1306,7 @@ html.past-hero .nav-trigger, html.past-hero .rsvp-jump{ opacity:1; visibility:vi
 /* =====================================================================
    SETTINGS - the only lines you should need to touch
    ===================================================================== */
-var WEDDING_ISO   = '2027-02-27T14:45:00+08:00';   // when everyone must be seated, Perth (AWST, no daylight saving); the service starts at 3:00 pm
+var WEDDING_ISO   = '2027-02-27T15:00:00+08:00';   // ceremony start, Perth (AWST, no daylight saving)
 var RSVP_EMAIL    = 'basil2fxs@gmail.com';           // where the email fallback goes
 // Google Form that receives every reply. Leave 'action' empty to use the email fallback instead.
 var RSVP_GFORM = {
@@ -1831,38 +1847,89 @@ document.addEventListener('click', function(e){
   document.addEventListener('visibilitychange', function(){ if (!document.hidden) tick(); });
 })();
 
-/* ---------- RSVP ---------- */
+/* ---------- RSVP: one answer per named guest, one Form row per guest ---------- */
 $$('form.rsvp').forEach(function(form){
-  var wrap = form.parentNode;
-  // a field stops being red the moment the guest touches it
-  ['input', 'change'].forEach(function(ev){ form.addEventListener(ev, function(e){ var f = e.target.closest('.field'); if (f) f.classList.remove('is-invalid'); if (!$('.field.is-invalid', form)) wrap.classList.remove('has-err'); }); });
+  var wrap = form.parentNode, card = form.closest('.rsvp-card'), root = form.closest('.lang-root');
+  var lang = form.closest('[lang]').getAttribute('lang');
+  var list = $('[data-guests]', form), gfield = $('.guests-field', form);
+  var proto = $('.guest', list).cloneNode(true), MAX = 12;
+  function guests(){ return $$('.guest', list); }
+  function renumber(){
+    var all = guests();
+    all.forEach(function(g, i){
+      var k = i + 1;
+      $$('.guest-n', g).forEach(function(sp){ sp.textContent = k; });
+      $$('input[type=radio]', g).forEach(function(r){ r.name = r.getAttribute('data-name') + '_' + lang + '_' + k; });
+      var nm = $('input[data-name="name"]', g); if (nm) nm.setAttribute('aria-label', (nm.getAttribute('data-label') || '') + ' ' + k);
+      var rm = $('.guest-remove', g); if (rm) rm.hidden = all.length === 1;
+    });
+    var add = $('[data-add-guest]', form); if (add) add.hidden = all.length >= MAX;
+  }
+  function addGuest(){
+    if (guests().length >= MAX) return;
+    var g = proto.cloneNode(true);
+    $$('input', g).forEach(function(i){ if (i.type === 'radio') i.checked = false; else i.value = ''; });
+    g.classList.remove('is-invalid', 'err-name', 'err-att', 'err-ev', 'is-declined'); g.classList.add('is-new');
+    var h = $('.hint', g); if (h) h.textContent = '';
+    list.appendChild(g); renumber();
+    $$('input[type=radio][data-default]', g).forEach(function(r){ r.checked = true; });
+    g.scrollIntoView({ block:'nearest', behavior: RM ? 'auto' : 'smooth' });
+    var nm = $('input[data-name="name"]', g); if (nm){ try { nm.focus({ preventScroll:true }); } catch(e){} }
+    Sfx.paper(0.03, 0.4);
+  }
+  renumber();
+  form.addEventListener('click', function(e){
+    if (e.target.closest('[data-add-guest]')){ addGuest(); return; }
+    var rm = e.target.closest('.guest-remove');
+    if (rm){ var g = rm.closest('.guest'); if (g && guests().length > 1){ g.parentNode.removeChild(g); renumber(); Sfx.paper(0.025, 0.35); } }
+  });
+  // a field stops being red the moment the guest touches it; declining hides "which part of the day"
+  ['input', 'change'].forEach(function(ev){ form.addEventListener(ev, function(e){
+    var g = e.target.closest('.guest'); if (g) g.classList.remove('is-invalid', 'err-name', 'err-att', 'err-ev');
+    var f = e.target.closest('.field'); if (f) f.classList.remove('is-invalid');
+    if (!$('.is-invalid', form)) wrap.classList.remove('has-err');
+    if (g && e.target.type === 'radio' && e.target.getAttribute('data-name') === 'att') g.classList.toggle('is-declined', e.target.getAttribute('data-att') === 'no');
+  }); });
+  function readGuests(){
+    return guests().map(function(g){
+      var att = $('input[data-name="att"]:checked', g), ev = $('input[data-name="ev"]:checked', g);
+      return { el:g, name:(($('input[data-name="name"]', g) || {}).value || '').trim(), att: att ? att.value : '',
+               yes: !!(att && att.getAttribute('data-att') === 'yes'), ev: ev ? ev.value : '', diet:(($('input[data-name="diet"]', g) || {}).value || '').trim() };
+    });
+  }
   form.addEventListener('submit', function(e){
     e.preventDefault();
     var fd = new FormData(form);
     var isEmail = function(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i.test(v); };
     var isPhone = function(v){ return /^\+?\d{8,15}$/.test(v.replace(/[\s().-]/g, '')); };
-    var bad = [];
-    $$('.field[data-req]', form).forEach(function(f){
-      var key = f.getAttribute('data-req'), v = (fd.get(key) || '').trim(), ok = !!v;
-      if (ok && key === 'contact') ok = isEmail(v) || isPhone(v);
-      if (ok && key === 'count') ok = +v >= 1;
-      f.classList.toggle('is-invalid', !ok);
-      var h = $('.hint', f); if (h) h.textContent = ok ? '' : f.getAttribute('data-err');
-      if (!ok) bad.push(f);
+    var bad = [], gs = readGuests();
+    gs.forEach(function(g){
+      var kind = !g.name ? 'name' : !g.att ? 'att' : (g.yes && !g.ev) ? 'ev' : '';
+      var msg = kind ? gfield.getAttribute('data-err-' + kind) : '';
+      g.el.classList.remove('err-name', 'err-att', 'err-ev');
+      g.el.classList.toggle('is-invalid', !!kind); if (kind) g.el.classList.add('err-' + kind);
+      var h = $('.hint', g.el); if (h) h.textContent = msg;
+      if (msg) bad.push(g.el);
     });
+    var cf = $('.field[data-req="contact"]', form), cv = (fd.get('contact') || '').trim(), cok = !!cv && (isEmail(cv) || isPhone(cv));
+    cf.classList.toggle('is-invalid', !cok);
+    var chh = $('.hint', cf); if (chh) chh.textContent = cok ? '' : cf.getAttribute('data-err');
+    if (!cok) bad.push(cf);
     if (bad.length){
       wrap.classList.add('has-err');
-      var first = bad[0], ctl = $('input, textarea', first);
+      var first = bad[0], ctl = $('input:not([type=radio]), input[type=radio], textarea', first);
       first.scrollIntoView({ behavior: RM ? 'auto' : 'smooth', block:'center' });
       if (ctl){ try { ctl.focus({ preventScroll:true }); } catch(e){} }
       return;
     }
     wrap.classList.remove('has-err');
-    var btn = $('.btn', form); btn.disabled = true;
-    var lang = form.closest('[lang]').getAttribute('lang');
-    fd.append('language', lang);
-    fd.append('submitted', new Date().toISOString());
-    var card = form.closest('.rsvp-card'), root = form.closest('.lang-root');
+    var btn = $('.submit .btn', form); btn.disabled = true;
+    var song = (fd.get('song') || '').trim(), message = (fd.get('message') || '').trim(), stamp = new Date().toISOString();
+    var withTag = (lang === 'el' ? 'Μαζί με: ' : 'With: ') + gs[0].name;
+    var rows = gs.map(function(g, i){
+      return { names:g.name, attending:g.att, count: g.yes ? '1' : '0', events: g.yes ? g.ev : '', dietary:g.diet,
+               contact:cv, song: i === 0 ? song : '', message: i === 0 ? message : withTag, language:lang, submitted:stamp };
+    });
     function done(){
       Sfx.paper(0.045, 0.8);
       wrap.classList.remove('is-mail'); wrap.classList.add('is-sending');
@@ -1875,29 +1942,33 @@ $$('form.rsvp').forEach(function(form){
       }, RM ? 0 : 340);
     }
     function mailFallback(){
-      var lines = [];
-      fd.forEach(function(v, k){ if (v) lines.push(k + ': ' + v); });
-      var subject = (lang === 'el' ? 'Επιβεβαίωση συμμετοχής - ' : 'RSVP - ') + (fd.get('names') || '');
+      var lines = gs.map(function(g){ return g.name + ': ' + g.att + (g.yes && g.ev ? ', ' + g.ev : '') + (g.diet ? ' (' + g.diet + ')' : ''); });
+      lines.push('contact: ' + cv); if (song) lines.push('song: ' + song); if (message) lines.push('message: ' + message);
+      var subject = (lang === 'el' ? 'Επιβεβαίωση συμμετοχής - ' : 'RSVP - ') + gs[0].name;
       Sfx.paper(0.045, 0.8);
       window.location.href = 'mailto:' + RSVP_EMAIL + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(lines.join('\n'));
       // the form stays, so the guest can retry if no mail app opened
       wrap.classList.add('is-mail'); btn.disabled = false;
-      var n = $('.rsvp-mailnote', wrap);
+      var nn = $('.rsvp-mailnote', wrap);
       if (card) card.scrollTo({ top:0, behavior:'auto' });
-      if (n){ try { n.focus({ preventScroll:true }); } catch(e){} }
+      if (nn){ try { nn.focus({ preventScroll:true }); } catch(e){} }
+    }
+    function postRows(url, fields, opts){
+      var chain = Promise.resolve();
+      rows.forEach(function(row){
+        chain = chain.then(function(){
+          var b = new FormData();
+          Object.keys(row).forEach(function(k){ var id = fields ? fields[k] : k; if (id) b.append(id, row[k] || ''); });
+          return fetch(url, Object.assign({ method:'POST', body:b }, opts || {})).then(function(res){ if (res && res.type !== 'opaque' && !res.ok) throw new Error('rsvp'); });
+        });
+      });
+      return chain;
     }
     if (RSVP_GFORM && RSVP_GFORM.action){
-      // Google Forms accepts a plain form post; the browser cannot read the reply, so a reachable post counts as sent
-      var gf = new FormData();
-      Object.keys(RSVP_GFORM.fields).forEach(function(k){ var id = RSVP_GFORM.fields[k]; if (id) gf.append(id, fd.get(k) || ''); });
-      fetch(RSVP_GFORM.action, { method:'POST', mode:'no-cors', body:gf })
-        .then(function(){ done(); })
-        .catch(function(){ mailFallback(); });
+      // Google Forms accepts a plain form post per guest; the browser cannot read the reply, so a reachable post counts as sent
+      postRows(RSVP_GFORM.action, RSVP_GFORM.fields, { mode:'no-cors' }).then(done).catch(mailFallback);
     } else if (RSVP_ENDPOINT){
-      fetch(RSVP_ENDPOINT, { method:'POST', body:fd, headers:{ 'Accept':'application/json' } })
-        .then(function(res){ if (!res.ok) throw new Error('rsvp'); return res.json(); })
-        .then(function(j){ if (!j || j.result !== 'ok') throw new Error('rsvp'); done(); })
-        .catch(function(){ mailFallback(); });
+      postRows(RSVP_ENDPOINT, null, { headers:{ 'Accept':'application/json' } }).then(done).catch(mailFallback);
     } else {
       mailFallback();
     }

@@ -25,6 +25,20 @@ anything in it can be read by anyone. `.gsheet`/`.gdoc`/`.gform` stubs are git-i
 a safety net.
 - To get an email for each reply: Responses tab, three-dot menu, **Get email notifications for new responses**.
 
+## One row per guest
+
+Since 7 September 2026 the reply card asks for each named guest separately (name, coming or not,
+ceremony / reception / both, dietary needs). The site sends **one Form response per guest**, so the
+Sheet and the CSV have one row per person:
+
+- `Names`: that guest's name. `Attending`: Accepts / Declines (Greek: Ναι / Δυστυχώς όχι).
+- `Number attending`: 1 if they accept, 0 if not, so a SUM of that column is the headcount.
+- `Events`: Ceremony / Reception / Both (blank when declining). Filter on it for the church count
+  and the dinner count.
+- `Dietary`: per guest. `Contact`: the same for every guest of one reply, which is how you tell a
+  party apart. `Song` and `Message` sit on the first guest's row; the other rows carry
+  "With: <first guest>" in Message.
+
 The website side is the `RSVP_GFORM` block near the bottom of `index.html`: the Form's
 `formResponse` address plus one `entry.NNNN` id per question. If you ever change the Form's
 questions, the ids change too; they can be read from the Form's public page (or ask Claude).
