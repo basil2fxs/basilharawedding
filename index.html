@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; base-uri 'none'; object-src 'none'; form-action 'none'; script-src 'sha256-vuvxLXz1vImBhvIAOTG4EB7rIyJHX9pMgWHtbcOJSGI=' 'sha256-cy86AxeWX/HsvCmLoJakAGwAo56G/6E7hEkiYnvFLwo='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://script.google.com https://script.googleusercontent.com https://docs.google.com; manifest-src 'self'; media-src 'none'; upgrade-insecure-requests">
 <meta name="theme-color" content="#FDFBF7">
 <meta name="color-scheme" content="light only">
 <meta name="description" content="Join Basil and Hara on the 27th of February 2027">
@@ -52,7 +53,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..500;1,400..500&family=Pinyon+Script&family=Great+Vibes&display=swap">
-<link id="gf" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..500;1,400..500&family=Pinyon+Script&family=Great+Vibes&display=swap" media="print" onload="this.media='all'">
+<link id="gf" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..500;1,400..500&family=Pinyon+Script&family=Great+Vibes&display=swap" media="print">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..500;1,400..500&family=Pinyon+Script&family=Great+Vibes&display=swap"></noscript>
 
 <style>
@@ -711,6 +712,9 @@ html.is-sealed .env-flap, html.is-sealed .letter, html.is-sealed .grow{ will-cha
 .faq .a .faq-k{ display:block; font-size:clamp(.64rem,2.7vw,.7rem); letter-spacing:.22em; padding-inline-start:.22em; text-transform:uppercase; color:var(--ink-soft); line-height:1.8; margin-bottom:2px; }
 .faq .a p + p{ margin-top:14px; }
 
+/* the trap field is off-screen for people, present for bots */
+.trap{ position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden; }
+
 /* RSVP validation */
 .rsvp .hint{ display:none; margin:8px 0 0; font-style:italic; font-size:.92em; color:#9B2226; text-align:center; }
 .field.is-invalid .hint{ display:block; }
@@ -1090,6 +1094,7 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
             </div>
             <p class="rsvp-mailnote" tabindex="-1">Your mail app should have opened with your reply ready to send. Please press send there. If it did not open, email us at <a href="mailto:basil2fxs@gmail.com">basil2fxs@gmail.com</a>.</p>
             <form class="rsvp" novalidate>
+              <div class="trap" aria-hidden="true"><label>Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
               <div class="field guests-field" style="--i:0" data-req="guests" data-err-name="Please add this guest's name" data-err-att="Please tell us whether this guest can come" data-err-ev="Please choose which part of the day">
                 <span class="lbl">Your party</span>
                 <div class="guests" data-guests>
@@ -1340,6 +1345,7 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
             </div>
             <p class="rsvp-mailnote" tabindex="-1">Η εφαρμογή ηλεκτρονικής αλληλογραφίας σας θα πρέπει να άνοιξε με την απάντηση έτοιμη. Παρακαλούμε πατήστε "αποστολή" εκεί. Αν δεν άνοιξε, γράψτε μας στο <a href="mailto:basil2fxs@gmail.com">basil2fxs@gmail.com</a>.</p>
             <form class="rsvp" novalidate>
+              <div class="trap" aria-hidden="true"><label>Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
               <div class="field guests-field" style="--i:0" data-req="guests" data-err-name="Παρακαλούμε γράψτε το όνομα" data-err-att="Παρακαλούμε πείτε μας αν θα έρθει" data-err-ev="Παρακαλούμε επιλέξτε πού">
                 <span class="lbl">Τα άτομα του προσκλητηρίου</span>
                 <div class="guests" data-guests>
@@ -1580,6 +1586,7 @@ var RSVP_GFORM = {
     language:''   // the Form's Language question is still "multiple choice"; leave empty until it is a short-answer question
   }
 };
+var SITE_KEY = 'e9f79141bd31ab49ad854635fd10ab6a';   // sent with every reply; the endpoint ignores posts without it
 var RSVP_ENDPOINT = 'https://script.google.com/macros/s/AKfycbz0TIfGQ7qWjgpPPzbpSnYjXHbc8iI9wAlRGft28kQu6gDPoObPah_OceLbqbDEwHNn/exec';   // the Apps Script web app (rsvp/Code.gs): answers {"result":"ok"} once the reply is in the Sheet
 
 /* ===================================================================== */
@@ -1725,8 +1732,9 @@ function unlock(){
 var fontsCss = new Promise(function(res){
   var l = document.getElementById('gf');
   if (!l) return res();
-  if (l.media === 'all' && l.sheet) return res();
-  l.addEventListener('load', function(){ res(); }, { once:true });
+  var apply = function(){ l.media = 'all'; res(); };
+  if (l.sheet){ apply(); return; }
+  l.addEventListener('load', apply, { once:true });
   l.addEventListener('error', function(){ res(); }, { once:true });
   setTimeout(res, 1500);
 });
@@ -2150,6 +2158,17 @@ document.addEventListener('toggle', function(e){
 
 /* ---------- RSVP delivery: verified, retried, kept on the device until confirmed ---------- */
 function uid(){ return 'r' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8); }
+function deviceToken(){
+  var k = 'bh.device', t = null;
+  try { t = localStorage.getItem(k); } catch(e){}
+  if (!t || !/^[a-z0-9]{8,40}$/.test(t)){
+    t = ''; var a = new Uint8Array(12); if (window.crypto && crypto.getRandomValues) crypto.getRandomValues(a); else for (var i = 0; i < 12; i++) a[i] = Math.floor(Math.random() * 256);
+    for (var j = 0; j < a.length; j++) t += (a[j] % 36).toString(36);
+    try { localStorage.setItem(k, t); } catch(e){}
+  }
+  return t;
+}
+var OPENED_AT = Date.now();
 var Pending = {
   key: 'bh.rsvp.pending',
   list: function(){ try { return JSON.parse(localStorage.getItem(this.key) || '[]') || []; } catch(e){ return []; } },
@@ -2448,7 +2467,10 @@ $$('form.rsvp').forEach(function(form){
       if (card) card.scrollTo({ top:0, behavior:'auto' });
       if (nn){ try { nn.focus({ preventScroll:true }); } catch(e){} }
     }
-    var payload = { id: uid(), submitted: stamp, language: lang, contact: cv, song: song, message: message,
+    // a hidden field only a bot fills, and a reply typed in under two seconds, are dropped quietly
+    var trap = $('input[name="website"]', form);
+    if ((trap && trap.value) || Date.now() - OPENED_AT < 2000){ btn.disabled = false; return; }
+    var payload = { id: uid(), k: SITE_KEY, d: deviceToken(), submitted: stamp, language: lang, contact: cv, song: song, message: message,
                     guests: gs.map(function(g){ return { name:g.name, attending:g.att, count: g.yes ? 1 : 0, events: g.yes ? g.ev : '', dietary:g.diet }; }) };
     Pending.add(payload);
     sendPayload(form, payload, false);
