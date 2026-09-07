@@ -677,7 +677,8 @@ html.is-sealed .env-flap, html.is-sealed .letter, html.is-sealed .grow{ will-cha
 /* the officiants sit apart from the address: a breath of space and a short rule between them */
 .details .caps.off-l{ position:relative; margin-top:clamp(28px,5vh,44px); padding-top:clamp(16px,2.8vh,22px); color:var(--ink-soft); }
 .details .caps.off-l::before{ content:""; position:absolute; left:50%; top:0; width:28px; height:.75px; background:var(--gold); opacity:.55; transform:translateX(-50%); }
-.details .officiants{ margin-top:6px; }
+.details .officiants{ margin-top:6px; max-width:none; line-height:1.5; }
+.kv.fam dd.venue-name{ max-width:none; line-height:1.5; }
 /* a party that is all regrets: no song, no contact needed, just a message if they like */
 .rsvp-wrap.all-declined .field[data-req="contact"], .rsvp-wrap.all-declined .field-song{ display:none; }
 .kv.fam dd.venue-name{ margin:2px auto 0; }
