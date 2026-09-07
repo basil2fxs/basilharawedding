@@ -412,8 +412,14 @@ html.is-sealed .env-flap, html.is-sealed .letter, html.is-sealed .grow{ will-cha
 @media (max-width: 419px){ .cd{ grid-template-columns:repeat(2,minmax(0,1fr)); row-gap:22px; } }
 .cd-n{ font-size:clamp(2rem,9vw,3rem); line-height:1; color:var(--gold); letter-spacing:.03em; font-variant-numeric:lining-nums tabular-nums; }
 .cd-l{ margin-top:8px; }
-.cd-today,.cd-past{ display:none; font-family:var(--script-h); color:var(--gold); font-size:clamp(2.4rem,10vw,3.5rem); }
-[lang="el"] .cd-today,[lang="el"] .cd-past{ font-family:var(--serif); font-style:italic; font-size:clamp(1.8rem,7vw,2.6rem); }
+.cd-past{ display:none; font-family:var(--script-h); color:var(--gold); font-size:clamp(2.4rem,10vw,3.5rem); }
+[lang="el"] .cd-past{ font-family:var(--serif); font-style:italic; font-size:clamp(1.8rem,7vw,2.6rem); }
+.cd-today{ display:none; }
+.cd-today .script-line{ font-size:clamp(2.4rem,10vw,3.5rem); }
+.cd-today .caps{ margin-top:10px; }
+.cd-today .cd-now{ margin-top:clamp(16px,3vh,24px); max-width:32ch; }
+.cd-today .cd-next{ margin-top:12px; color:var(--ink-soft); }
+.cd-today .cd-next[hidden]{ display:none; }
 .cd.is-today,.cd.is-past{ display:block; }
 .cd.is-today .cd-cell,.cd.is-past .cd-cell{ display:none; }
 .cd.is-today .cd-today,.cd.is-past .cd-past{ display:block; }
@@ -934,7 +940,12 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
         <div class="cd-cell"><div class="cd-n" data-cd="h">00</div><div class="caps cd-l">Hours</div></div>
         <div class="cd-cell"><div class="cd-n" data-cd="m">00</div><div class="caps cd-l">Minutes</div></div>
         <div class="cd-cell"><div class="cd-n" data-cd="s">00</div><div class="caps cd-l">Seconds</div></div>
-        <div class="cd-today">Today.</div>
+        <div class="cd-today" data-phases="[{&quot;m&quot;: 810, &quot;at&quot;: &quot;1:30 pm&quot;, &quot;now&quot;: &quot;Everyone is taking their seats in the church.&quot;, &quot;short&quot;: &quot;seated in the church&quot;}, {&quot;m&quot;: 825, &quot;at&quot;: &quot;1:45 pm&quot;, &quot;now&quot;: &quot;The ceremony has begun.&quot;, &quot;short&quot;: &quot;the ceremony&quot;}, {&quot;m&quot;: 915, &quot;at&quot;: &quot;3:15 pm&quot;, &quot;now&quot;: &quot;The ceremony is over. Rice outside the church, and then the afternoon is yours until the Pan Pacific.&quot;, &quot;short&quot;: &quot;rice outside the church&quot;}, {&quot;m&quot;: 1110, &quot;at&quot;: &quot;6:30 pm&quot;, &quot;now&quot;: &quot;Drinks and canapes at the Pan Pacific, served until 7:00 pm.&quot;, &quot;short&quot;: &quot;drinks and canapes&quot;}, {&quot;m&quot;: 1140, &quot;at&quot;: &quot;7:00 pm&quot;, &quot;now&quot;: &quot;The reception is under way in the Golden Ballroom.&quot;, &quot;short&quot;: &quot;into the Golden Ballroom&quot;}, {&quot;m&quot;: 1260, &quot;at&quot;: &quot;9:00 pm&quot;, &quot;now&quot;: &quot;The first dance and the cutting of the cake.&quot;, &quot;short&quot;: &quot;first dance and cake&quot;}, {&quot;m&quot;: 1350, &quot;at&quot;: &quot;10:30 pm&quot;, &quot;now&quot;: &quot;The breaking of the plates, and the dancing.&quot;, &quot;short&quot;: &quot;breaking of the plates&quot;}, {&quot;m&quot;: 1439, &quot;at&quot;: &quot;11:59 pm&quot;, &quot;now&quot;: &quot;The last dance.&quot;, &quot;short&quot;: &quot;the last dance&quot;}]" data-next-label="Next:">
+          <p class="script-line">Today</p>
+          <p class="caps">The wedding is under way</p>
+          <p class="lede cd-now" data-cd-now aria-live="polite"></p>
+          <p class="caps-sm cd-next" data-cd-next hidden></p>
+        </div>
         <div class="cd-past">Married.</div>
       </div>
     </section>
@@ -1142,7 +1153,7 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
         <details name="en-faq"><summary>Can I bring a plus one?</summary><div class="a"><p><span class="faq-k">The church service</span>Open to everyone. Bring whoever you like and simply add their names to your reply, marked Ceremony.</p><p><span class="faq-k">The reception</span>By invitation only, for the people named on your invitation. We would love to host everyone, but we cannot.</p></div></details>
         <details name="en-faq"><summary>Are children welcome?</summary><div class="a"><p>In the church, always. For the reception, please check the names on your invitation.</p></div></details>
       </div>
-      <p class="lede rv faq-contact">Anything else? Email us at <a href="mailto:basil2fxs@gmail.com">basil2fxs@gmail.com</a> or text Basil on <a href="sms:+61422083274">0422 083 274</a>.</p>
+      <p class="lede rv faq-contact">Anything else? Email Basil at <a href="mailto:basil2fxs@gmail.com">basil2fxs@gmail.com</a> or text on <a href="sms:+61422083274">0422 083 274</a>.</p>
     </section>
     <footer class="band foot" id="en-foot">
       <span class="orn rv"></span>
@@ -1179,7 +1190,12 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
         <div class="cd-cell"><div class="cd-n" data-cd="h">00</div><div class="caps cd-l">Ώρες</div></div>
         <div class="cd-cell"><div class="cd-n" data-cd="m">00</div><div class="caps cd-l">Λεπτά</div></div>
         <div class="cd-cell"><div class="cd-n" data-cd="s">00</div><div class="caps cd-l">Δευτερόλεπτα</div></div>
-        <div class="cd-today">Σήμερα.</div>
+        <div class="cd-today" data-phases="[{&quot;m&quot;: 810, &quot;at&quot;: &quot;13:30&quot;, &quot;now&quot;: &quot;Όλοι παίρνουν τις θέσεις τους στην εκκλησία.&quot;, &quot;short&quot;: &quot;θέσεις στην εκκλησία&quot;}, {&quot;m&quot;: 825, &quot;at&quot;: &quot;13:45&quot;, &quot;now&quot;: &quot;Το Μυστήριο έχει ξεκινήσει.&quot;, &quot;short&quot;: &quot;το Μυστήριο&quot;}, {&quot;m&quot;: 915, &quot;at&quot;: &quot;15:15&quot;, &quot;now&quot;: &quot;Το Μυστήριο τελείωσε. Ρύζι έξω από την εκκλησία, και έπειτα το απόγευμα είναι δικό σας μέχρι το Παν Πασίφικ.&quot;, &quot;short&quot;: &quot;ρύζι έξω από την εκκλησία&quot;}, {&quot;m&quot;: 1110, &quot;at&quot;: &quot;18:30&quot;, &quot;now&quot;: &quot;Ποτά και καναπεδάκια στο Παν Πασίφικ, μέχρι τις 19:00.&quot;, &quot;short&quot;: &quot;ποτά και καναπεδάκια&quot;}, {&quot;m&quot;: 1140, &quot;at&quot;: &quot;19:00&quot;, &quot;now&quot;: &quot;Η δεξίωση είναι σε εξέλιξη στην αίθουσα Γκόλντεν Μπολρούμ.&quot;, &quot;short&quot;: &quot;είσοδος στην αίθουσα&quot;}, {&quot;m&quot;: 1260, &quot;at&quot;: &quot;21:00&quot;, &quot;now&quot;: &quot;Ο πρώτος χορός και το κόψιμο της τούρτας.&quot;, &quot;short&quot;: &quot;πρώτος χορός και τούρτα&quot;}, {&quot;m&quot;: 1350, &quot;at&quot;: &quot;22:30&quot;, &quot;now&quot;: &quot;Το σπάσιμο των πιάτων, και χορός.&quot;, &quot;short&quot;: &quot;σπάσιμο των πιάτων&quot;}, {&quot;m&quot;: 1439, &quot;at&quot;: &quot;23:59&quot;, &quot;now&quot;: &quot;Ο τελευταίος χορός.&quot;, &quot;short&quot;: &quot;ο τελευταίος χορός&quot;}]" data-next-label="Επόμενο:">
+          <p class="script-line">Σήμερα</p>
+          <p class="caps">Ο γάμος είναι σε εξέλιξη</p>
+          <p class="lede cd-now" data-cd-now aria-live="polite"></p>
+          <p class="caps-sm cd-next" data-cd-next hidden></p>
+        </div>
         <div class="cd-past">Παντρευτήκαμε.</div>
       </div>
     </section>
@@ -1387,7 +1403,7 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
         <details name="el-faq"><summary>Μπορώ να φέρω συνοδό;</summary><div class="a"><p><span class="faq-k">Το Μυστήριο στην εκκλησία</span>Ανοιχτό σε όλους. Φέρτε όποιον θέλετε και απλώς προσθέστε τα ονόματα στην απάντησή σας, με την επιλογή Στο Μυστήριο.</p><p><span class="faq-k">Η δεξίωση</span>Μόνο με πρόσκληση, για τα άτομα που αναγράφονται στο προσκλητήριό σας. Θα θέλαμε να φιλοξενήσουμε όλους, αλλά δυστυχώς δεν γίνεται.</p></div></details>
         <details name="el-faq"><summary>Μπορώ να φέρω τα παιδιά μου;</summary><div class="a"><p>Στην εκκλησία, πάντα. Για τη δεξίωση, δείτε τα ονόματα στο προσκλητήριό σας.</p></div></details>
       </div>
-      <p class="lede rv faq-contact">Για οτιδήποτε άλλο, γράψτε μας στο <a href="mailto:basil2fxs@gmail.com">basil2fxs@gmail.com</a> ή στείλτε μήνυμα στον Βασίλη στο <a href="sms:+61422083274">0422 083 274</a>.</p>
+      <p class="lede rv faq-contact">Για οτιδήποτε άλλο, γράψτε στον Βασίλη στο <a href="mailto:basil2fxs@gmail.com">basil2fxs@gmail.com</a> ή στείλτε μήνυμα στο <a href="sms:+61422083274">0422 083 274</a>.</p>
     </section>
     <footer class="band foot" id="el-foot">
       <span class="orn rv"></span>
@@ -2085,15 +2101,27 @@ document.addEventListener('toggle', function(e){
 /* ---------- countdown (live seconds, aligned to the clock, one timer) ---------- */
 (function(){
   var target = Date.parse(WEDDING_ISO), timer = null;
+  var DAY_START = Date.parse(WEDDING_ISO.slice(0, 10) + 'T00:00:00+08:00');   // midnight in Perth on the day
   if (isNaN(target)) return;
   function pad(n){ return n < 10 ? '0' + n : '' + n; }
   function tick(){
     clearTimeout(timer);
     var diff = target - Date.now(), cds = $$('.cd');
     if (diff <= 0){
-      var past = diff < -12 * 36e5;
-      cds.forEach(function(c){ c.classList.toggle('is-today', !past); c.classList.toggle('is-past', past); });
-      if (!past) timer = setTimeout(tick, 1000);
+      // the day itself: say what is happening right now (Perth time) and what comes next; after the night, Married
+      var mins = Math.floor((Date.now() - DAY_START) / 6e4), past = mins >= 27 * 60;
+      cds.forEach(function(c){
+        c.classList.toggle('is-today', !past); c.classList.toggle('is-past', past);
+        if (past) return;
+        var live = c.querySelector('.cd-today'); if (!live) return;
+        var phases = []; try { phases = JSON.parse(live.getAttribute('data-phases') || '[]'); } catch(e){}
+        var cur = null, nxt = null;
+        for (var i = 0; i < phases.length; i++){ if (mins >= phases[i].m){ cur = phases[i]; nxt = phases[i + 1] || null; } }
+        var nowEl = live.querySelector('[data-cd-now]'), nextEl = live.querySelector('[data-cd-next]');
+        if (nowEl && cur && nowEl.textContent !== cur.now) nowEl.textContent = cur.now;
+        if (nextEl){ var ns = nxt ? (live.getAttribute('data-next-label') + ' ' + nxt.at + ', ' + nxt.short) : ''; if (nextEl.textContent !== ns) nextEl.textContent = ns; nextEl.hidden = !ns; }
+      });
+      timer = setTimeout(tick, past ? 60000 : 1000);
       return;
     }
     var dd = Math.floor(diff / 864e5), hh = Math.floor(diff % 864e5 / 36e5), mm = Math.floor(diff % 36e5 / 6e4), sc = Math.floor(diff % 6e4 / 1000);
