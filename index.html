@@ -648,7 +648,7 @@ html.is-sealed .env-flap, html.is-sealed .letter, html.is-sealed .grow{ will-cha
 .guest-row{ margin-top:14px; }
 .lbl-sm{ display:block; font-size:clamp(.64rem,2.7vw,.7rem); letter-spacing:.2em; padding-inline-start:.2em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:8px; line-height:1.6; }
 .guest .guest-row + input[type=text]{ margin-top:16px; }
-.guest.is-declined .guest-ev{ display:none; }
+.guest.is-declined .guest-ev, .guest.is-declined input[data-name=diet]{ display:none; }
 .guest.err-name input[data-name=name]{ border-color:#B3282E; box-shadow:0 0 0 3px rgba(155,34,38,.10); }
 .guest.err-att .guest-att .choice span{ border-color:#B3282E; }
 .guest.err-ev .guest-ev .choice span{ border-color:#B3282E; }
@@ -2176,7 +2176,7 @@ $$('form.rsvp').forEach(function(form){
   function updateGuest(g){
     var nm = (($('input[data-name="name"]', g) || {}).value || '').trim(), att = $('input[data-name="att"]:checked', g), ev = $('input[data-name="ev"]:checked', g);
     var ok = !!nm && !!att, sum = $('.guest-summary', g);
-    var diet = (($('input[data-name="diet"]', g) || {}).value || '').trim();
+    var diet = (att && att.getAttribute('data-att') === 'yes') ? (($('input[data-name="diet"]', g) || {}).value || '').trim() : '';
     if (sum) sum.textContent = ok ? nm + ' - ' + att.value + (att.getAttribute('data-att') === 'yes' && ev ? ', ' + ev.value : '') + (diet ? ', ' + diet : '') : '';
     g.classList.toggle('is-complete', ok);
     if (!ok) g.classList.remove('is-collapsed');
@@ -2266,8 +2266,9 @@ $$('form.rsvp').forEach(function(form){
   function readGuests(){
     return guests().map(function(g){
       var att = $('input[data-name="att"]:checked', g), ev = $('input[data-name="ev"]:checked', g);
+      var yes = !!(att && att.getAttribute('data-att') === 'yes');
       return { el:g, name:(($('input[data-name="name"]', g) || {}).value || '').trim(), att: att ? att.value : '',
-               yes: !!(att && att.getAttribute('data-att') === 'yes'), ev: ev ? ev.value : '', diet:(($('input[data-name="diet"]', g) || {}).value || '').trim() };
+               yes: yes, ev: ev ? ev.value : '', diet: yes ? (($('input[data-name="diet"]', g) || {}).value || '').trim() : '' };
     });
   }
   form.addEventListener('submit', function(e){
