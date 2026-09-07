@@ -82,8 +82,8 @@ function json_(obj) {
 function backupResponses() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var folder = folderOf_(ss);
-  var main = ss.getSheetByName(RESPONSES);
-  writeCsv_(folder, BACKUP_NAME, main ? csvOf_(ss, main) : HEADER.map(q_).join(',') + '\r\n');
+  var main = getSheet_(ss, RESPONSES);          // the tab exists from day one, header and all
+  writeCsv_(folder, BACKUP_NAME, csvOf_(ss, main));
   var form = ss.getSheetByName(FORM_TAB) || ss.getSheets()[0];
   if (form && form.getLastRow() > 1) writeCsv_(folder, FALLBACK_BACKUP_NAME, csvOf_(ss, form));
 }
