@@ -82,6 +82,43 @@ The language a guest used is obvious from the Attending value (English or Greek 
 it properly: change that question's type to Short answer, then put its `entry` id into
 `RSVP_GFORM.fields.language`.
 
+## Protection against bots and bad actors (7 September 2026)
+
+What an attacker can reach, and what stops them:
+
+- **The reply endpoint** (the Apps Script web app) is the only thing that accepts input. Every reply
+  must carry the site key (`SITE_KEY`, the same value in `index.html` and `Code.gs`; it is visible
+  in the page source, so it is not a secret, but it turns away the generic bots that post to any
+  form they find), a device token the site keeps in the browser, and a well-formed body: 1 to 12
+  guests, names up to 80 characters, only the known answer and event values, dietary up to 200,
+  contact up to 120 and a real email or phone when anyone accepts, song up to 200, message up to
+  1000. Anything else is refused and nothing is written.
+- **A hidden trap field** sits in the form off-screen; people never see it, bots fill it. A reply
+  with it filled is answered "ok" and thrown away. A reply sent within two seconds of opening the
+  page is dropped by the page itself.
+- **Rate limits** (counters in the script cache, holding no personal data): 3 replies per device
+  per hour, 6 per device per day, 4 per contact address per day, 40 replies from everyone per ten
+  minutes. Google Apps Script cannot see the sender's IP address, so the device token stands in
+  for it; a determined attacker can mint tokens, which is why the global limit exists. Over the
+  limit the site shows "Not sent yet" with Try again and Send by email, so a real guest is never
+  lost, only delayed.
+- **The endpoint never returns data.** Opening it shows "RSVP endpoint is live" and nothing else.
+  The Sheet, the CSV and the Form responses are private to Basil's Google account. Nothing on the
+  website reads guest data back, so there is no anonymous path to anyone's details. The only
+  public data is what Basil chose to publish (bank details, the album folder).
+- **The page itself** carries a Content Security Policy: only its own two inline scripts (by
+  hash) may run, styles and fonts may come only from Google Fonts, network calls may go only to
+  Google Forms and the Apps Script endpoint, and nothing can be framed or embedded. Guest input is
+  only ever placed as text, never as HTML. Every outside link opens with `rel="noopener"`.
+- **The album folder** is "anyone with the link can add": guests who have the link can see and add
+  photos, which is the point of it; nothing else lives in that folder.
+- **Hosting**: GitHub Pages is static and served over HTTPS only; there is no server to break into.
+  The two accounts that matter are the GitHub account (the site) and the Spaceship account (the
+  domain): keep two-factor authentication on for both, and on the Google account (the replies).
+
+If the site key ever needs changing: pick a new value, put it in `Code.gs` (SITE_KEY) and in
+`index.html` (SITE_KEY), and publish a new version of the web app.
+
 ## Fallback
 
 If the Form ever refuses a post (Google outage, form closed), the site opens the guest's mail app
