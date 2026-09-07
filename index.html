@@ -135,10 +135,10 @@ html.await-script .name, html.await-script .h-script, html.await-script .script-
 .caps{
   text-transform:uppercase; font-weight:400; color:var(--ink); text-wrap:balance;
   font-size:clamp(.72rem,3.1vw,.8125rem);
-  letter-spacing:.25em; text-indent:.25em; line-height:2.1;
+  letter-spacing:.25em; text-indent:0; padding-inline-start:.25em; line-height:2.1;
 }
-[lang="el"] .caps{ letter-spacing:.2em; text-indent:.2em; }
-.caps-sm{ font-size:clamp(.66rem,2.8vw,.72rem); letter-spacing:.24em; text-indent:.24em; line-height:2; text-transform:uppercase; }
+[lang="el"] .caps{ letter-spacing:.2em; padding-inline-start:.2em; }
+.caps-sm{ font-size:clamp(.66rem,2.8vw,.72rem); letter-spacing:.24em; text-indent:0; padding-inline-start:.24em; line-height:2; text-transform:uppercase; }
 .name{
   font-family:var(--script); font-weight:400; color:var(--gold);
   font-size:clamp(3.75rem,21vw,10rem); line-height:.86; letter-spacing:0; text-indent:0;
@@ -162,12 +162,12 @@ html.await-script .name, html.await-script .h-script, html.await-script .script-
 [lang="el"] .h-script{ font-family:var(--serif); font-style:italic; font-size:clamp(2rem,8.2vw,3.2rem); letter-spacing:.02em; line-height:1.15; }
 .date-word{
   text-transform:uppercase; font-size:clamp(.75rem,3.4vw,.875rem);
-  letter-spacing:.28em; text-indent:.28em; line-height:1;
-  padding:.65em .1em; border-top:.75px solid var(--gold); border-bottom:.75px solid var(--gold);
+  letter-spacing:.28em; text-indent:0; line-height:1;
+  padding:.65em .1em .65em .38em; border-top:.75px solid var(--gold); border-bottom:.75px solid var(--gold);
   color:var(--ink);
 }
-[lang="el"] .date-word{ font-size:clamp(.625rem,2.8vw,.75rem); letter-spacing:.2em; text-indent:.2em; }
-.date-num{ font-size:clamp(2.5rem,13vw,4.5rem); line-height:1; letter-spacing:.04em; text-indent:.04em; color:var(--gold); font-variant-numeric:lining-nums; }
+[lang="el"] .date-word{ font-size:clamp(.625rem,2.8vw,.75rem); letter-spacing:.2em; padding-left:.3em; }
+.date-num{ font-size:clamp(2.5rem,13vw,4.5rem); line-height:1; letter-spacing:.04em; padding-inline-start:.04em; color:var(--gold); font-variant-numeric:lining-nums; }
 .prose{ max-width:34ch; margin-inline:auto; text-align:center; text-wrap:balance; }
 .prose + .prose{ margin-top:1.1em; }
 .lede{ text-align:center; max-width:30ch; margin-inline:auto; text-wrap:balance; }
@@ -244,7 +244,7 @@ em{ font-style:italic; }
 .addr{ position:absolute; left:8%; right:8%; top:66.5%; transform:translateZ(21px); text-align:center; pointer-events:none; }
 .addr .lbl{
   display:inline-block; text-transform:uppercase; font-size:clamp(17px,5.4vw,24px);
-  letter-spacing:.3em; text-indent:.3em; color:var(--ink); line-height:1; padding:4px 0 9px; position:relative;
+  letter-spacing:.3em; text-indent:0; padding-left:.3em; color:var(--ink); line-height:1; padding-top:4px; padding-bottom:9px; position:relative;
 }
 .addr .lbl::after{ content:""; position:absolute; left:2%; right:2%; bottom:0; border-bottom:.75px solid var(--gold); opacity:.45; transition:opacity 420ms var(--ease-veil); }
 .env-unit.chosen .addr .lbl::after{ opacity:.9; }
@@ -370,15 +370,15 @@ html.is-sealed .env-flap, html.is-sealed .letter, html.is-sealed .grow{ will-cha
 }
 .hero-in{ display:flex; flex-direction:column; align-items:center; width:100%; max-width:34rem; }
 .hero .monogram{ margin-bottom:clamp(10px,2.4vh,26px); width:clamp(112px,30vw,168px); }
-.hero .caps{ max-width:32rem; text-wrap:balance; font-size:clamp(.66rem,2.9vw,.8125rem); letter-spacing:.22em; text-indent:.22em; line-height:2; }
-[lang="el"] .hero .caps{ letter-spacing:.18em; text-indent:.18em; }
+.hero .caps{ max-width:32rem; text-wrap:balance; font-size:clamp(.66rem,2.9vw,.8125rem); letter-spacing:.22em; padding-inline-start:.22em; line-height:2; }
+[lang="el"] .hero .caps{ letter-spacing:.18em; padding-inline-start:.18em; }
 .hero .names{ margin:clamp(10px,2.4vh,26px) 0 clamp(12px,2.4vh,26px); display:flex; flex-direction:column; align-items:center; }
 .hero .name + .join + .name{ margin-top:-.05em; }
 /* equal columns either side of the number, so the 27 sits on the page's centre line whatever the words' lengths */
 .dateblock{ display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); align-items:center; column-gap:clamp(14px,4vw,26px); width:100%; margin:clamp(16px,3.2vh,36px) 0 0; }
 .dateblock .date-word:first-child{ justify-self:end; }
 .dateblock .date-word:last-child{ justify-self:start; }
-.year{ text-transform:uppercase; font-size:clamp(.75rem,3.4vw,.875rem); letter-spacing:.3em; text-indent:.3em; line-height:1; margin-top:clamp(12px,2vh,18px); color:var(--ink); }
+.year{ text-transform:uppercase; font-size:clamp(.75rem,3.4vw,.875rem); letter-spacing:.3em; padding-inline-start:.3em; line-height:1; margin-top:clamp(12px,2vh,18px); color:var(--ink); }
 .hero .venue{ margin-top:clamp(16px,3.2vh,36px); }
 .hero .venue-addr{ margin-top:8px; color:var(--ink-soft); line-height:1.9; }
 @media (max-width: 479px){ .hero .venue-addr br{ display:none; } }
@@ -398,6 +398,7 @@ html.is-sealed .env-flap, html.is-sealed .letter, html.is-sealed .grow{ will-cha
 
 /* Portrait */
 .portrait{ position:relative; max-width:15.5rem; margin:0 auto; }
+.band[data-sec="photo"]{ padding-top:0; }
 .portrait img{ width:100%; height:auto; clip-path:inset(0 round 999px 999px 0 0); }
 .portrait::after{ content:""; position:absolute; inset:-11px; border:.75px solid var(--gold-soft); border-radius:999px 999px 0 0; pointer-events:none; }
 @media (min-width: 760px){ .portrait{ max-width:17rem; } }
@@ -405,7 +406,7 @@ html.is-sealed .env-flap, html.is-sealed .letter, html.is-sealed .grow{ will-cha
 
 /* Countdown */
 .cd{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:clamp(6px,2vw,18px); max-width:28rem; margin-inline:auto; }
-.cd .cd-l{ font-size:clamp(.58rem,2.4vw,.7rem); letter-spacing:.16em; text-indent:.16em; }
+.cd .cd-l{ font-size:clamp(.58rem,2.4vw,.7rem); letter-spacing:.16em; padding-inline-start:.16em; }
 @media (max-width: 419px){ .cd{ grid-template-columns:repeat(2,minmax(0,1fr)); row-gap:22px; } }
 .cd-n{ font-size:clamp(2rem,9vw,3rem); line-height:1; color:var(--gold); letter-spacing:.03em; font-variant-numeric:lining-nums tabular-nums; }
 .cd-l{ margin-top:8px; }
@@ -439,38 +440,38 @@ html.is-sealed .env-flap, html.is-sealed .letter, html.is-sealed .grow{ will-cha
 
 /* Travel */
 .kv{ text-align:center; max-width:34ch; margin-inline:auto; }
-.kv dt{ font-size:clamp(.66rem,2.8vw,.72rem); letter-spacing:.24em; text-transform:uppercase; line-height:2; margin-top:1.1em; color:var(--ink-soft); }
+.kv dt{ font-size:clamp(.66rem,2.8vw,.72rem); letter-spacing:.24em; padding-inline-start:.24em; text-transform:uppercase; line-height:2; margin-top:1.1em; color:var(--ink-soft); }
 .kv dd{ text-wrap:balance; }
 .kv a{ border-bottom:.75px solid var(--gold-soft); }
 
 /* RSVP */
-.rsvp{ max-width:30rem; margin-inline:auto; text-align:left; border-top:.75px solid var(--gold-soft); }
+.rsvp{ max-width:30rem; margin-inline:auto; text-align:center; border-top:.75px solid var(--gold-soft); }
 .rsvp .field{ padding:clamp(18px,3vh,26px) 0; border-bottom:.75px solid var(--gold-soft); }
-.rsvp .lbl{ display:block; font-size:clamp(.7rem,3vw,.78rem); letter-spacing:.22em; text-transform:uppercase; line-height:1.6; color:var(--ink); margin-bottom:10px; }
+.rsvp .lbl{ display:block; font-size:clamp(.7rem,3vw,.78rem); letter-spacing:.22em; padding-inline-start:.22em; text-transform:uppercase; line-height:1.6; color:var(--ink); margin-bottom:10px; }
 .rsvp .lbl small{ text-transform:none; letter-spacing:0; font-size:inherit; color:var(--ink-soft); }
 .rsvp input[type=text],.rsvp input[type=number],.rsvp textarea{
   display:block; width:100%; background:var(--white); border:.75px solid var(--gold-hair); border-radius:2px;
-  padding:13px 14px; margin:0; font:inherit; color:var(--ink); line-height:1.5; outline:none;
+  padding:13px 14px; margin:0; font:inherit; color:var(--ink); line-height:1.5; outline:none; text-align:center;
   transition:border-color 300ms var(--ease-fade), box-shadow 300ms var(--ease-fade);
 }
 .rsvp input:focus,.rsvp textarea:focus{ border-color:var(--gold); box-shadow:0 0 0 3px rgba(168,135,79,.12); }
 .rsvp textarea{ resize:vertical; min-height:4.2em; }
 .rsvp input::placeholder,.rsvp textarea::placeholder{ color:var(--ink-soft); opacity:1; font-style:italic; }
-.choices{ display:flex; flex-wrap:wrap; gap:10px; }
+.choices{ display:flex; flex-wrap:wrap; justify-content:center; gap:10px; }
 .choice{ position:relative; cursor:pointer; display:inline-flex; }
 .choice input{ position:absolute; opacity:0; width:1px; height:1px; pointer-events:none; }
 .choice span{
-  display:inline-block; min-height:46px; padding:13px 18px 11px; border:.75px solid var(--gold-hair); border-radius:2px; background:var(--white);
-  font-size:clamp(.72rem,3.1vw,.8125rem); letter-spacing:.18em; text-indent:.18em; text-transform:uppercase; line-height:1.4; color:var(--ink);
+  display:inline-block; min-height:46px; padding:13px 18px 11px calc(18px + .18em); border:.75px solid var(--gold-hair); border-radius:2px; background:var(--white);
+  font-size:clamp(.72rem,3.1vw,.8125rem); letter-spacing:.18em; text-indent:0; text-transform:uppercase; line-height:1.4; color:var(--ink);
   transition:background-color 300ms var(--ease-fade), color 300ms var(--ease-fade), border-color 300ms var(--ease-fade);
 }
 .choice input:checked + span{ background:var(--ink); color:var(--paper); border-color:var(--ink); }
 .choice input:focus-visible + span{ outline:1px solid var(--gold); outline-offset:3px; }
 .rsvp .submit{ text-align:center; padding-top:clamp(22px,4vh,30px); }
 .btn{
-  display:inline-block; min-height:50px; padding:16px 38px 14px; margin-top:0;
+  display:inline-block; min-height:50px; padding:16px 38px 14px calc(38px + .28em); margin-top:0;
   background:var(--ink); border:.75px solid var(--ink); border-radius:2px; cursor:pointer;
-  text-transform:uppercase; font-size:clamp(.72rem,3.1vw,.8125rem); letter-spacing:.28em; text-indent:.28em; line-height:1;
+  text-transform:uppercase; font-size:clamp(.72rem,3.1vw,.8125rem); letter-spacing:.28em; text-indent:0; line-height:1;
   color:var(--paper); touch-action:manipulation; -webkit-tap-highlight-color:transparent;
   transition:opacity 200ms linear, background-color 400ms var(--ease-fade), color 400ms var(--ease-fade);
 }
@@ -481,7 +482,7 @@ html.is-sealed .env-flap, html.is-sealed .letter, html.is-sealed .grow{ will-cha
 .nav-rsvp .btn{ background:transparent; color:var(--ink); border-color:var(--gold); }
 .nav-rsvp .btn:hover{ background:var(--ink); color:var(--paper); }
 .rsvp-cta{ text-align:center; }
-.btn-lg{ min-height:58px; padding:20px 56px 18px; font-size:clamp(.78rem,3.3vw,.875rem); }
+.btn-lg{ min-height:58px; padding:20px 56px 18px calc(56px + .28em); font-size:clamp(.78rem,3.3vw,.875rem); }
 .rsvp-received{ display:none; }
 .rsvp-cta.is-done [data-rsvp-open]{ display:none; }
 .rsvp-cta.is-done .rsvp-received{ display:block; }
@@ -505,7 +506,7 @@ html.is-sealed .env-flap, html.is-sealed .letter, html.is-sealed .grow{ will-cha
 .dlg-close{
   position:absolute; z-index:2; background:none; border:0; cursor:pointer; min-width:44px; min-height:44px; padding:0 12px;
   top:max(8px, env(safe-area-inset-top)); right:max(14px, env(safe-area-inset-right));
-  text-transform:uppercase; font-size:10.5px; letter-spacing:.3em; text-indent:.3em; color:var(--ink);
+  text-transform:uppercase; font-size:10.5px; letter-spacing:.3em; text-indent:0; padding-left:calc(12px + .3em); color:var(--ink);
   touch-action:manipulation; -webkit-tap-highlight-color:transparent;
 }
 .dlg-close:focus-visible{ outline:1px solid var(--gold); outline-offset:-6px; }
@@ -559,7 +560,7 @@ html.is-sealed .env-flap, html.is-sealed .letter, html.is-sealed .grow{ will-cha
 .bank-row .copy{
   grid-column:2; grid-row:1 / span 2; align-self:center;
   background:transparent; border:.75px solid var(--gold); border-radius:2px; cursor:pointer; min-height:40px; padding:10px 14px 9px;
-  text-transform:uppercase; font-size:10.5px; letter-spacing:.24em; text-indent:.24em; line-height:1; color:var(--ink);
+  text-transform:uppercase; font-size:10.5px; letter-spacing:.24em; text-indent:0; padding-left:calc(14px + .24em); line-height:1; color:var(--ink);
   touch-action:manipulation; -webkit-tap-highlight-color:transparent;
   transition:background-color 300ms var(--ease-fade), color 300ms var(--ease-fade), transform 180ms var(--ease-std);
 }
@@ -599,9 +600,42 @@ html.is-sealed .env-flap, html.is-sealed .letter, html.is-sealed .grow{ will-cha
 
 /* RSVP: one block per named guest */
 .guests-field > .lbl{ margin-bottom:4px; }
-.guest{ position:relative; padding:6px 0 4px; }
-.guest + .guest{ margin-top:14px; padding-top:18px; border-top:.75px dashed var(--gold-soft); }
-.guest-head{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:8px; }
+.guest{ position:relative; border:.75px solid var(--gold-soft); border-radius:3px; background:rgba(255,255,255,.45); }
+.guest + .guest{ margin-top:10px; }
+.guest-head{
+  display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:12px; width:100%;
+  background:none; border:0; cursor:pointer; padding:15px 16px; margin:0; color:inherit; font:inherit; text-align:center;
+  touch-action:manipulation; -webkit-tap-highlight-color:transparent;
+}
+.guest-head:focus-visible{ outline:1px solid var(--gold); outline-offset:-4px; }
+.guest-head .guest-title{ grid-column:2; color:var(--ink); }
+.guest-head .guest-edit{ grid-column:3; justify-self:end; display:none; color:var(--ink-soft); }
+.guest-summary{ display:none; }
+.guest.is-complete .guest-summary{ display:inline; }
+.guest.is-complete .guest-title{ letter-spacing:.16em; padding-inline-start:.16em; }
+.guest.is-complete .guest-label{ display:none; }
+.guest.is-collapsed .guest-edit{ display:inline; }
+.guest.is-collapsed .guest-body{ display:none; }
+.guest-body{ padding:0 16px 16px; }
+.guest-body > input[type=text]:first-of-type{ margin-top:2px; }
+.guest .guest-remove{ margin-top:8px; padding:10px 12px; }
+.add-guest{
+  display:inline-flex; align-items:center; gap:14px; margin-top:16px; padding:6px 12px 6px 6px;
+  background:none; border:0; cursor:pointer; color:var(--ink);
+  text-transform:uppercase; font-size:10.5px; letter-spacing:.24em; line-height:1;
+  touch-action:manipulation; -webkit-tap-highlight-color:transparent;
+}
+.add-guest .plus{
+  width:44px; height:44px; border-radius:50%; border:.75px solid var(--gold); display:grid; place-items:center;
+  font-family:var(--serif); font-size:1.5rem; line-height:1; color:var(--gold); padding-bottom:2px;
+  transition:background-color 300ms var(--ease-fade), color 300ms var(--ease-fade), border-color 300ms var(--ease-fade), transform 180ms var(--ease-std);
+}
+.add-guest:hover .plus,.add-guest:focus-visible .plus{ background:var(--ink); border-color:var(--ink); color:var(--paper); }
+.add-guest:active .plus{ transform:scale(.94); }
+.add-guest:focus-visible{ outline:none; }
+.add-guest[hidden]{ display:none; }
+.tally{ margin:14px 0 0; color:var(--ink-soft); }
+.tally[hidden]{ display:none; }
 .guest-title{ color:var(--ink-soft); }
 .guest-remove{
   background:none; border:0; cursor:pointer; padding:10px 0 10px 14px; min-height:44px;
@@ -611,27 +645,14 @@ html.is-sealed .env-flap, html.is-sealed .letter, html.is-sealed .grow{ will-cha
 .guest-remove:hover,.guest-remove:focus-visible{ color:var(--ink); }
 .guest-remove:focus-visible{ outline:1px solid var(--gold); outline-offset:2px; }
 .guest-row{ margin-top:14px; }
-.lbl-sm{ display:block; font-size:clamp(.64rem,2.7vw,.7rem); letter-spacing:.2em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:8px; line-height:1.6; }
+.lbl-sm{ display:block; font-size:clamp(.64rem,2.7vw,.7rem); letter-spacing:.2em; padding-inline-start:.2em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:8px; line-height:1.6; }
 .guest .guest-row + input[type=text]{ margin-top:16px; }
 .guest.is-declined .guest-ev{ display:none; }
-.guest-people{ display:flex; align-items:center; justify-content:space-between; gap:14px; }
-.guest-people .lbl-sm{ margin:0; }
-.stepper{ display:inline-flex; align-items:stretch; border:.75px solid var(--gold-hair); border-radius:2px; background:var(--white); }
-.stepper button{
-  width:44px; min-height:44px; background:none; border:0; cursor:pointer; font-size:1.25rem; line-height:1; color:var(--ink);
-  touch-action:manipulation; -webkit-tap-highlight-color:transparent; transition:background-color 200ms var(--ease-fade), transform 180ms var(--ease-std);
-}
-.stepper button:hover{ background:rgba(168,135,79,.10); }
-.stepper button:active{ transform:scale(.94); }
-.stepper button:focus-visible{ outline:1px solid var(--gold); outline-offset:-4px; }
-.rsvp .stepper input[type=number]{ width:3.2em; border:0; border-left:.75px solid var(--gold-hair); border-right:.75px solid var(--gold-hair); border-radius:0; text-align:center; padding:10px 4px; font-variant-numeric:lining-nums tabular-nums; -moz-appearance:textfield; }
-.rsvp .stepper input::-webkit-outer-spin-button,.rsvp .stepper input::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
-.rsvp .stepper input:focus{ box-shadow:none; }
 .guest.err-name input[data-name=name]{ border-color:#B3282E; box-shadow:0 0 0 3px rgba(155,34,38,.10); }
 .guest.err-att .guest-att .choice span{ border-color:#B3282E; }
 .guest.err-ev .guest-ev .choice span{ border-color:#B3282E; }
 .guest.is-invalid .hint{ display:block; margin:0 0 10px; }
-.btn-sm{ min-height:46px; padding:14px 26px 12px; }
+.btn-sm{ min-height:46px; padding:14px 26px 12px calc(26px + .28em); }
 [data-add-guest]{ margin-top:18px; }
 [data-add-guest][hidden]{ display:none; }
 @media (prefers-reduced-motion: no-preference){
@@ -639,7 +660,7 @@ html.is-sealed .env-flap, html.is-sealed .letter, html.is-sealed .grow{ will-cha
 }
 
 /* RSVP validation */
-.rsvp .hint{ display:none; margin:8px 0 0; font-style:italic; font-size:.92em; color:#9B2226; }
+.rsvp .hint{ display:none; margin:8px 0 0; font-style:italic; font-size:.92em; color:#9B2226; text-align:center; }
 .field.is-invalid .hint{ display:block; }
 .field.is-invalid .lbl{ color:#9B2226; }
 .field.is-invalid input, .field.is-invalid textarea{ border-color:#B3282E; box-shadow:0 0 0 3px rgba(155,34,38,.10); }
@@ -675,7 +696,7 @@ html.is-sealed .env-flap, html.is-sealed .letter, html.is-sealed .grow{ will-cha
 .foot p.thanks{ margin-top:clamp(18px,3vh,26px); font-style:italic; }
 .lang-switch button{
   background:none; border:0; cursor:pointer; padding:12px 10px; min-height:44px;
-  text-transform:uppercase; font-size:11px; letter-spacing:.24em; text-indent:.24em; color:var(--ink-soft);
+  text-transform:uppercase; font-size:11px; letter-spacing:.24em; text-indent:0; padding-left:calc(10px + .24em); color:var(--ink-soft);
   touch-action:manipulation; -webkit-tap-highlight-color:transparent; transition:color 200ms;
 }
 .lang-switch button:hover,.lang-switch button:focus-visible{ color:var(--ink); }
@@ -687,8 +708,8 @@ html.is-sealed .env-flap, html.is-sealed .letter, html.is-sealed .grow{ will-cha
 .nav-trigger,.rsvp-jump{
   position:fixed; z-index:20; top:max(8px, env(safe-area-inset-top));
   min-width:44px; min-height:44px; display:grid; place-items:center;
-  background:none; border:0; cursor:pointer; padding:0 12px;
-  text-transform:uppercase; font-size:10.5px; letter-spacing:.3em; text-indent:.3em; line-height:1; color:var(--ink);
+  background:none; border:0; cursor:pointer; padding:0 12px 0 calc(12px + .3em);
+  text-transform:uppercase; font-size:10.5px; letter-spacing:.3em; text-indent:0; line-height:1; color:var(--ink);
   opacity:0; visibility:hidden; pointer-events:none; touch-action:manipulation; -webkit-tap-highlight-color:transparent;
   transition:opacity 600ms var(--ease-fade), visibility 0s 600ms;
 }
@@ -698,7 +719,7 @@ html.is-sealed .env-flap, html.is-sealed .letter, html.is-sealed .grow{ will-cha
 /* the reply word lives in the opposite corner as a fine gold pill, there from the first frame of the page */
 .rsvp-jump{
   left:max(14px, env(safe-area-inset-left)); top:max(10px, calc(env(safe-area-inset-top) + 2px));
-  min-height:40px; padding:0 18px 0 20px; border:.75px solid var(--gold); border-radius:999px;
+  min-height:40px; padding:0 18px 0 calc(18px + .3em); border:.75px solid var(--gold); border-radius:999px;
   background:rgba(253,251,247,.72); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
   box-shadow:0 6px 18px -10px rgba(120,96,58,.35);
 }
@@ -738,7 +759,7 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
 .nav-close{
   position:absolute; z-index:2; background:none; border:0; cursor:pointer; min-width:44px; min-height:44px; padding:0 12px;
   top:max(8px, env(safe-area-inset-top)); right:max(14px, env(safe-area-inset-right));
-  text-transform:uppercase; font-size:10.5px; letter-spacing:.3em; text-indent:.3em; color:var(--ink);
+  text-transform:uppercase; font-size:10.5px; letter-spacing:.3em; text-indent:0; padding-left:calc(12px + .3em); color:var(--ink);
   touch-action:manipulation; -webkit-tap-highlight-color:transparent;
 }
 .nav-close:focus-visible{ outline:1px solid var(--gold); outline-offset:-6px; }
@@ -786,8 +807,8 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
 .faq summary:active{ opacity:.7; }
 .choice span:hover{ border-color:var(--gold); }
 .sound-toggle{
-  background:none; border:0; cursor:pointer; padding:12px 10px; min-height:44px; margin-top:6px;
-  text-transform:uppercase; font-size:11px; letter-spacing:.24em; text-indent:.24em; color:var(--ink-soft);
+  background:none; border:0; cursor:pointer; padding:12px 10px 12px calc(10px + .24em); min-height:44px; margin-top:6px;
+  text-transform:uppercase; font-size:11px; letter-spacing:.24em; text-indent:0; color:var(--ink-soft);
   touch-action:manipulation; -webkit-tap-highlight-color:transparent;
 }
 .sound-toggle:hover,.sound-toggle:focus-visible{ color:var(--ink); }
@@ -920,8 +941,8 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
     <section class="band" id="en-gifts" data-sec="gifts" aria-labelledby="en-gifts-h">
       <span class="orn rv"></span>
       <div class="sec-head rv"><h2 class="h-script" id="en-gifts-h">Gifts</h2></div>
-      <p class="prose rv">Your presence is the greatest gift. If you would like to give something more, we are making the home we already share truly ours, and a contribution towards it would mean the world to us. There will be a wishing well at the reception for cards and cash, or you are welcome to give by bank transfer.</p>
-      <div class="gift-cta rv"><button class="btn btn-ghost" type="button" data-gift-open>Bank details</button></div>
+      <p class="prose rv">Your presence is the greatest gift. If you would like to give more, a contribution towards the home we are getting ready would mean a great deal to us. There will be a wishing well at the reception, or you can give by bank transfer.</p>
+      <div class="gift-cta rv"><button class="btn btn-ghost" type="button" data-gift-open>Give a gift</button></div>
       <dialog class="rsvp-dlg gift-dlg" id="en-gift-dlg" aria-labelledby="en-gift-dlg-h">
         <div class="rsvp-card">
           <button class="dlg-close" type="button" data-close>Close</button>
@@ -932,7 +953,7 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
               <p class="caps">Thank you for thinking of us</p>
             </div>
             <dl class="bank">
-              <div class="bank-row"><dt>Account name</dt><dd>BASIL DIMITRIOS TOUFEXIS AND HARIKLEIA KONTORINIS</dd></div>
+              <div class="bank-row"><dt>Account name</dt><dd>BASIL DIMITRIOS TOUFEXIS AND HARIKLEIA KONTORINIS</dd><button type="button" class="copy" data-copy="BASIL DIMITRIOS TOUFEXIS AND HARIKLEIA KONTORINIS" data-label="Copy" data-done="Copied">Copy</button></div>
               <div class="bank-row"><dt>BSB</dt><dd>067-873</dd><button type="button" class="copy" data-copy="067873" data-label="Copy" data-done="Copied">Copy</button></div>
               <div class="bank-row"><dt>Account number</dt><dd>21289759</dd><button type="button" class="copy" data-copy="21289759" data-label="Copy" data-done="Copied">Copy</button></div>
               <div class="bank-row"><dt>Reference</dt><dd>Your name</dd></div>
@@ -956,7 +977,7 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
     <section class="band" id="en-rsvp" data-sec="rsvp" aria-labelledby="en-rsvp-h">
       <span class="orn rv"></span>
       <div class="sec-head rv"><h2 class="h-script" id="en-rsvp-h">RSVP</h2><p class="caps">Kindly reply by Friday 15 January 2027</p></div>
-      <p class="lede rv">Add everyone named on your invitation, and anyone joining you for the church service. People with the same answer can share a line. Give anyone answering differently a line of their own.</p>
+      <p class="lede rv">Kindly reply once for everyone on your invitation.</p>
       <div class="rsvp-cta rv">
         <button class="btn btn-lg" type="button" data-rsvp-open>Reply</button>
         <p class="rsvp-received script-line">Thank you, we have your reply.</p>
@@ -976,29 +997,33 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
                 <span class="lbl">Your party</span>
                 <div class="guests" data-guests>
                   <div class="guest">
-                    <div class="guest-head"><span class="caps-sm guest-title">Guests <span class="guest-n">1</span></span><button type="button" class="guest-remove" hidden>Remove</button></div>
-                    <p class="hint"></p>
-                    <input type="text" data-name="name" data-label="Guests" aria-label="Guests 1" autocomplete="off" placeholder="Full name, or names with the same answer">
-                    <div class="guest-row guest-people"><span class="lbl-sm">People</span>
-                      <div class="stepper"><button type="button" data-step="-1" aria-label="-">-</button><input type="number" data-name="people" value="1" min="1" max="12" inputmode="numeric" aria-label="People"><button type="button" data-step="1" aria-label="+">+</button></div>
-                    </div>
-                    <div class="guest-row guest-att"><span class="lbl-sm">Joining us?</span>
-                      <div class="choices">
-                        <label class="choice"><input type="radio" data-name="att" name="att_en_1" value="Accepts" data-att="yes"><span>Accepts</span></label>
-                        <label class="choice"><input type="radio" data-name="att" name="att_en_1" value="Declines" data-att="no"><span>Declines</span></label>
+                    <button type="button" class="guest-head" data-guest-toggle aria-expanded="true">
+                      <span class="caps-sm guest-title"><span class="guest-label">Guest <span class="guest-n">1</span></span><span class="guest-summary"></span></span>
+                      <span class="caps-sm guest-edit">Edit</span>
+                    </button>
+                    <div class="guest-body">
+                      <p class="hint"></p>
+                      <input type="text" data-name="name" data-label="Guest" aria-label="Guest 1" autocomplete="off" placeholder="Full name">
+                      <div class="guest-row guest-att"><span class="lbl-sm">Joining us?</span>
+                        <div class="choices">
+                          <label class="choice"><input type="radio" data-name="att" name="att_en_1" value="Accepts" data-att="yes"><span>Accepts</span></label>
+                          <label class="choice"><input type="radio" data-name="att" name="att_en_1" value="Declines" data-att="no"><span>Declines</span></label>
+                        </div>
                       </div>
-                    </div>
-                    <div class="guest-row guest-ev"><span class="lbl-sm">For</span>
-                      <div class="choices">
-                        <label class="choice"><input type="radio" data-name="ev" name="ev_en_1" value="Ceremony"><span>Ceremony</span></label>
-                        <label class="choice"><input type="radio" data-name="ev" name="ev_en_1" value="Reception"><span>Reception</span></label>
-                        <label class="choice"><input type="radio" data-name="ev" name="ev_en_1" value="Both" checked data-default><span>Both</span></label>
+                      <div class="guest-row guest-ev"><span class="lbl-sm">For</span>
+                        <div class="choices">
+                          <label class="choice"><input type="radio" data-name="ev" name="ev_en_1" value="Ceremony"><span>Ceremony</span></label>
+                          <label class="choice"><input type="radio" data-name="ev" name="ev_en_1" value="Reception"><span>Reception</span></label>
+                          <label class="choice"><input type="radio" data-name="ev" name="ev_en_1" value="Both" checked data-default><span>Both</span></label>
+                        </div>
                       </div>
+                      <input type="text" data-name="diet" aria-label="Dietary needs or allergies (optional)" placeholder="Dietary needs or allergies (optional)">
+                      <button type="button" class="guest-remove" hidden>Remove this guest</button>
                     </div>
-                    <input type="text" data-name="diet" aria-label="Dietary requirements or allergies (optional)" placeholder="Dietary requirements or allergies (optional)">
                   </div>
                 </div>
-                <button type="button" class="btn btn-ghost btn-sm" data-add-guest>Add another line</button>
+                <button type="button" class="add-guest" data-add-guest><span class="plus" aria-hidden="true">+</span><span class="add-label">Add a guest</span></button>
+                <p class="caps-sm tally" data-tally aria-live="polite" hidden data-yes-1="1 guest attending" data-yes-n="{n} guests attending" data-no-1="1 unable to come" data-no-n="{n} unable to come"></p>
               </div>
               <div class="field" style="--i:5" data-req="contact" data-err="Please enter a valid email address or mobile number">
                 <label class="lbl" for="en-contact">Email or mobile</label>
@@ -1030,13 +1055,13 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
       <span class="orn rv"></span>
       <div class="sec-head rv"><h2 class="h-script" id="en-faq-h">Questions</h2></div>
       <div class="faq rv">
-        <details><summary>I have never been to an Orthodox wedding. Is there anything I need to do?</summary><div class="a"><p>Nothing at all. Stand when everyone stands, follow the people around you, and enjoy it. You do not need to be Orthodox and you will not be asked to take part in anything.</p></div></details>
-        <details><summary>What happens during the service?</summary><div class="a"><p>An Orthodox wedding has no spoken vows. Our rings are blessed, we are crowned with the <em>Stefana</em>, we share a common cup, and the priest leads us three times around the table. It takes about an hour and guests stand for most of it.</p></div></details>
-        <details><summary>What time should I arrive?</summary><div class="a"><p>Please be seated by 2:45 pm. The service starts at 3:00 pm sharp and the doors close once it begins, so please do not be late.</p></div></details>
-        <details><summary>Who is the koumbaros?</summary><div class="a"><p>The <em>koumbaros</em> is our best man: he exchanges the rings and the crowns over our heads, and stays part of the family for life. Ours is Antoni Zeidan, Basil's best mate of many years.</p></div></details>
-        <details><summary>Can I take photographs?</summary><div class="a"><p>Not during the service, please. Our photographers will cover the ceremony and we will share their pictures. At the reception, yes, as many as you like, and please add them to our album (see Photographs above).</p></div></details>
-        <details><summary>Can I bring a plus one?</summary><div class="a"><p>To the church, yes: the service is open to everyone, so bring whoever you like and simply add their names to your reply, marked Ceremony. The reception is by invitation only, for the people named on your invitation. We would love to host everyone, but we cannot.</p></div></details>
-        <details><summary>Are children welcome?</summary><div class="a"><p>In the church, always. For the reception, please check the names on your invitation.</p></div></details>
+        <details name="en-faq"><summary>I have never been to an Orthodox wedding. Is there anything I need to do?</summary><div class="a"><p>Nothing at all. Stand when everyone stands, follow the people around you, and enjoy it. You do not need to be Orthodox and you will not be asked to take part in anything.</p></div></details>
+        <details name="en-faq"><summary>What happens during the service?</summary><div class="a"><p>An Orthodox wedding has no spoken vows. Our rings are blessed, we are crowned with the <em>Stefana</em>, we share a common cup, and the priest leads us three times around the table. It takes about an hour and guests stand for most of it.</p></div></details>
+        <details name="en-faq"><summary>What time should I arrive?</summary><div class="a"><p>Please be seated by 2:45 pm. The service starts at 3:00 pm sharp and the doors close once it begins, so please do not be late.</p></div></details>
+        <details name="en-faq"><summary>Who is the koumbaros?</summary><div class="a"><p>The <em>koumbaros</em> is our best man: he exchanges the rings and the crowns over our heads, and stays part of the family for life. Ours is Antoni Zeidan, Basil's best mate of many years.</p></div></details>
+        <details name="en-faq"><summary>Can I take photographs?</summary><div class="a"><p>Not during the service, please. Our photographers will cover the ceremony and we will share their pictures. At the reception, yes, as many as you like, and please add them to our album (see Photographs above).</p></div></details>
+        <details name="en-faq"><summary>Can I bring a plus one?</summary><div class="a"><p>To the church, yes: the service is open to everyone, so bring whoever you like and simply add their names to your reply, marked Ceremony. The reception is by invitation only, for the people named on your invitation. We would love to host everyone, but we cannot.</p></div></details>
+        <details name="en-faq"><summary>Are children welcome?</summary><div class="a"><p>In the church, always. For the reception, please check the names on your invitation.</p></div></details>
       </div>
       <p class="lede rv faq-contact">Anything else? Email us at <a href="mailto:basil2fxs@gmail.com">basil2fxs@gmail.com</a> or text Basil on <a href="sms:+61422083274">0422 083 274</a>.</p>
     </section>
@@ -1133,8 +1158,8 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
     <section class="band" id="el-gifts" data-sec="gifts" aria-labelledby="el-gifts-h">
       <span class="orn rv"></span>
       <div class="sec-head rv"><h2 class="h-script" id="el-gifts-h">Δώρα</h2></div>
-      <p class="prose rv">Το μεγαλύτερο δώρο για εμάς είναι η παρουσία σας. Αν θέλετε να προσφέρετε κάτι παραπάνω, φτιάχνουμε το σπίτι στο οποίο ήδη ζούμε μαζί, και μια συνεισφορά για αυτό θα σήμαινε πολλά για εμάς. Στη δεξίωση θα υπάρχει κουτί ευχών για κάρτες και μετρητά, ή μπορείτε να κάνετε κατάθεση στον λογαριασμό μας.</p>
-      <div class="gift-cta rv"><button class="btn btn-ghost" type="button" data-gift-open>Στοιχεία λογαριασμού</button></div>
+      <p class="prose rv">Το μεγαλύτερο δώρο για εμάς είναι η παρουσία σας. Αν θέλετε να προσφέρετε κάτι παραπάνω, μια συνεισφορά για το σπίτι που ετοιμάζουμε θα σήμαινε πολλά για εμάς. Στη δεξίωση θα υπάρχει κουτί ευχών, ή μπορείτε να κάνετε κατάθεση στον λογαριασμό μας.</p>
+      <div class="gift-cta rv"><button class="btn btn-ghost" type="button" data-gift-open>Κάντε ένα δώρο</button></div>
       <dialog class="rsvp-dlg gift-dlg" id="el-gift-dlg" aria-labelledby="el-gift-dlg-h">
         <div class="rsvp-card">
           <button class="dlg-close" type="button" data-close>Κλείσιμο</button>
@@ -1145,7 +1170,7 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
               <p class="caps">Σας ευχαριστούμε που μας σκέφτεστε</p>
             </div>
             <dl class="bank">
-              <div class="bank-row"><dt>Όνομα λογαριασμού</dt><dd>BASIL DIMITRIOS TOUFEXIS AND HARIKLEIA KONTORINIS</dd></div>
+              <div class="bank-row"><dt>Όνομα λογαριασμού</dt><dd>BASIL DIMITRIOS TOUFEXIS AND HARIKLEIA KONTORINIS</dd><button type="button" class="copy" data-copy="BASIL DIMITRIOS TOUFEXIS AND HARIKLEIA KONTORINIS" data-label="Αντιγραφή" data-done="Αντιγράφηκε">Αντιγραφή</button></div>
               <div class="bank-row"><dt>BSB</dt><dd>067-873</dd><button type="button" class="copy" data-copy="067873" data-label="Αντιγραφή" data-done="Αντιγράφηκε">Αντιγραφή</button></div>
               <div class="bank-row"><dt>Αριθμός λογαριασμού</dt><dd>21289759</dd><button type="button" class="copy" data-copy="21289759" data-label="Αντιγραφή" data-done="Αντιγράφηκε">Αντιγραφή</button></div>
               <div class="bank-row"><dt>Αιτιολογία</dt><dd>Το όνομά σας</dd></div>
@@ -1169,7 +1194,7 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
     <section class="band" id="el-rsvp" data-sec="rsvp" aria-labelledby="el-rsvp-h">
       <span class="orn rv"></span>
       <div class="sec-head rv"><h2 class="h-script" id="el-rsvp-h">Επιβεβαίωση συμμετοχής</h2><p class="caps">Παρακαλούμε απαντήστε μέχρι την Παρασκευή, 15 Ιανουαρίου 2027</p></div>
-      <p class="lede rv">Προσθέστε όλα τα άτομα που αναγράφονται στο προσκλητήριό σας, και όποιον έρθει μαζί σας στην εκκλησία. Όσοι έχουν την ίδια απάντηση μπορούν να μπουν στην ίδια γραμμή. Δώστε ξεχωριστή γραμμή σε όποιον απαντά διαφορετικά.</p>
+      <p class="lede rv">Παρακαλούμε απαντήστε μία φορά για όλους όσοι αναγράφονται στο προσκλητήριό σας.</p>
       <div class="rsvp-cta rv">
         <button class="btn btn-lg" type="button" data-rsvp-open>Απαντήστε</button>
         <p class="rsvp-received script-line">Ευχαριστούμε, λάβαμε την απάντησή σας.</p>
@@ -1189,29 +1214,33 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
                 <span class="lbl">Τα άτομα του προσκλητηρίου</span>
                 <div class="guests" data-guests>
                   <div class="guest">
-                    <div class="guest-head"><span class="caps-sm guest-title">Καλεσμένοι <span class="guest-n">1</span></span><button type="button" class="guest-remove" hidden>Αφαίρεση</button></div>
-                    <p class="hint"></p>
-                    <input type="text" data-name="name" data-label="Καλεσμένοι" aria-label="Καλεσμένοι 1" autocomplete="off" placeholder="Ονοματεπώνυμο, ή ονόματα με την ίδια απάντηση">
-                    <div class="guest-row guest-people"><span class="lbl-sm">Άτομα</span>
-                      <div class="stepper"><button type="button" data-step="-1" aria-label="-">-</button><input type="number" data-name="people" value="1" min="1" max="12" inputmode="numeric" aria-label="Άτομα"><button type="button" data-step="1" aria-label="+">+</button></div>
-                    </div>
-                    <div class="guest-row guest-att"><span class="lbl-sm">Θα έρθει;</span>
-                      <div class="choices">
-                        <label class="choice"><input type="radio" data-name="att" name="att_el_1" value="Ναι" data-att="yes"><span>Ναι</span></label>
-                        <label class="choice"><input type="radio" data-name="att" name="att_el_1" value="Δυστυχώς όχι" data-att="no"><span>Δυστυχώς όχι</span></label>
+                    <button type="button" class="guest-head" data-guest-toggle aria-expanded="true">
+                      <span class="caps-sm guest-title"><span class="guest-label">Άτομο <span class="guest-n">1</span></span><span class="guest-summary"></span></span>
+                      <span class="caps-sm guest-edit">Αλλαγή</span>
+                    </button>
+                    <div class="guest-body">
+                      <p class="hint"></p>
+                      <input type="text" data-name="name" data-label="Άτομο" aria-label="Άτομο 1" autocomplete="off" placeholder="Ονοματεπώνυμο">
+                      <div class="guest-row guest-att"><span class="lbl-sm">Θα έρθει;</span>
+                        <div class="choices">
+                          <label class="choice"><input type="radio" data-name="att" name="att_el_1" value="Ναι" data-att="yes"><span>Ναι</span></label>
+                          <label class="choice"><input type="radio" data-name="att" name="att_el_1" value="Δυστυχώς όχι" data-att="no"><span>Δυστυχώς όχι</span></label>
+                        </div>
                       </div>
-                    </div>
-                    <div class="guest-row guest-ev"><span class="lbl-sm">Πού</span>
-                      <div class="choices">
-                        <label class="choice"><input type="radio" data-name="ev" name="ev_el_1" value="Στο Μυστήριο"><span>Στο Μυστήριο</span></label>
-                        <label class="choice"><input type="radio" data-name="ev" name="ev_el_1" value="Στη δεξίωση"><span>Στη δεξίωση</span></label>
-                        <label class="choice"><input type="radio" data-name="ev" name="ev_el_1" value="Και στα δύο" checked data-default><span>Και στα δύο</span></label>
+                      <div class="guest-row guest-ev"><span class="lbl-sm">Πού</span>
+                        <div class="choices">
+                          <label class="choice"><input type="radio" data-name="ev" name="ev_el_1" value="Στο Μυστήριο"><span>Στο Μυστήριο</span></label>
+                          <label class="choice"><input type="radio" data-name="ev" name="ev_el_1" value="Στη δεξίωση"><span>Στη δεξίωση</span></label>
+                          <label class="choice"><input type="radio" data-name="ev" name="ev_el_1" value="Και στα δύο" checked data-default><span>Και στα δύο</span></label>
+                        </div>
                       </div>
+                      <input type="text" data-name="diet" aria-label="Διατροφικές ανάγκες (προαιρετικό)" placeholder="Διατροφικές ανάγκες (προαιρετικό)">
+                      <button type="button" class="guest-remove" hidden>Αφαίρεση ατόμου</button>
                     </div>
-                    <input type="text" data-name="diet" aria-label="Διατροφικές ανάγκες ή αλλεργίες (προαιρετικό)" placeholder="Διατροφικές ανάγκες ή αλλεργίες (προαιρετικό)">
                   </div>
                 </div>
-                <button type="button" class="btn btn-ghost btn-sm" data-add-guest>Προσθήκη γραμμής</button>
+                <button type="button" class="add-guest" data-add-guest><span class="plus" aria-hidden="true">+</span><span class="add-label">Προσθήκη ατόμου</span></button>
+                <p class="caps-sm tally" data-tally aria-live="polite" hidden data-yes-1="1 άτομο θα έρθει" data-yes-n="{n} άτομα θα έρθουν" data-no-1="1 δεν θα μπορέσει" data-no-n="{n} δεν θα μπορέσουν"></p>
               </div>
               <div class="field" style="--i:5" data-req="contact" data-err="Παρακαλούμε γράψτε μια έγκυρη ηλεκτρονική διεύθυνση ή έναν αριθμό κινητού">
                 <label class="lbl" for="el-contact">Ηλεκτρονική διεύθυνση ή κινητό</label>
@@ -1243,13 +1272,13 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
       <span class="orn rv"></span>
       <div class="sec-head rv"><h2 class="h-script" id="el-faq-h">Συχνές ερωτήσεις</h2></div>
       <div class="faq rv">
-        <details><summary>Δεν έχω ξαναπάει σε ορθόδοξο γάμο. Χρειάζεται να κάνω κάτι;</summary><div class="a"><p>Απολύτως τίποτα. Σηκώνεστε όταν σηκώνονται όλοι, ακολουθείτε τους διπλανούς σας και το απολαμβάνετε. Δεν χρειάζεται να είστε ορθόδοξοι και δεν θα σας ζητηθεί να συμμετάσχετε σε τίποτα.</p></div></details>
-        <details><summary>Τι γίνεται στη διάρκεια του Μυστηρίου;</summary><div class="a"><p>Ο ορθόδοξος γάμος δεν έχει όρκους. Ευλογούνται τα δαχτυλίδια, στεφανωνόμαστε με τα Στέφανα, πίνουμε από το κοινό ποτήριο και ο ιερέας μας οδηγεί τρεις φορές γύρω από το τραπέζι. Κρατάει περίπου μία ώρα και οι καλεσμένοι είναι όρθιοι.</p></div></details>
-        <details><summary>Τι ώρα να έρθω;</summary><div class="a"><p>Να είστε στις θέσεις σας μέχρι τις 14:45. Το Μυστήριο ξεκινά ακριβώς στις 15:00 και οι πόρτες κλείνουν με την έναρξή του, οπότε παρακαλούμε μην αργήσετε.</p></div></details>
-        <details><summary>Ποιος είναι ο κουμπάρος;</summary><div class="a"><p>Ο κουμπάρος είναι αυτός που μας στεφανώνει: αλλάζει τα δαχτυλίδια και τα Στέφανα πάνω από τα κεφάλια μας και μένει για πάντα μέλος της οικογένειας. Κουμπάρος μας θα είναι ο Αντώνης Ζεϊντάν, ο κολλητός φίλος του Βασίλη εδώ και πολλά χρόνια.</p></div></details>
-        <details><summary>Μπορώ να βγάλω φωτογραφίες;</summary><div class="a"><p>Όχι στη διάρκεια του Μυστηρίου, παρακαλούμε. Οι φωτογράφοι μας θα καλύψουν την τελετή και θα μοιραστούμε τις φωτογραφίες τους μαζί σας. Στη δεξίωση, ναι, όσες θέλετε, και παρακαλούμε προσθέστε τις στο άλμπουμ μας (δείτε την ενότητα Φωτογραφίες πιο πάνω).</p></div></details>
-        <details><summary>Μπορώ να φέρω συνοδό;</summary><div class="a"><p>Στην εκκλησία, ναι: το Μυστήριο είναι ανοιχτό σε όλους, οπότε φέρτε όποιον θέλετε και απλώς προσθέστε τα ονόματα στην απάντησή σας, με την επιλογή Στο Μυστήριο. Η δεξίωση είναι μόνο με πρόσκληση, για τα άτομα που αναγράφονται στο προσκλητήριό σας. Θα θέλαμε να φιλοξενήσουμε όλους, αλλά δυστυχώς δεν γίνεται.</p></div></details>
-        <details><summary>Μπορώ να φέρω τα παιδιά μου;</summary><div class="a"><p>Στην εκκλησία, πάντα. Για τη δεξίωση, δείτε τα ονόματα στο προσκλητήριό σας.</p></div></details>
+        <details name="el-faq"><summary>Δεν έχω ξαναπάει σε ορθόδοξο γάμο. Χρειάζεται να κάνω κάτι;</summary><div class="a"><p>Απολύτως τίποτα. Σηκώνεστε όταν σηκώνονται όλοι, ακολουθείτε τους διπλανούς σας και το απολαμβάνετε. Δεν χρειάζεται να είστε ορθόδοξοι και δεν θα σας ζητηθεί να συμμετάσχετε σε τίποτα.</p></div></details>
+        <details name="el-faq"><summary>Τι γίνεται στη διάρκεια του Μυστηρίου;</summary><div class="a"><p>Ο ορθόδοξος γάμος δεν έχει όρκους. Ευλογούνται τα δαχτυλίδια, στεφανωνόμαστε με τα Στέφανα, πίνουμε από το κοινό ποτήριο και ο ιερέας μας οδηγεί τρεις φορές γύρω από το τραπέζι. Κρατάει περίπου μία ώρα και οι καλεσμένοι είναι όρθιοι.</p></div></details>
+        <details name="el-faq"><summary>Τι ώρα να έρθω;</summary><div class="a"><p>Να είστε στις θέσεις σας μέχρι τις 14:45. Το Μυστήριο ξεκινά ακριβώς στις 15:00 και οι πόρτες κλείνουν με την έναρξή του, οπότε παρακαλούμε μην αργήσετε.</p></div></details>
+        <details name="el-faq"><summary>Ποιος είναι ο κουμπάρος;</summary><div class="a"><p>Ο κουμπάρος είναι αυτός που μας στεφανώνει: αλλάζει τα δαχτυλίδια και τα Στέφανα πάνω από τα κεφάλια μας και μένει για πάντα μέλος της οικογένειας. Κουμπάρος μας θα είναι ο Αντώνης Ζεϊντάν, ο κολλητός φίλος του Βασίλη εδώ και πολλά χρόνια.</p></div></details>
+        <details name="el-faq"><summary>Μπορώ να βγάλω φωτογραφίες;</summary><div class="a"><p>Όχι στη διάρκεια του Μυστηρίου, παρακαλούμε. Οι φωτογράφοι μας θα καλύψουν την τελετή και θα μοιραστούμε τις φωτογραφίες τους μαζί σας. Στη δεξίωση, ναι, όσες θέλετε, και παρακαλούμε προσθέστε τις στο άλμπουμ μας (δείτε την ενότητα Φωτογραφίες πιο πάνω).</p></div></details>
+        <details name="el-faq"><summary>Μπορώ να φέρω συνοδό;</summary><div class="a"><p>Στην εκκλησία, ναι: το Μυστήριο είναι ανοιχτό σε όλους, οπότε φέρτε όποιον θέλετε και απλώς προσθέστε τα ονόματα στην απάντησή σας, με την επιλογή Στο Μυστήριο. Η δεξίωση είναι μόνο με πρόσκληση, για τα άτομα που αναγράφονται στο προσκλητήριό σας. Θα θέλαμε να φιλοξενήσουμε όλους, αλλά δυστυχώς δεν γίνεται.</p></div></details>
+        <details name="el-faq"><summary>Μπορώ να φέρω τα παιδιά μου;</summary><div class="a"><p>Στην εκκλησία, πάντα. Για τη δεξίωση, δείτε τα ονόματα στο προσκλητήριό σας.</p></div></details>
       </div>
       <p class="lede rv faq-contact">Για οτιδήποτε άλλο, γράψτε μας στο <a href="mailto:basil2fxs@gmail.com">basil2fxs@gmail.com</a> ή στείλτε μήνυμα στον Βασίλη στο <a href="sms:+61422083274">0422 083 274</a>.</p>
     </section>
@@ -1933,6 +1962,12 @@ document.addEventListener('click', function(e){
   if (lb) setLanguage(lb.getAttribute('data-setlang'));
 });
 
+/* ---------- questions: opening one folds the other away ---------- */
+document.addEventListener('toggle', function(e){
+  var d = e.target; if (!d || d.tagName !== 'DETAILS' || !d.open || !d.closest('.faq')) return;
+  $$('details[open]', d.closest('.faq')).forEach(function(o){ if (o !== d) o.open = false; });
+}, true);
+
 /* ---------- countdown (live seconds, aligned to the clock, one timer) ---------- */
 (function(){
   var target = Date.parse(WEDDING_ISO), timer = null;
@@ -1965,22 +2000,45 @@ $$('form.rsvp').forEach(function(form){
   var list = $('[data-guests]', form), gfield = $('.guests-field', form);
   var proto = $('.guest', list).cloneNode(true), MAX = 12;
   function guests(){ return $$('.guest', list); }
+  function complete(g){ return !!(($('input[data-name="name"]', g) || {}).value || '').trim() && !!$('input[data-name="att"]:checked', g); }
+  function updateGuest(g){
+    var nm = (($('input[data-name="name"]', g) || {}).value || '').trim(), att = $('input[data-name="att"]:checked', g), ev = $('input[data-name="ev"]:checked', g);
+    var ok = !!nm && !!att, sum = $('.guest-summary', g);
+    if (sum) sum.textContent = ok ? nm + ' - ' + att.value + (att.getAttribute('data-att') === 'yes' && ev && !ev.hasAttribute('data-default') ? ', ' + ev.value : '') : '';
+    g.classList.toggle('is-complete', ok);
+    if (!ok) g.classList.remove('is-collapsed');
+    var tg = $('[data-guest-toggle]', g); if (tg) tg.setAttribute('aria-expanded', g.classList.contains('is-collapsed') ? 'false' : 'true');
+  }
+  function updateTally(){
+    var yes = 0, no = 0;
+    guests().forEach(function(g){ var a = $('input[data-name="att"]:checked', g); if (!a) return; if (a.getAttribute('data-att') === 'yes') yes++; else no++; });
+    var t = $('[data-tally]', form); if (!t) return;
+    if (!yes && !no){ t.textContent = ''; t.hidden = true; return; }
+    var parts = [];
+    if (yes) parts.push((yes === 1 ? t.getAttribute('data-yes-1') : t.getAttribute('data-yes-n')).replace('{n}', yes));
+    if (no) parts.push((no === 1 ? t.getAttribute('data-no-1') : t.getAttribute('data-no-n')).replace('{n}', no));
+    t.textContent = parts.join(', '); t.hidden = false;
+  }
   function renumber(){
     var all = guests();
     all.forEach(function(g, i){
       var k = i + 1;
+      updateGuest(g);
       $$('.guest-n', g).forEach(function(sp){ sp.textContent = k; });
       $$('input[type=radio]', g).forEach(function(r){ r.name = r.getAttribute('data-name') + '_' + lang + '_' + k; });
       var nm = $('input[data-name="name"]', g); if (nm) nm.setAttribute('aria-label', (nm.getAttribute('data-label') || '') + ' ' + k);
       var rm = $('.guest-remove', g); if (rm) rm.hidden = all.length === 1;
     });
     var add = $('[data-add-guest]', form); if (add) add.hidden = all.length >= MAX;
+    updateTally();
   }
   function addGuest(){
     if (guests().length >= MAX) return;
+    guests().forEach(function(x){ if (complete(x)) x.classList.add('is-collapsed'); updateGuest(x); });   // the finished ones fold into their summary line
     var g = proto.cloneNode(true);
-    $$('input', g).forEach(function(i){ if (i.type === 'radio') i.checked = false; else if (i.type === 'number'){ i.value = '1'; i.removeAttribute('data-touched'); } else i.value = ''; });
-    g.classList.remove('is-invalid', 'err-name', 'err-att', 'err-ev', 'is-declined'); g.classList.add('is-new');
+    $$('input', g).forEach(function(i){ if (i.type === 'radio') i.checked = false; else i.value = ''; });
+    g.classList.remove('is-invalid', 'err-name', 'err-att', 'err-ev', 'is-declined', 'is-collapsed', 'is-complete'); g.classList.add('is-new');
+    var sm = $('.guest-summary', g); if (sm) sm.textContent = '';
     var h = $('.hint', g); if (h) h.textContent = '';
     list.appendChild(g); renumber();
     $$('input[type=radio][data-default]', g).forEach(function(r){ r.checked = true; });
@@ -1989,19 +2047,9 @@ $$('form.rsvp').forEach(function(form){
     Sfx.paper(0.03, 0.4);
   }
   renumber();
-  function countNames(v){ return v.split(/,|&|\band\b|\bκαι\b/i).map(function(x){ return x.trim(); }).filter(Boolean).length; }
-  form.addEventListener('input', function(e){
-    if (e.target.getAttribute('data-name') !== 'name') return;
-    var g = e.target.closest('.guest'), pe = g && $('input[data-name="people"]', g);
-    if (pe && !pe.hasAttribute('data-touched')) pe.value = Math.min(12, Math.max(1, countNames(e.target.value)));
-  });
   form.addEventListener('click', function(e){
-    var st = e.target.closest('[data-step]');
-    if (st){
-      var pe = $('input[data-name="people"]', st.closest('.stepper'));
-      if (pe){ pe.value = Math.min(12, Math.max(1, (parseInt(pe.value, 10) || 1) + parseInt(st.getAttribute('data-step'), 10))); pe.setAttribute('data-touched', ''); }
-      return;
-    }
+    var tg = e.target.closest('[data-guest-toggle]');
+    if (tg){ var gg = tg.closest('.guest'); if (gg && complete(gg)) gg.classList.toggle('is-collapsed'); if (gg) updateGuest(gg); Sfx.paper(0.02, 0.3); return; }
     if (e.target.closest('[data-add-guest]')){ addGuest(); return; }
     var rm = e.target.closest('.guest-remove');
     if (rm){ var g = rm.closest('.guest'); if (g && guests().length > 1){ g.parentNode.removeChild(g); renumber(); Sfx.paper(0.025, 0.35); } }
@@ -2012,13 +2060,14 @@ $$('form.rsvp').forEach(function(form){
     var f = e.target.closest('.field'); if (f) f.classList.remove('is-invalid');
     if (!$('.is-invalid', form)) wrap.classList.remove('has-err');
     if (g && e.target.type === 'radio' && e.target.getAttribute('data-name') === 'att') g.classList.toggle('is-declined', e.target.getAttribute('data-att') === 'no');
+    if (g) updateGuest(g);
+    updateTally();
   }); });
   function readGuests(){
     return guests().map(function(g){
       var att = $('input[data-name="att"]:checked', g), ev = $('input[data-name="ev"]:checked', g);
-      var pe = $('input[data-name="people"]', g), people = Math.min(12, Math.max(1, parseInt(pe && pe.value, 10) || 1));
       return { el:g, name:(($('input[data-name="name"]', g) || {}).value || '').trim(), att: att ? att.value : '',
-               yes: !!(att && att.getAttribute('data-att') === 'yes'), ev: ev ? ev.value : '', diet:(($('input[data-name="diet"]', g) || {}).value || '').trim(), people:people };
+               yes: !!(att && att.getAttribute('data-att') === 'yes'), ev: ev ? ev.value : '', diet:(($('input[data-name="diet"]', g) || {}).value || '').trim() };
     });
   }
   form.addEventListener('submit', function(e){
@@ -2031,7 +2080,7 @@ $$('form.rsvp').forEach(function(form){
       var kind = !g.name ? 'name' : !g.att ? 'att' : (g.yes && !g.ev) ? 'ev' : '';
       var msg = kind ? gfield.getAttribute('data-err-' + kind) : '';
       g.el.classList.remove('err-name', 'err-att', 'err-ev');
-      g.el.classList.toggle('is-invalid', !!kind); if (kind) g.el.classList.add('err-' + kind);
+      g.el.classList.toggle('is-invalid', !!kind); if (kind){ g.el.classList.add('err-' + kind); g.el.classList.remove('is-collapsed'); }
       var h = $('.hint', g.el); if (h) h.textContent = msg;
       if (msg) bad.push(g.el);
     });
@@ -2051,7 +2100,7 @@ $$('form.rsvp').forEach(function(form){
     var song = (fd.get('song') || '').trim(), message = (fd.get('message') || '').trim(), stamp = new Date().toISOString();
     var withTag = (lang === 'el' ? 'Μαζί με: ' : 'With: ') + gs[0].name;
     var rows = gs.map(function(g, i){
-      return { names:g.name, attending:g.att, count: g.yes ? String(g.people) : '0', events: g.yes ? g.ev : '', dietary:g.diet,
+      return { names:g.name, attending:g.att, count: g.yes ? '1' : '0', events: g.yes ? g.ev : '', dietary:g.diet,
                contact:cv, song: i === 0 ? song : '', message: i === 0 ? message : withTag, language:lang, submitted:stamp };
     });
     function done(){
@@ -2067,7 +2116,7 @@ $$('form.rsvp').forEach(function(form){
       }, RM ? 0 : 340);
     }
     function mailFallback(){
-      var lines = gs.map(function(g){ return g.name + (g.people > 1 ? ' (' + g.people + ')' : '') + ': ' + g.att + (g.yes && g.ev ? ', ' + g.ev : '') + (g.diet ? ' (' + g.diet + ')' : ''); });
+      var lines = gs.map(function(g){ return g.name + ': ' + g.att + (g.yes && g.ev ? ', ' + g.ev : '') + (g.diet ? ' (' + g.diet + ')' : ''); });
       lines.push('contact: ' + cv); if (song) lines.push('song: ' + song); if (message) lines.push('message: ' + message);
       var subject = (lang === 'el' ? 'Επιβεβαίωση συμμετοχής - ' : 'RSVP - ') + gs[0].name;
       Sfx.paper(0.045, 0.8);

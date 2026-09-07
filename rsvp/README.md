@@ -27,12 +27,13 @@ a safety net.
 
 ## One row per guest
 
-Since 7 September 2026 the reply card asks for one line per answer: a name, or several names that
-share the same answer, with a People count (typing "Maria and Nick" sets it to 2), coming or not,
-ceremony / reception / both, dietary needs. The site sends **one Form response per line**:
+Since 7 September 2026 the reply card asks for one card per guest (Guest 1, Guest 2 ... added with
+a plus): full name, coming or not, ceremony / reception / both, dietary needs. A finished card folds
+into "Name - Accepts" and the card shows a running tally. The site sends **one Form response per
+guest**:
 
-- `Names`: the name or names on that line. `Attending`: Accepts / Declines (Greek: Ναι / Δυστυχώς όχι).
-- `Number attending`: the People count if they accept, 0 if not, so a SUM of that column is the headcount.
+- `Names`: that guest's name. `Attending`: Accepts / Declines (Greek: Ναι / Δυστυχώς όχι).
+- `Number attending`: 1 if they accept, 0 if not, so a SUM of that column is the headcount.
 - `Events`: Ceremony / Reception / Both (blank when declining). Filter on it for the church count
   and the dinner count. Extra people a guest brings to the church only will appear as their own
   rows marked Ceremony (the site tells guests the service is open to all, the reception is not).
