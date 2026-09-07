@@ -614,6 +614,19 @@ html.is-sealed .env-flap, html.is-sealed .letter, html.is-sealed .grow{ will-cha
 .lbl-sm{ display:block; font-size:clamp(.64rem,2.7vw,.7rem); letter-spacing:.2em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:8px; line-height:1.6; }
 .guest .guest-row + input[type=text]{ margin-top:16px; }
 .guest.is-declined .guest-ev{ display:none; }
+.guest-people{ display:flex; align-items:center; justify-content:space-between; gap:14px; }
+.guest-people .lbl-sm{ margin:0; }
+.stepper{ display:inline-flex; align-items:stretch; border:.75px solid var(--gold-hair); border-radius:2px; background:var(--white); }
+.stepper button{
+  width:44px; min-height:44px; background:none; border:0; cursor:pointer; font-size:1.25rem; line-height:1; color:var(--ink);
+  touch-action:manipulation; -webkit-tap-highlight-color:transparent; transition:background-color 200ms var(--ease-fade), transform 180ms var(--ease-std);
+}
+.stepper button:hover{ background:rgba(168,135,79,.10); }
+.stepper button:active{ transform:scale(.94); }
+.stepper button:focus-visible{ outline:1px solid var(--gold); outline-offset:-4px; }
+.rsvp .stepper input[type=number]{ width:3.2em; border:0; border-left:.75px solid var(--gold-hair); border-right:.75px solid var(--gold-hair); border-radius:0; text-align:center; padding:10px 4px; font-variant-numeric:lining-nums tabular-nums; -moz-appearance:textfield; }
+.rsvp .stepper input::-webkit-outer-spin-button,.rsvp .stepper input::-webkit-inner-spin-button{ -webkit-appearance:none; margin:0; }
+.rsvp .stepper input:focus{ box-shadow:none; }
 .guest.err-name input[data-name=name]{ border-color:#B3282E; box-shadow:0 0 0 3px rgba(155,34,38,.10); }
 .guest.err-att .guest-att .choice span{ border-color:#B3282E; }
 .guest.err-ev .guest-ev .choice span{ border-color:#B3282E; }
@@ -943,7 +956,7 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
     <section class="band" id="en-rsvp" data-sec="rsvp" aria-labelledby="en-rsvp-h">
       <span class="orn rv"></span>
       <div class="sec-head rv"><h2 class="h-script" id="en-rsvp-h">RSVP</h2><p class="caps">Kindly reply by Friday 15 January 2027</p></div>
-      <p class="lede rv">Add everyone named on your invitation, and anyone joining you for the church service, and tell us for each person whether they can be with us and for which part of the day.</p>
+      <p class="lede rv">Add everyone named on your invitation, and anyone joining you for the church service. People with the same answer can share a line. Give anyone answering differently a line of their own.</p>
       <div class="rsvp-cta rv">
         <button class="btn btn-lg" type="button" data-rsvp-open>Reply</button>
         <p class="rsvp-received script-line">Thank you, we have your reply.</p>
@@ -963,9 +976,12 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
                 <span class="lbl">Your party</span>
                 <div class="guests" data-guests>
                   <div class="guest">
-                    <div class="guest-head"><span class="caps-sm guest-title">Guest <span class="guest-n">1</span></span><button type="button" class="guest-remove" hidden>Remove</button></div>
+                    <div class="guest-head"><span class="caps-sm guest-title">Guests <span class="guest-n">1</span></span><button type="button" class="guest-remove" hidden>Remove</button></div>
                     <p class="hint"></p>
-                    <input type="text" data-name="name" data-label="Guest" aria-label="Guest 1" autocomplete="off" placeholder="Full name">
+                    <input type="text" data-name="name" data-label="Guests" aria-label="Guests 1" autocomplete="off" placeholder="Full name, or names with the same answer">
+                    <div class="guest-row guest-people"><span class="lbl-sm">People</span>
+                      <div class="stepper"><button type="button" data-step="-1" aria-label="-">-</button><input type="number" data-name="people" value="1" min="1" max="12" inputmode="numeric" aria-label="People"><button type="button" data-step="1" aria-label="+">+</button></div>
+                    </div>
                     <div class="guest-row guest-att"><span class="lbl-sm">Joining us?</span>
                       <div class="choices">
                         <label class="choice"><input type="radio" data-name="att" name="att_en_1" value="Accepts" data-att="yes"><span>Accepts</span></label>
@@ -982,7 +998,7 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
                     <input type="text" data-name="diet" aria-label="Dietary requirements or allergies (optional)" placeholder="Dietary requirements or allergies (optional)">
                   </div>
                 </div>
-                <button type="button" class="btn btn-ghost btn-sm" data-add-guest>Add another guest</button>
+                <button type="button" class="btn btn-ghost btn-sm" data-add-guest>Add another line</button>
               </div>
               <div class="field" style="--i:5" data-req="contact" data-err="Please enter a valid email address or mobile number">
                 <label class="lbl" for="en-contact">Email or mobile</label>
@@ -1017,7 +1033,7 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
         <details><summary>I have never been to an Orthodox wedding. Is there anything I need to do?</summary><div class="a"><p>Nothing at all. Stand when everyone stands, follow the people around you, and enjoy it. You do not need to be Orthodox and you will not be asked to take part in anything.</p></div></details>
         <details><summary>What happens during the service?</summary><div class="a"><p>An Orthodox wedding has no spoken vows. Our rings are blessed, we are crowned with the <em>Stefana</em>, we share a common cup, and the priest leads us three times around the table. It takes about an hour and guests stand for most of it.</p></div></details>
         <details><summary>What time should I arrive?</summary><div class="a"><p>Please be seated by 2:45 pm. The service starts at 3:00 pm sharp and the doors close once it begins, so please do not be late.</p></div></details>
-        <details><summary>Who is the koumbaros?</summary><div class="a"><p>The <em>koumbaros</em> is the couple's sponsor: he exchanges the rings and the crowns over our heads, and stays part of the family for life. Ours is Antoni Zeidan, Basil's best mate of many years.</p></div></details>
+        <details><summary>Who is the koumbaros?</summary><div class="a"><p>The <em>koumbaros</em> is our best man: he exchanges the rings and the crowns over our heads, and stays part of the family for life. Ours is Antoni Zeidan, Basil's best mate of many years.</p></div></details>
         <details><summary>Can I take photographs?</summary><div class="a"><p>Not during the service, please. Our photographers will cover the ceremony and we will share their pictures. At the reception, yes, as many as you like, and please add them to our album (see Photographs above).</p></div></details>
         <details><summary>Can I bring a plus one?</summary><div class="a"><p>To the church, yes: the service is open to everyone, so bring whoever you like and simply add their names to your reply, marked Ceremony. The reception is by invitation only, for the people named on your invitation. We would love to host everyone, but we cannot.</p></div></details>
         <details><summary>Are children welcome?</summary><div class="a"><p>In the church, always. For the reception, please check the names on your invitation.</p></div></details>
@@ -1153,7 +1169,7 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
     <section class="band" id="el-rsvp" data-sec="rsvp" aria-labelledby="el-rsvp-h">
       <span class="orn rv"></span>
       <div class="sec-head rv"><h2 class="h-script" id="el-rsvp-h">Επιβεβαίωση συμμετοχής</h2><p class="caps">Παρακαλούμε απαντήστε μέχρι την Παρασκευή, 15 Ιανουαρίου 2027</p></div>
-      <p class="lede rv">Προσθέστε όλα τα άτομα που αναγράφονται στο προσκλητήριό σας, και όποιον έρθει μαζί σας στην εκκλησία, και πείτε μας για το καθένα αν θα είναι μαζί μας και σε ποιο μέρος της ημέρας.</p>
+      <p class="lede rv">Προσθέστε όλα τα άτομα που αναγράφονται στο προσκλητήριό σας, και όποιον έρθει μαζί σας στην εκκλησία. Όσοι έχουν την ίδια απάντηση μπορούν να μπουν στην ίδια γραμμή. Δώστε ξεχωριστή γραμμή σε όποιον απαντά διαφορετικά.</p>
       <div class="rsvp-cta rv">
         <button class="btn btn-lg" type="button" data-rsvp-open>Απαντήστε</button>
         <p class="rsvp-received script-line">Ευχαριστούμε, λάβαμε την απάντησή σας.</p>
@@ -1173,9 +1189,12 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
                 <span class="lbl">Τα άτομα του προσκλητηρίου</span>
                 <div class="guests" data-guests>
                   <div class="guest">
-                    <div class="guest-head"><span class="caps-sm guest-title">Άτομο <span class="guest-n">1</span></span><button type="button" class="guest-remove" hidden>Αφαίρεση</button></div>
+                    <div class="guest-head"><span class="caps-sm guest-title">Καλεσμένοι <span class="guest-n">1</span></span><button type="button" class="guest-remove" hidden>Αφαίρεση</button></div>
                     <p class="hint"></p>
-                    <input type="text" data-name="name" data-label="Άτομο" aria-label="Άτομο 1" autocomplete="off" placeholder="Ονοματεπώνυμο">
+                    <input type="text" data-name="name" data-label="Καλεσμένοι" aria-label="Καλεσμένοι 1" autocomplete="off" placeholder="Ονοματεπώνυμο, ή ονόματα με την ίδια απάντηση">
+                    <div class="guest-row guest-people"><span class="lbl-sm">Άτομα</span>
+                      <div class="stepper"><button type="button" data-step="-1" aria-label="-">-</button><input type="number" data-name="people" value="1" min="1" max="12" inputmode="numeric" aria-label="Άτομα"><button type="button" data-step="1" aria-label="+">+</button></div>
+                    </div>
                     <div class="guest-row guest-att"><span class="lbl-sm">Θα έρθει;</span>
                       <div class="choices">
                         <label class="choice"><input type="radio" data-name="att" name="att_el_1" value="Ναι" data-att="yes"><span>Ναι</span></label>
@@ -1192,7 +1211,7 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
                     <input type="text" data-name="diet" aria-label="Διατροφικές ανάγκες ή αλλεργίες (προαιρετικό)" placeholder="Διατροφικές ανάγκες ή αλλεργίες (προαιρετικό)">
                   </div>
                 </div>
-                <button type="button" class="btn btn-ghost btn-sm" data-add-guest>Προσθήκη ατόμου</button>
+                <button type="button" class="btn btn-ghost btn-sm" data-add-guest>Προσθήκη γραμμής</button>
               </div>
               <div class="field" style="--i:5" data-req="contact" data-err="Παρακαλούμε γράψτε μια έγκυρη ηλεκτρονική διεύθυνση ή έναν αριθμό κινητού">
                 <label class="lbl" for="el-contact">Ηλεκτρονική διεύθυνση ή κινητό</label>
@@ -1227,7 +1246,7 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
         <details><summary>Δεν έχω ξαναπάει σε ορθόδοξο γάμο. Χρειάζεται να κάνω κάτι;</summary><div class="a"><p>Απολύτως τίποτα. Σηκώνεστε όταν σηκώνονται όλοι, ακολουθείτε τους διπλανούς σας και το απολαμβάνετε. Δεν χρειάζεται να είστε ορθόδοξοι και δεν θα σας ζητηθεί να συμμετάσχετε σε τίποτα.</p></div></details>
         <details><summary>Τι γίνεται στη διάρκεια του Μυστηρίου;</summary><div class="a"><p>Ο ορθόδοξος γάμος δεν έχει όρκους. Ευλογούνται τα δαχτυλίδια, στεφανωνόμαστε με τα Στέφανα, πίνουμε από το κοινό ποτήριο και ο ιερέας μας οδηγεί τρεις φορές γύρω από το τραπέζι. Κρατάει περίπου μία ώρα και οι καλεσμένοι είναι όρθιοι.</p></div></details>
         <details><summary>Τι ώρα να έρθω;</summary><div class="a"><p>Να είστε στις θέσεις σας μέχρι τις 14:45. Το Μυστήριο ξεκινά ακριβώς στις 15:00 και οι πόρτες κλείνουν με την έναρξή του, οπότε παρακαλούμε μην αργήσετε.</p></div></details>
-        <details><summary>Ποιος είναι ο κουμπάρος;</summary><div class="a"><p>Ο κουμπάρος είναι ο παράνυμφος του ζευγαριού: αλλάζει τα δαχτυλίδια και τα Στέφανα πάνω από τα κεφάλια μας και μένει για πάντα μέλος της οικογένειας. Κουμπάρος μας θα είναι ο Αντώνης Ζεϊντάν, ο κολλητός φίλος του Βασίλη εδώ και πολλά χρόνια.</p></div></details>
+        <details><summary>Ποιος είναι ο κουμπάρος;</summary><div class="a"><p>Ο κουμπάρος είναι αυτός που μας στεφανώνει: αλλάζει τα δαχτυλίδια και τα Στέφανα πάνω από τα κεφάλια μας και μένει για πάντα μέλος της οικογένειας. Κουμπάρος μας θα είναι ο Αντώνης Ζεϊντάν, ο κολλητός φίλος του Βασίλη εδώ και πολλά χρόνια.</p></div></details>
         <details><summary>Μπορώ να βγάλω φωτογραφίες;</summary><div class="a"><p>Όχι στη διάρκεια του Μυστηρίου, παρακαλούμε. Οι φωτογράφοι μας θα καλύψουν την τελετή και θα μοιραστούμε τις φωτογραφίες τους μαζί σας. Στη δεξίωση, ναι, όσες θέλετε, και παρακαλούμε προσθέστε τις στο άλμπουμ μας (δείτε την ενότητα Φωτογραφίες πιο πάνω).</p></div></details>
         <details><summary>Μπορώ να φέρω συνοδό;</summary><div class="a"><p>Στην εκκλησία, ναι: το Μυστήριο είναι ανοιχτό σε όλους, οπότε φέρτε όποιον θέλετε και απλώς προσθέστε τα ονόματα στην απάντησή σας, με την επιλογή Στο Μυστήριο. Η δεξίωση είναι μόνο με πρόσκληση, για τα άτομα που αναγράφονται στο προσκλητήριό σας. Θα θέλαμε να φιλοξενήσουμε όλους, αλλά δυστυχώς δεν γίνεται.</p></div></details>
         <details><summary>Μπορώ να φέρω τα παιδιά μου;</summary><div class="a"><p>Στην εκκλησία, πάντα. Για τη δεξίωση, δείτε τα ονόματα στο προσκλητήριό σας.</p></div></details>
@@ -1960,7 +1979,7 @@ $$('form.rsvp').forEach(function(form){
   function addGuest(){
     if (guests().length >= MAX) return;
     var g = proto.cloneNode(true);
-    $$('input', g).forEach(function(i){ if (i.type === 'radio') i.checked = false; else i.value = ''; });
+    $$('input', g).forEach(function(i){ if (i.type === 'radio') i.checked = false; else if (i.type === 'number'){ i.value = '1'; i.removeAttribute('data-touched'); } else i.value = ''; });
     g.classList.remove('is-invalid', 'err-name', 'err-att', 'err-ev', 'is-declined'); g.classList.add('is-new');
     var h = $('.hint', g); if (h) h.textContent = '';
     list.appendChild(g); renumber();
@@ -1970,7 +1989,19 @@ $$('form.rsvp').forEach(function(form){
     Sfx.paper(0.03, 0.4);
   }
   renumber();
+  function countNames(v){ return v.split(/,|&|\band\b|\bκαι\b/i).map(function(x){ return x.trim(); }).filter(Boolean).length; }
+  form.addEventListener('input', function(e){
+    if (e.target.getAttribute('data-name') !== 'name') return;
+    var g = e.target.closest('.guest'), pe = g && $('input[data-name="people"]', g);
+    if (pe && !pe.hasAttribute('data-touched')) pe.value = Math.min(12, Math.max(1, countNames(e.target.value)));
+  });
   form.addEventListener('click', function(e){
+    var st = e.target.closest('[data-step]');
+    if (st){
+      var pe = $('input[data-name="people"]', st.closest('.stepper'));
+      if (pe){ pe.value = Math.min(12, Math.max(1, (parseInt(pe.value, 10) || 1) + parseInt(st.getAttribute('data-step'), 10))); pe.setAttribute('data-touched', ''); }
+      return;
+    }
     if (e.target.closest('[data-add-guest]')){ addGuest(); return; }
     var rm = e.target.closest('.guest-remove');
     if (rm){ var g = rm.closest('.guest'); if (g && guests().length > 1){ g.parentNode.removeChild(g); renumber(); Sfx.paper(0.025, 0.35); } }
@@ -1985,8 +2016,9 @@ $$('form.rsvp').forEach(function(form){
   function readGuests(){
     return guests().map(function(g){
       var att = $('input[data-name="att"]:checked', g), ev = $('input[data-name="ev"]:checked', g);
+      var pe = $('input[data-name="people"]', g), people = Math.min(12, Math.max(1, parseInt(pe && pe.value, 10) || 1));
       return { el:g, name:(($('input[data-name="name"]', g) || {}).value || '').trim(), att: att ? att.value : '',
-               yes: !!(att && att.getAttribute('data-att') === 'yes'), ev: ev ? ev.value : '', diet:(($('input[data-name="diet"]', g) || {}).value || '').trim() };
+               yes: !!(att && att.getAttribute('data-att') === 'yes'), ev: ev ? ev.value : '', diet:(($('input[data-name="diet"]', g) || {}).value || '').trim(), people:people };
     });
   }
   form.addEventListener('submit', function(e){
@@ -2019,7 +2051,7 @@ $$('form.rsvp').forEach(function(form){
     var song = (fd.get('song') || '').trim(), message = (fd.get('message') || '').trim(), stamp = new Date().toISOString();
     var withTag = (lang === 'el' ? 'Μαζί με: ' : 'With: ') + gs[0].name;
     var rows = gs.map(function(g, i){
-      return { names:g.name, attending:g.att, count: g.yes ? '1' : '0', events: g.yes ? g.ev : '', dietary:g.diet,
+      return { names:g.name, attending:g.att, count: g.yes ? String(g.people) : '0', events: g.yes ? g.ev : '', dietary:g.diet,
                contact:cv, song: i === 0 ? song : '', message: i === 0 ? message : withTag, language:lang, submitted:stamp };
     });
     function done(){
@@ -2035,7 +2067,7 @@ $$('form.rsvp').forEach(function(form){
       }, RM ? 0 : 340);
     }
     function mailFallback(){
-      var lines = gs.map(function(g){ return g.name + ': ' + g.att + (g.yes && g.ev ? ', ' + g.ev : '') + (g.diet ? ' (' + g.diet + ')' : ''); });
+      var lines = gs.map(function(g){ return g.name + (g.people > 1 ? ' (' + g.people + ')' : '') + ': ' + g.att + (g.yes && g.ev ? ', ' + g.ev : '') + (g.diet ? ' (' + g.diet + ')' : ''); });
       lines.push('contact: ' + cv); if (song) lines.push('song: ' + song); if (message) lines.push('message: ' + message);
       var subject = (lang === 'el' ? 'Επιβεβαίωση συμμετοχής - ' : 'RSVP - ') + gs[0].name;
       Sfx.paper(0.045, 0.8);
