@@ -374,9 +374,14 @@ html.is-sealed .env-flap, html.is-sealed .letter, html.is-sealed .grow{ will-cha
 [lang="el"] .hero .caps{ letter-spacing:.18em; text-indent:.18em; }
 .hero .names{ margin:clamp(10px,2.4vh,26px) 0 clamp(12px,2.4vh,26px); display:flex; flex-direction:column; align-items:center; }
 .hero .name + .join + .name{ margin-top:-.05em; }
-.dateblock{ display:flex; align-items:center; justify-content:center; gap:clamp(14px,4vw,26px); margin:clamp(16px,3.2vh,36px) 0 0; }
+/* equal columns either side of the number, so the 27 sits on the page's centre line whatever the words' lengths */
+.dateblock{ display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); align-items:center; column-gap:clamp(14px,4vw,26px); width:100%; margin:clamp(16px,3.2vh,36px) 0 0; }
+.dateblock .date-word:first-child{ justify-self:end; }
+.dateblock .date-word:last-child{ justify-self:start; }
 .year{ text-transform:uppercase; font-size:clamp(.75rem,3.4vw,.875rem); letter-spacing:.3em; text-indent:.3em; line-height:1; margin-top:clamp(12px,2vh,18px); color:var(--ink); }
 .hero .venue{ margin-top:clamp(16px,3.2vh,36px); }
+.hero .venue-addr{ margin-top:8px; color:var(--ink-soft); line-height:1.9; }
+@media (max-width: 479px){ .hero .venue-addr br{ display:none; } }
 .hero .script-line{ margin-top:clamp(10px,2vh,20px); }
 @media (max-width: 479px){ .hero .caps br{ display:none; } }
 @media (max-height: 700px){
@@ -642,20 +647,31 @@ html.is-sealed .env-flap, html.is-sealed .letter, html.is-sealed .grow{ will-cha
    NAVIGATION - one word, invisible until needed; a full-screen dialog
    --------------------------------------------------------------------- */
 .nav-trigger,.rsvp-jump{
-  position:fixed; z-index:20; right:max(14px, env(safe-area-inset-right));
+  position:fixed; z-index:20; top:max(8px, env(safe-area-inset-top));
   min-width:44px; min-height:44px; display:grid; place-items:center;
   background:none; border:0; cursor:pointer; padding:0 12px;
   text-transform:uppercase; font-size:10.5px; letter-spacing:.3em; text-indent:.3em; line-height:1; color:var(--ink);
   opacity:0; visibility:hidden; pointer-events:none; touch-action:manipulation; -webkit-tap-highlight-color:transparent;
   transition:opacity 600ms var(--ease-fade), visibility 0s 600ms;
 }
-.nav-trigger span,.rsvp-jump span{ display:block; position:relative; padding-bottom:5px; }
-.nav-trigger span::after,.rsvp-jump span::after{ content:""; position:absolute; left:0; right:.3em; bottom:0; border-bottom:.75px solid var(--gold); opacity:.55; }
-.nav-trigger{ top:max(8px, env(safe-area-inset-top)); }
-.rsvp-jump{ bottom:max(10px, env(safe-area-inset-bottom)); }
-html.past-hero .nav-trigger, html.past-hero .rsvp-jump{ opacity:1; visibility:visible; pointer-events:auto; transition:opacity 600ms var(--ease-fade), visibility 0s; }
-.nav-trigger:focus-visible,.rsvp-jump:focus-visible{ outline:1px solid var(--gold); outline-offset:-6px; }
-.nav-trigger:active,.rsvp-jump:active{ opacity:.5; }
+.nav-trigger{ right:max(14px, env(safe-area-inset-right)); }
+.nav-trigger span{ display:block; position:relative; padding-bottom:5px; }
+.nav-trigger span::after{ content:""; position:absolute; left:0; right:.3em; bottom:0; border-bottom:.75px solid var(--gold); opacity:.55; }
+/* the reply word lives in the opposite corner as a fine gold pill, there from the first frame of the page */
+.rsvp-jump{
+  left:max(14px, env(safe-area-inset-left)); top:max(10px, calc(env(safe-area-inset-top) + 2px));
+  min-height:40px; padding:0 18px 0 20px; border:.75px solid var(--gold); border-radius:999px;
+  background:rgba(253,251,247,.72); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+  box-shadow:0 6px 18px -10px rgba(120,96,58,.35);
+}
+.rsvp-jump span{ display:block; }
+.rsvp-jump.is-done{ background:var(--ink); border-color:var(--ink); color:var(--paper); }
+@media (hover:hover){ .rsvp-jump:hover{ background:var(--ink); border-color:var(--ink); color:var(--paper); } }
+/* both appear once the envelope has opened and the page is settled; nothing during the landing */
+html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; visibility:visible; pointer-events:auto; transition:opacity 900ms var(--ease-fade) 700ms, visibility 0s; }
+.nav-trigger:focus-visible{ outline:1px solid var(--gold); outline-offset:-6px; }
+.rsvp-jump:focus-visible{ outline:1px solid var(--gold); outline-offset:3px; }
+.nav-trigger:active{ opacity:.5; }
 
 #nav{
   position:fixed; inset:0; width:100%; height:100%; max-width:none; max-height:none;
@@ -728,7 +744,7 @@ html.past-hero .nav-trigger, html.past-hero .rsvp-jump{ opacity:1; visibility:vi
 }
 /* Every control answers the finger: a small, quick press, then release */
 .btn, .choice span, .nav-close, .dlg-close, .nav-trigger, .rsvp-jump, .lang-switch button, .sound-toggle, .nav-list a, .faq summary{ transition-property:transform, opacity, background-color, color, border-color, box-shadow; transition-duration:180ms; transition-timing-function:var(--ease-std); }
-.btn:active, .choice:active span, .nav-close:active, .dlg-close:active, .lang-switch button:active, .sound-toggle:active, .nav-list a:active{ transform:scale(.97); }
+.btn:active, .choice:active span, .nav-close:active, .dlg-close:active, .rsvp-jump:active, .lang-switch button:active, .sound-toggle:active, .nav-list a:active{ transform:scale(.97); }
 .faq summary:active{ opacity:.7; }
 .choice span:hover{ border-color:var(--gold); }
 .sound-toggle{
@@ -793,6 +809,7 @@ html.past-hero .nav-trigger, html.past-hero .rsvp-jump{ opacity:1; visibility:vi
         </div>
         <p class="year rv">2027</p>
         <p class="caps venue rv">Greek Orthodox Cathedral of <br>Saints Constantine and Helene</p>
+        <p class="caps-sm venue-addr rv">20 Parker Street, Northbridge, <br>Perth, Western Australia</p>
         <p class="script-line rv">reception to follow</p>
       </div>
     </header>
@@ -819,7 +836,7 @@ html.past-hero .nav-trigger, html.past-hero .rsvp-jump{ opacity:1; visibility:vi
       <div class="details rv">
         <span class="caps">Saturday 27 February 2027, 3:00 pm</span>
         <p class="venue-name">Greek Orthodox Cathedral of Saints Constantine and Helene</p>
-        <span class="caps"><a href="https://maps.google.com/?q=Greek+Orthodox+Cathedral+of+Saints+Constantine+and+Helene,+Parker+Street,+Northbridge+WA+6003" target="_blank" rel="noopener">Cnr Parker &amp; Francis Streets, Northbridge</a></span>
+        <span class="caps"><a href="https://maps.google.com/?q=Greek+Orthodox+Cathedral+of+Saints+Constantine+and+Helene,+20+Parker+Street,+Northbridge+WA+6003,+Australia" target="_blank" rel="noopener">20 Parker Street, Northbridge WA 6003, Australia</a></span>
       </div>
       <p class="prose rv arrive">Please be inside the church by 2:45 pm. The service begins at 3:00 pm sharp and, out of respect for the sacrament, there is strictly no entry once it has started.</p>
     </section>
@@ -829,7 +846,7 @@ html.past-hero .nav-trigger, html.past-hero .rsvp-jump{ opacity:1; visibility:vi
       <div class="details rv">
         <span class="caps">From 6:30 pm until late</span>
         <p class="venue-name">Pan Pacific Perth</p>
-        <span class="caps"><a href="https://maps.google.com/?q=Pan+Pacific+Perth,+207+Adelaide+Terrace,+Perth+WA+6000" target="_blank" rel="noopener">207 Adelaide Terrace, Perth</a></span>
+        <span class="caps"><a href="https://maps.google.com/?q=Pan+Pacific+Perth,+207+Adelaide+Terrace,+Perth+WA+6000" target="_blank" rel="noopener">207 Adelaide Terrace, Perth WA 6000, Australia</a></span>
       </div>
       <p class="lede rv">Dinner, wishes and dancing at the Pan Pacific, a few minutes by car from the church.</p>
     </section>
@@ -880,7 +897,7 @@ html.past-hero .nav-trigger, html.past-hero .rsvp-jump{ opacity:1; visibility:vi
     <section class="band" id="en-rsvp" data-sec="rsvp" aria-labelledby="en-rsvp-h">
       <span class="orn rv"></span>
       <div class="sec-head rv"><h2 class="h-script" id="en-rsvp-h">RSVP</h2><p class="caps">Kindly reply by Friday 15 January 2027</p></div>
-      <p class="lede rv">Add everyone named on your invitation, and tell us for each person whether they can be with us, and for which part of the day.</p>
+      <p class="lede rv">Add everyone named on your invitation, and anyone joining you for the church service, and tell us for each person whether they can be with us and for which part of the day.</p>
       <div class="rsvp-cta rv">
         <button class="btn btn-lg" type="button" data-rsvp-open>Reply</button>
         <p class="rsvp-received script-line">Thank you, we have your reply.</p>
@@ -956,7 +973,7 @@ html.past-hero .nav-trigger, html.past-hero .rsvp-jump{ opacity:1; visibility:vi
         <details><summary>What time should I arrive?</summary><div class="a"><p>Please be seated by 2:45 pm. The service starts at 3:00 pm sharp and the doors close once it begins, so please do not be late.</p></div></details>
         <details><summary>Who is the koumbaros?</summary><div class="a"><p>The <em>koumbaros</em> is the couple's sponsor: he exchanges the rings and the crowns over our heads, and stays part of the family for life. Ours is Antoni Zeidan, Basil's best mate of many years.</p></div></details>
         <details><summary>Can I take photographs?</summary><div class="a"><p>Not during the service, please. Our photographers will cover the ceremony and we will share their pictures. At the reception, yes, as many as you like, and please add them to our album (see Photographs above).</p></div></details>
-        <details><summary>Can I bring a plus one?</summary><div class="a"><p>Our invitations are addressed to the people we are able to host. We would love to have everyone with us, but we cannot, so please reply only for those named on yours.</p></div></details>
+        <details><summary>Can I bring a plus one?</summary><div class="a"><p>To the church, yes: the service is open to everyone, so bring whoever you like and simply add their names to your reply, marked Ceremony. The reception is by invitation only, for the people named on your invitation. We would love to host everyone, but we cannot.</p></div></details>
         <details><summary>Are children welcome?</summary><div class="a"><p>In the church, always. For the reception, please check the names on your invitation.</p></div></details>
       </div>
       <p class="lede rv faq-contact">Anything else? Email us at <a href="mailto:basil2fxs@gmail.com">basil2fxs@gmail.com</a> or text Basil on <a href="sms:+61422083274">0422 083 274</a>.</p>
@@ -981,6 +998,7 @@ html.past-hero .nav-trigger, html.past-hero .rsvp-jump{ opacity:1; visibility:vi
         </div>
         <p class="year rv">2027</p>
         <p class="caps venue rv">Ιερός Καθεδρικός Ναός <br>Αγίων Κωνσταντίνου και Ελένης</p>
+        <p class="caps-sm venue-addr rv">Πάρκερ Στριτ 20, Νόρθμπριτζ, <br>Πέρθη, Δυτική Αυστραλία</p>
         <p class="script-line rv">θα ακολουθήσει δεξίωση</p>
       </div>
     </header>
@@ -1007,7 +1025,7 @@ html.past-hero .nav-trigger, html.past-hero .rsvp-jump{ opacity:1; visibility:vi
       <div class="details rv">
         <span class="caps">Σάββατο, 27 Φεβρουαρίου 2027, 15:00</span>
         <p class="venue-name">Ιερός Καθεδρικός Ναός Αγίων Κωνσταντίνου και Ελένης</p>
-        <span class="caps"><a href="https://maps.google.com/?q=Greek+Orthodox+Cathedral+of+Saints+Constantine+and+Helene,+Parker+Street,+Northbridge+WA+6003" target="_blank" rel="noopener">Γωνία Πάρκερ &amp; Φράνσις, Νόρθμπριτζ</a></span>
+        <span class="caps"><a href="https://maps.google.com/?q=Greek+Orthodox+Cathedral+of+Saints+Constantine+and+Helene,+20+Parker+Street,+Northbridge+WA+6003,+Australia" target="_blank" rel="noopener">Πάρκερ Στριτ 20, Νόρθμπριτζ, Δυτική Αυστραλία 6003, Αυστραλία</a></span>
       </div>
       <p class="prose rv arrive">Παρακαλούμε να είστε μέσα στην εκκλησία μέχρι τις 14:45. Το Μυστήριο ξεκινά ακριβώς στις 15:00 και, από σεβασμό προς το Μυστήριο, δεν επιτρέπεται η είσοδος μετά την έναρξή του.</p>
     </section>
@@ -1017,7 +1035,7 @@ html.past-hero .nav-trigger, html.past-hero .rsvp-jump{ opacity:1; visibility:vi
       <div class="details rv">
         <span class="caps">Από τις 18:30 μέχρι αργά</span>
         <p class="venue-name">Ξενοδοχείο Παν Πασίφικ Περθ</p>
-        <span class="caps"><a href="https://maps.google.com/?q=Pan+Pacific+Perth,+207+Adelaide+Terrace,+Perth+WA+6000" target="_blank" rel="noopener">Αδελέιντ Τέρας 207, Περθ</a></span>
+        <span class="caps"><a href="https://maps.google.com/?q=Pan+Pacific+Perth,+207+Adelaide+Terrace,+Perth+WA+6000" target="_blank" rel="noopener">Αδελέιντ Τέρας 207, Περθ, Δυτική Αυστραλία 6000, Αυστραλία</a></span>
       </div>
       <p class="lede rv">Δείπνο, ευχές και χορός στο Παν Πασίφικ, λίγα λεπτά με το αυτοκίνητο από την εκκλησία.</p>
     </section>
@@ -1068,7 +1086,7 @@ html.past-hero .nav-trigger, html.past-hero .rsvp-jump{ opacity:1; visibility:vi
     <section class="band" id="el-rsvp" data-sec="rsvp" aria-labelledby="el-rsvp-h">
       <span class="orn rv"></span>
       <div class="sec-head rv"><h2 class="h-script" id="el-rsvp-h">Επιβεβαίωση συμμετοχής</h2><p class="caps">Παρακαλούμε απαντήστε μέχρι την Παρασκευή, 15 Ιανουαρίου 2027</p></div>
-      <p class="lede rv">Προσθέστε όλα τα άτομα που αναγράφονται στο προσκλητήριό σας και πείτε μας για το καθένα αν θα είναι μαζί μας, και σε ποιο μέρος της ημέρας.</p>
+      <p class="lede rv">Προσθέστε όλα τα άτομα που αναγράφονται στο προσκλητήριό σας, και όποιον έρθει μαζί σας στην εκκλησία, και πείτε μας για το καθένα αν θα είναι μαζί μας και σε ποιο μέρος της ημέρας.</p>
       <div class="rsvp-cta rv">
         <button class="btn btn-lg" type="button" data-rsvp-open>Απαντήστε</button>
         <p class="rsvp-received script-line">Ευχαριστούμε, λάβαμε την απάντησή σας.</p>
@@ -1144,7 +1162,7 @@ html.past-hero .nav-trigger, html.past-hero .rsvp-jump{ opacity:1; visibility:vi
         <details><summary>Τι ώρα να έρθω;</summary><div class="a"><p>Να είστε στις θέσεις σας μέχρι τις 14:45. Το Μυστήριο ξεκινά ακριβώς στις 15:00 και οι πόρτες κλείνουν με την έναρξή του, οπότε παρακαλούμε μην αργήσετε.</p></div></details>
         <details><summary>Ποιος είναι ο κουμπάρος;</summary><div class="a"><p>Ο κουμπάρος είναι ο παράνυμφος του ζευγαριού: αλλάζει τα δαχτυλίδια και τα Στέφανα πάνω από τα κεφάλια μας και μένει για πάντα μέλος της οικογένειας. Κουμπάρος μας θα είναι ο Αντώνης Ζεϊντάν, ο κολλητός φίλος του Βασίλη εδώ και πολλά χρόνια.</p></div></details>
         <details><summary>Μπορώ να βγάλω φωτογραφίες;</summary><div class="a"><p>Όχι στη διάρκεια του Μυστηρίου, παρακαλούμε. Οι φωτογράφοι μας θα καλύψουν την τελετή και θα μοιραστούμε τις φωτογραφίες τους μαζί σας. Στη δεξίωση, ναι, όσες θέλετε, και παρακαλούμε προσθέστε τις στο άλμπουμ μας (δείτε την ενότητα Φωτογραφίες πιο πάνω).</p></div></details>
-        <details><summary>Μπορώ να φέρω συνοδό;</summary><div class="a"><p>Τα προσκλητήριά μας απευθύνονται στα άτομα που μπορούμε να φιλοξενήσουμε. Θα θέλαμε να είναι όλοι μαζί μας, αλλά δυστυχώς δεν γίνεται, οπότε παρακαλούμε απαντήστε μόνο για όσους αναγράφονται στο δικό σας.</p></div></details>
+        <details><summary>Μπορώ να φέρω συνοδό;</summary><div class="a"><p>Στην εκκλησία, ναι: το Μυστήριο είναι ανοιχτό σε όλους, οπότε φέρτε όποιον θέλετε και απλώς προσθέστε τα ονόματα στην απάντησή σας, με την επιλογή Στο Μυστήριο. Η δεξίωση είναι μόνο με πρόσκληση, για τα άτομα που αναγράφονται στο προσκλητήριό σας. Θα θέλαμε να φιλοξενήσουμε όλους, αλλά δυστυχώς δεν γίνεται.</p></div></details>
         <details><summary>Μπορώ να φέρω τα παιδιά μου;</summary><div class="a"><p>Στην εκκλησία, πάντα. Για τη δεξίωση, δείτε τα ονόματα στο προσκλητήριό σας.</p></div></details>
       </div>
       <p class="lede rv faq-contact">Για οτιδήποτε άλλο, γράψτε μας στο <a href="mailto:basil2fxs@gmail.com">basil2fxs@gmail.com</a> ή στείλτε μήνυμα στον Βασίλη στο <a href="sms:+61422083274">0422 083 274</a>.</p>
@@ -1160,7 +1178,7 @@ html.past-hero .nav-trigger, html.past-hero .rsvp-jump{ opacity:1; visibility:vi
 
 <!-- Navigation -->
 <button class="nav-trigger" type="button" aria-haspopup="dialog" aria-controls="nav"><span class="lang-en" lang="en">Menu</span><span class="lang-el" lang="el">Μενού</span></button>
-<button class="rsvp-jump" type="button" data-rsvp-open><span class="lang-en" lang="en">RSVP</span><span class="lang-el" lang="el">Συμμετοχή</span></button>
+<button class="rsvp-jump" type="button" data-rsvp-open><span class="lang-en" lang="en" data-done="Replied">RSVP</span><span class="lang-el" lang="el" data-done="Απαντήσατε">Συμμετοχή</span></button>
 
 <dialog id="nav" aria-labelledby="nav-l">
   <span id="nav-l" class="vh"><span class="lang-en" lang="en">Menu</span><span class="lang-el" lang="el">Μενού</span></span>
@@ -1937,6 +1955,7 @@ $$('form.rsvp').forEach(function(form){
       setTimeout(function(){
         wrap.classList.remove('is-sending'); wrap.classList.add('is-done');
         var cta = root ? $('.rsvp-cta', root) : null; if (cta) cta.classList.add('is-done');
+        var jump = $('.rsvp-jump'); if (jump){ jump.classList.add('is-done'); $$('span[data-done]', jump).forEach(function(sp){ sp.textContent = sp.getAttribute('data-done'); }); }
         var d = $('.rsvp-done', wrap);
         if (d){ try { d.focus({ preventScroll:true }); } catch(e){} }
       }, RM ? 0 : 340);

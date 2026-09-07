@@ -34,7 +34,8 @@ Sheet and the CSV have one row per person:
 - `Names`: that guest's name. `Attending`: Accepts / Declines (Greek: Ναι / Δυστυχώς όχι).
 - `Number attending`: 1 if they accept, 0 if not, so a SUM of that column is the headcount.
 - `Events`: Ceremony / Reception / Both (blank when declining). Filter on it for the church count
-  and the dinner count.
+  and the dinner count. Extra people a guest brings to the church only will appear as their own
+  rows marked Ceremony (the site tells guests the service is open to all, the reception is not).
 - `Dietary`: per guest. `Contact`: the same for every guest of one reply, which is how you tell a
   party apart. `Song` and `Message` sit on the first guest's row; the other rows carry
   "With: <first guest>" in Message.
