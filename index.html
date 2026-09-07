@@ -481,8 +481,8 @@ html.is-sealed .env-flap, html.is-sealed .letter, html.is-sealed .grow{ will-cha
 .btn:active{ opacity:.6; }
 .btn:focus-visible{ outline:1px solid var(--gold); outline-offset:5px; }
 .btn[disabled]{ opacity:.5; cursor:default; }
-.nav-rsvp .btn{ background:transparent; color:var(--ink); border-color:var(--gold); }
-.nav-rsvp .btn:hover{ background:var(--ink); color:var(--paper); }
+.nav-rsvp .btn{ background:var(--ink); color:var(--paper); border-color:var(--ink); min-height:58px; padding:20px 52px 18px calc(52px + .3em); font-size:clamp(.82rem,3.5vw,.95rem); font-weight:500; letter-spacing:.3em; box-shadow:0 18px 40px -22px rgba(120,96,58,.55); }
+.nav-rsvp .btn:hover{ background:var(--ink-strong); }
 .rsvp-cta{ text-align:center; }
 .btn-lg{ min-height:58px; padding:20px 56px 18px calc(56px + .28em); font-size:clamp(.78rem,3.3vw,.875rem); }
 .rsvp-received{ display:none; }
@@ -779,7 +779,7 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
   padding:calc(env(safe-area-inset-top) + 64px) var(--pad) calc(env(safe-area-inset-bottom) + 48px);
 }
 .nav-mono{ width:clamp(84px,22vw,116px); }
-.nav-list{ margin:clamp(18px,4vh,34px) 0; }
+.nav-list{ margin:0 0 clamp(18px,4vh,34px); }
 .nav-list li{ padding:clamp(4px,1vh,8px) 0; }
 .nav-list a{
   display:inline-block; padding:6px 14px; min-height:44px;
@@ -797,7 +797,7 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
   touch-action:manipulation; -webkit-tap-highlight-color:transparent;
 }
 .nav-close:focus-visible{ outline:1px solid var(--gold); outline-offset:-6px; }
-.nav-rsvp{ margin-top:clamp(10px,2vh,18px); }
+.nav-rsvp{ margin-top:clamp(18px,3.5vh,30px); }
 @media all{
   #nav[open]{ animation:navcurtain 520ms var(--ease-place) both; }
   #nav.closing{ animation:navfade 300ms var(--ease-std) both; }
@@ -1407,7 +1407,6 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
   <button class="nav-close" type="button" data-close><span class="lang-en" lang="en">Close</span><span class="lang-el" lang="el">Κλείσιμο</span></button>
   <div class="nav-in">
     <div>
-      <svg class="monogram nav-mono" viewBox="0 0 920 688" aria-hidden="true"><use href="#mono"/></svg>
       <ul class="nav-list lang-en" lang="en">
         <li style="--i:0"><a href="#en-ceremony">The Ceremony</a></li>
         <li style="--i:1"><a href="#en-reception">The Reception</a></li>
@@ -1425,7 +1424,6 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
         <li style="--i:5"><a href="#el-faq">Ερωτήσεις</a></li>
       </ul>
       <div class="nav-rsvp"><button class="btn lang-en" lang="en" type="button" data-rsvp-open>RSVP</button><button class="btn lang-el" lang="el" type="button" data-rsvp-open>Επιβεβαίωση συμμετοχής</button></div>
-      <div><button type="button" class="sound-toggle" data-sound aria-pressed="true"><span class="lang-en" lang="en" data-on="Sound on" data-off="Sound off">Sound on</span><span class="lang-el" lang="el" data-on="Ήχος ενεργός" data-off="Ήχος ανενεργός">Ήχος ενεργός</span></button></div>
     </div>
   </div>
 </dialog>
