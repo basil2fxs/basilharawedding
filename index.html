@@ -210,7 +210,7 @@ em{ font-style:italic; }
 .glide{ position:relative; transform-style:preserve-3d; }
 
 /* contact shadow: two fixed-blur layers, cross-faded - never animate blur */
-.sh{ position:absolute; left:50%; bottom:-4%; width:88%; height:10%; translate:-50% 0;
+.sh{ position:absolute; left:6%; bottom:-4%; width:88%; height:10%;
      border-radius:50%; pointer-events:none; transform:translateZ(-1px); }
 .sh-soft{ background:radial-gradient(50% 50% at 50% 50%,rgba(var(--shadow),.30),rgba(var(--shadow),0) 70%); filter:blur(9px); opacity:.10; }
 .sh-tight{ background:radial-gradient(50% 50% at 50% 50%,rgba(var(--shadow),.42),rgba(var(--shadow),0) 66%); filter:blur(3px); opacity:.62; }
@@ -331,8 +331,10 @@ html.is-sealed .env-flap, html.is-sealed .letter, html.is-sealed .grow{ will-cha
   100%{ transform:translate3d(0,0,0) }
 }
 @media (prefers-reduced-motion: reduce){
+  html.full-intro .env-unit{ opacity:0 }
+  html.full-intro.play .env-unit{ animation:fadein 1100ms var(--ease-fade) both; animation-delay:var(--d0,320ms); }
   html.full-intro .addr{ opacity:0 }
-  html.full-intro.play .addr{ animation:fadein 400ms linear both; }
+  html.full-intro.play .addr{ animation:fadein 700ms linear both; animation-delay:calc(var(--d0,320ms) + 900ms); }
   @keyframes fadein{ from{opacity:0} to{opacity:1} }
 }
 @media (min-width: 760px){
@@ -763,6 +765,7 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
   color:var(--ink); overscroll-behavior:contain;
 }
 #nav::backdrop{ background:transparent; }
+#nav[open], .rsvp-dlg[open]{ z-index:9600; }
 .nav-in{
   position:absolute; inset:0; overflow:auto; -webkit-overflow-scrolling:touch;
   display:grid; place-items:center; text-align:center;
@@ -1169,7 +1172,7 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
         <span class="caps off-l">Τελούν το Μυστήριο</span>
         <p class="venue-name officiants">Ο Θεοφιλέστατος Επίσκοπος Ελπίδιος<br>Ο Αρχιμανδρίτης πατήρ Μακάριος<br>Ο πατήρ Τέρι</p>
       </div>
-      <p class="prose rv arrive">Παρακαλούμε να έχετε φτάσει μέχρι τις 13:30 για να καθίσετε. Το Μυστήριο ξεκινά ακριβώς στις 13:45 και, από σεβασμό προς το Μυστήριο, δεν επιτρέπεται η είσοδος μετά την έναρξή του.</p>
+      <p class="prose rv arrive">Παρακαλούμε να έχετε φτάσει μέχρι τις 13:30 για να καθίσετε. Το Μυστήριο ξεκινά ακριβώς στις 13:45 και, από σεβασμό προς την ιερότητα της τελετής, δεν επιτρέπεται η είσοδος μετά την έναρξή του.</p>
     </section>
     <section class="band" id="el-reception" data-sec="reception" aria-labelledby="el-reception-h">
       <span class="orn rv"></span>
@@ -1177,8 +1180,8 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
       <div class="church-art tables-art rv" aria-hidden="true"><svg class="art" viewBox="0 0 920 613" aria-hidden="true" focusable="false"><use href="#art-reception"/></svg></div>
       <div class="details rv">
         <span class="caps">Ποτά και καναπεδάκια από τις 18:30, δεξίωση από τις 19:00</span>
-        <p class="venue-name">Ξενοδοχείο Παν Πασίφικ Περθ, Αίθουσα Γκόλντεν Μπολρούμ</p>
-        <span class="caps"><a href="https://maps.google.com/?q=Pan+Pacific+Perth,+207+Adelaide+Terrace,+Perth+WA+6000" target="_blank" rel="noopener">Αδελέιντ Τέρας 207, Περθ, Δυτική Αυστραλία 6000, Αυστραλία</a></span>
+        <p class="venue-name">Ξενοδοχείο Παν Πασίφικ Πέρθη, Αίθουσα Γκόλντεν Μπολρούμ</p>
+        <span class="caps"><a href="https://maps.google.com/?q=Pan+Pacific+Perth,+207+Adelaide+Terrace,+Perth+WA+6000" target="_blank" rel="noopener">Αδελέιντ Τέρας 207, Πέρθη, Δυτική Αυστραλία 6000, Αυστραλία</a></span>
       </div>
       <p class="lede rv">Ποτά και καναπεδάκια από τις 18:30, και έπειτα η δεξίωση στην αίθουσα Γκόλντεν Μπολρούμ από τις 19:00. Το Παν Πασίφικ είναι λίγα λεπτά με το αυτοκίνητο από την εκκλησία.</p>
     </section>
@@ -1186,11 +1189,11 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
       <span class="orn rv"></span>
       <div class="sec-head rv"><h2 class="h-script" id="el-schedule-h">Το πρόγραμμα της ημέρας</h2></div>
       <ol class="sched" data-rv-group data-rv-step="80" data-rv-cap="6">
-        <li class="rv"><span class="caps t">13:30</span><span class="e">Άφιξη για να καθίσετε</span></li>
+        <li class="rv"><span class="caps t">13:30</span><span class="e">Προσέλευση στην εκκλησία και τακτοποίηση στις θέσεις</span></li>
         <li class="rv"><span class="caps t">13:45</span><span class="e">Έναρξη του Μυστηρίου</span></li>
         <li class="rv"><span class="caps t">15:15</span><span class="e">Τέλος του Μυστηρίου. Παρακαλούμε περιμένετε έξω για να μας ρίξετε ρύζι καθώς βγαίνουμε από την εκκλησία, και έπειτα είστε ελεύθεροι να φύγετε</span></li>
         <li class="rv"><span class="caps t">18:30</span><span class="e">Άφιξη στο Παν Πασίφικ για ποτά και καναπεδάκια</span></li>
-        <li class="rv"><span class="caps t">19:00</span><span class="e">Περνάμε στην αίθουσα Γκόλντεν Μπολρούμ και βρίσκετε τη θέση σας</span></li>
+        <li class="rv"><span class="caps t">19:00</span><span class="e">Είσοδος στην αίθουσα Γκόλντεν Μπολρούμ, όπου σας περιμένει η θέση σας</span></li>
         <li class="rv"><span class="caps t">22:00</span><span class="e">Κόψιμο της τούρτας</span></li>
         <li class="rv"><span class="caps t">22:30</span><span class="e">Σπάσιμο των πιάτων</span></li>
         <li class="rv"><span class="caps t">23:59</span><span class="e">Ο τελευταίος χορός</span></li>
@@ -1200,7 +1203,7 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
       <span class="orn rv"></span>
       <div class="sec-head rv"><h2 class="h-script" id="el-dress-h">Ενδυματολογικός κώδικας</h2></div>
       <div class="ruled-line rv"><i></i><span>Επίσημη ένδυση</span><i></i></div>
-      <p class="lede rv">Παρακαλούμε βραδινή ένδυση χορού. Σκούρο κοστούμι με γραβάτα, ή σμόκιν αν θέλετε. Μακρύ ή κοκτέιλ φόρεμα, με καλυμμένους ώμους μέσα στην εκκλησία.</p>
+      <p class="lede rv">Παρακαλούμε επίσημη βραδινή ένδυση. Σκούρο κοστούμι με γραβάτα, ή σμόκιν αν θέλετε. Μακρύ ή κοκτέιλ φόρεμα, με καλυμμένους ώμους μέσα στην εκκλησία.</p>
     </section>
     <section class="band" id="el-families" data-sec="families" aria-labelledby="el-families-h">
       <span class="orn rv"></span>
@@ -1226,7 +1229,7 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
       <div class="sec-head rv"><h2 class="h-script" id="el-travel-h">Άφιξη &amp; Διαμονή</h2></div>
       <dl class="kv" data-rv-group>
         <div class="rv"><dt>Πώς θα έρθετε</dt><dd>Η εκκλησία βρίσκεται στο Νόρθμπριτζ, δέκα λεπτά με τα πόδια από τον κεντρικό σταθμό της Πέρθης και είκοσι λεπτά με το αυτοκίνητο από το αεροδρόμιο. Το Παν Πασίφικ βρίσκεται στην Αδελέιντ Τέρας, στο κέντρο της πόλης, λίγα λεπτά πιο πέρα με το αυτοκίνητο.</dd></div>
-        <div class="rv"><dt>Πάρκινγκ</dt><dd>Στην εκκλησία οι γύρω δρόμοι γεμίζουν το Σάββατο. Το πάρκινγκ της Πολιτειακής Βιβλιοθήκης στην οδό Φράνσις είναι λίγα λεπτά μακριά. Στο Παν Πασίφικ Περθ οι καλεσμένοι έχουν έκπτωση 40% στο πάρκινγκ: πάρτε έναν κωδικό στάθμευσης από το τραπέζι των δώρων και σκανάρετέ τον στην έξοδο. Υπάρχει και βαλέ για 65 δολάρια ανά αυτοκίνητο, ανά ημέρα. Η είσοδος του πάρκινγκ είναι από την οδό Χιλ και υπόκειται σε διαθεσιμότητα.</dd></div>
+        <div class="rv"><dt>Πάρκινγκ</dt><dd>Στην εκκλησία οι γύρω δρόμοι γεμίζουν το Σάββατο. Το πάρκινγκ της Πολιτειακής Βιβλιοθήκης στην οδό Φράνσις είναι λίγα λεπτά μακριά. Στο Παν Πασίφικ Πέρθη οι καλεσμένοι έχουν έκπτωση 40% στο πάρκινγκ: πάρτε έναν κωδικό στάθμευσης από το τραπέζι των δώρων και σκανάρετέ τον στην έξοδο. Υπάρχει και υπηρεσία βαλέ με 65 δολάρια ανά αυτοκίνητο την ημέρα. Η είσοδος του πάρκινγκ είναι από την οδό Χιλ, ανάλογα με τη διαθεσιμότητα.</dd></div>
         <div class="rv"><dt>Διαμονή</dt><dd>Αν θέλετε να μείνετε στο ξενοδοχείο Παν Πασίφικ τη νύχτα του γάμου μας, οι καλεσμένοι μας έχουν έκπτωση έως 30% στη διαμονή τους: <a href="https://www.panpacific.com/en/hotels-and-resorts/pp-perth/offers/embrace-exclusive-savings.html" target="_blank" rel="noopener">κάντε κράτηση μέσω αυτού του συνδέσμου</a>.</dd></div>
         <div class="rv"><dt>Καιρός</dt><dd>Τέλη Φεβρουαρίου ο καιρός είναι ζεστός και ξηρός: γύρω στους 32 βαθμούς το απόγευμα και 18 τη νύχτα.</dd></div>
       </dl>
@@ -1235,7 +1238,7 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
       <span class="orn rv"></span>
       <div class="sec-head rv"><h2 class="h-script" id="el-gifts-h">Δώρα</h2></div>
       <p class="prose rv">Η παρουσία σας στον γάμο μας είναι η μεγαλύτερη ευλογία. Αν θέλετε να μας τιμήσετε με ένα δώρο, μια χρηματική συνεισφορά στο κουτί ευχών μας στη δεξίωση θα εκτιμηθεί ειλικρινά. Μπορείτε επίσης να κάνετε κατάθεση στον λογαριασμό μας.</p>
-      <div class="gift-cta rv"><button class="btn btn-ghost" type="button" data-gift-open>Δώρο με κατάθεση</button></div>
+      <div class="gift-cta rv"><button class="btn btn-ghost" type="button" data-gift-open>Δώρο με τραπεζική κατάθεση</button></div>
       <dialog class="rsvp-dlg gift-dlg" id="el-gift-dlg" aria-labelledby="el-gift-dlg-h">
         <div class="rsvp-card">
           <button class="dlg-close" type="button" data-close>Κλείσιμο</button>
@@ -1303,7 +1306,7 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
                           <label class="choice"><input type="radio" data-name="att" name="att_el_1" value="Δυστυχώς δεν θα μπορέσει" data-att="no"><span>Δυστυχώς δεν θα μπορέσει</span></label>
                         </div>
                       </div>
-                      <div class="guest-row guest-ev"><span class="lbl-sm">Πού</span>
+                      <div class="guest-row guest-ev"><span class="lbl-sm">Θα παρευρεθεί</span>
                         <div class="choices">
                           <label class="choice"><input type="radio" data-name="ev" name="ev_el_1" value="Στο Μυστήριο"><span>Στο Μυστήριο</span></label>
                           <label class="choice"><input type="radio" data-name="ev" name="ev_el_1" value="Στη δεξίωση"><span>Στη δεξίωση</span></label>
@@ -1375,7 +1378,7 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
 
 <!-- Navigation -->
 <button class="nav-trigger" type="button" aria-haspopup="dialog" aria-controls="nav"><span class="lang-en" lang="en">Menu</span><span class="lang-el" lang="el">Μενού</span></button>
-<button class="rsvp-jump" type="button" data-rsvp-open><span class="lang-en" lang="en" data-done="Replied">RSVP</span><span class="lang-el" lang="el" data-done="Απαντήσατε">Συμμετοχή</span></button>
+<button class="rsvp-jump" type="button" data-rsvp-open><span class="lang-en" lang="en" data-done="Replied">RSVP</span><span class="lang-el" lang="el" data-done="Απαντήσατε">Δήλωση συμμετοχής</span></button>
 
 <dialog id="nav" aria-labelledby="nav-l">
   <span id="nav-l" class="vh"><span class="lang-en" lang="en">Menu</span><span class="lang-el" lang="el">Μενού</span></span>
@@ -1764,11 +1767,19 @@ function openEnvelope(lang, K){
   site.style.visibility = 'visible'; site.style.opacity = '1';   // paints now, hidden behind the curtain, not mid-flight
 
   if (RM || !envelope || !flap.animate || !realTop){
-    // no 3D at all: a calm crossfade, which is the right answer, not a token gesture
+    // no 3D and no flight (reduced motion, or an old browser): the seal still gives, the other
+    // envelope fades, and the page develops through the paper over about two seconds
     site.style.visibility = 'visible'; site.style.opacity = '1'; site.removeAttribute('inert');
     prepareHeroStagger(); initReveals();
-    var f = curtain.animate([{ opacity:0.999 }, { opacity:0 }], { duration:320, fill:'forwards', easing:'cubic-bezier(.4,0,.2,1)' });
-    f.finished.then(function(){ requestAnimationFrame(unlock); }).catch(unlock);
+    var fade = function(el, from, to, ms, delay){
+      if (!el) return null;
+      if (el.animate) return el.animate([{ opacity:from }, { opacity:to }], { duration:ms, delay:delay || 0, fill:'forwards', easing:'cubic-bezier(.4,0,.2,1)' });
+      el.style.transition = 'opacity ' + ms + 'ms linear ' + (delay || 0) + 'ms'; el.style.opacity = String(to); return null;
+    };
+    setTimeout(function(){ if (envelope) envelope.classList.add('cracked'); Sfx.crack(); }, 300);
+    fade(other, 1, 0, 700, 200);
+    fade(curtain, 0.999, 0, 1100, 900);
+    setTimeout(function(){ unlock(); }, 2100);
     return;
   }
 
@@ -1963,12 +1974,13 @@ var Lock = (function(){
 /* ---------- menu dialog ---------- */
 (function(){
   var dlg = $('#nav'), trig = $('.nav-trigger');
-  if (!dlg || !trig || typeof dlg.showModal !== 'function') return;
-  var closing = false;
-  function open(){ Lock.on(); dlg.showModal(); }
+  if (!dlg || !trig) return;
+  var modal = typeof dlg.showModal === 'function', closing = false;
+  function isOpen(){ return dlg.hasAttribute('open'); }
+  function open(){ Lock.on(); if (modal) dlg.showModal(); else dlg.setAttribute('open', ''); }
   function close(cb){
-    if (closing || !dlg.open) return; closing = true;
-    var done = function(){ dlg.classList.remove('closing'); dlg.close(); Lock.off(); closing = false; trig.focus({ preventScroll:true }); if (cb) cb(); };
+    if (closing || !isOpen()) return; closing = true;
+    var done = function(){ dlg.classList.remove('closing'); if (modal) dlg.close(); else dlg.removeAttribute('open'); Lock.off(); closing = false; trig.focus({ preventScroll:true }); if (cb) cb(); };
     if (RM){ done(); return; }
     dlg.classList.add('closing');
     setTimeout(done, 300);
@@ -1991,9 +2003,9 @@ var Lock = (function(){
 var rsvpClosing = false;
 function openCard(kind){
   var lang = html.getAttribute('data-lang') === 'el' ? 'el' : 'en';
-  var dlg = $('#' + lang + '-' + kind + '-dlg'); if (!dlg || dlg.open) return;
-  if (typeof dlg.showModal !== 'function'){ dlg.setAttribute('open', ''); return; }
-  Lock.on(); dlg.showModal();
+  var dlg = $('#' + lang + '-' + kind + '-dlg'); if (!dlg || dlg.hasAttribute('open')) return;
+  Lock.on();
+  if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', '');
   Sfx.init(); Sfx.paper(0.035, 0.6);
   var card = $('.rsvp-card', dlg);
   if (card){ card.scrollTop = 0; card.setAttribute('tabindex', '-1'); try { card.focus({ preventScroll:true }); } catch(e){} }
@@ -2001,9 +2013,9 @@ function openCard(kind){
 function openRsvp(){ openCard('rsvp'); }
 function openGift(){ openCard('gift'); }
 function closeRsvp(dlg, cb){
-  if (!dlg || rsvpClosing || !dlg.open) return; rsvpClosing = true;
+  if (!dlg || rsvpClosing || !dlg.hasAttribute('open')) return; rsvpClosing = true;
   var done = function(){
-    dlg.classList.remove('closing'); dlg.close(); Lock.off(); rsvpClosing = false;
+    dlg.classList.remove('closing'); if (typeof dlg.close === 'function' && typeof dlg.showModal === 'function') dlg.close(); else dlg.removeAttribute('open'); Lock.off(); rsvpClosing = false;
     var root = dlg.closest('.lang-root'), back = root ? $(dlg.classList.contains('gift-dlg') ? '[data-gift-open]' : '[data-rsvp-open]', root) : null;
     if (back && back.offsetParent !== null) { try { back.focus({ preventScroll:true }); } catch(e){} }
     if (cb) cb();
