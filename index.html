@@ -674,6 +674,8 @@ html.is-sealed .env-flap, html.is-sealed .letter, html.is-sealed .grow{ will-cha
   @keyframes shake{ 0%,100%{ transform:translate3d(0,0,0) } 20%{ transform:translate3d(-6px,0,0) } 40%{ transform:translate3d(5px,0,0) } 60%{ transform:translate3d(-3px,0,0) } 80%{ transform:translate3d(2px,0,0) } }
 }
 .church-art svg.art{ width:100%; height:auto; }
+.details .off-l{ margin-top:clamp(14px,2.6vh,20px); color:var(--ink-soft); }
+.details .officiants{ margin-top:6px; }
 /* a party that is all regrets: no song, no contact needed, just a message if they like */
 .rsvp-wrap.all-declined .field[data-req="contact"], .rsvp-wrap.all-declined .field-song{ display:none; }
 .kv.fam dd.venue-name{ margin:2px auto 0; }
@@ -916,6 +918,8 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
         <span class="caps">Saturday 27 February 2027, 1:45 pm</span>
         <p class="venue-name">Greek Orthodox Cathedral of Saints Constantine and Helene</p>
         <span class="caps"><a href="https://maps.google.com/?q=Greek+Orthodox+Cathedral+of+Saints+Constantine+and+Helene,+20+Parker+Street,+Northbridge+WA+6003,+Australia" target="_blank" rel="noopener">20 Parker Street, Northbridge WA 6003, Australia</a></span>
+        <span class="caps off-l">Officiated by</span>
+        <p class="venue-name officiants">His Grace Bishop Elpidios, Archimandrite Father Makarios and Father Terry</p>
       </div>
       <p class="prose rv arrive">Please arrive by 1:30 pm to be seated. The ceremony begins at 1:45 pm sharp and, out of respect for the sacrament, there is strictly no entry once it has started.</p>
     </section>
@@ -967,7 +971,6 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
         <div class="rv"><dt>Groomsmen</dt><dd class="venue-name">Pandelis Toufexis, Costa Toufexis and Hamish Wood</dd></div>
         <div class="rv"><dt>Bridesmaids</dt><dd class="venue-name">Eleni Toufexis, Poppy Bolt and Ramudhi Kottage</dd></div>
         <div class="rv"><dt>Flower girl</dt><dd class="venue-name">Sofia Kontorinis</dd></div>
-        <div class="rv"><dt>Ring bearer</dt><dd class="venue-name">To be announced</dd></div>
       </dl>
     </section>
     <section class="band" id="en-travel" data-sec="travel" aria-labelledby="en-travel-h">
@@ -1160,6 +1163,8 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
         <span class="caps">Σάββατο, 27 Φεβρουαρίου 2027, 13:45</span>
         <p class="venue-name">Ιερός Καθεδρικός Ναός Αγίων Κωνσταντίνου και Ελένης</p>
         <span class="caps"><a href="https://maps.google.com/?q=Greek+Orthodox+Cathedral+of+Saints+Constantine+and+Helene,+20+Parker+Street,+Northbridge+WA+6003,+Australia" target="_blank" rel="noopener">Πάρκερ Στριτ 20, Νόρθμπριτζ, Δυτική Αυστραλία 6003, Αυστραλία</a></span>
+        <span class="caps off-l">Τελούν το Μυστήριο</span>
+        <p class="venue-name officiants">Ο Θεοφιλέστατος Επίσκοπος Ελπίδιος, ο Αρχιμανδρίτης πατήρ Μακάριος και ο πατήρ Τέρι</p>
       </div>
       <p class="prose rv arrive">Παρακαλούμε να έχετε φτάσει μέχρι τις 13:30 για να καθίσετε. Το Μυστήριο ξεκινά ακριβώς στις 13:45 και, από σεβασμό προς το Μυστήριο, δεν επιτρέπεται η είσοδος μετά την έναρξή του.</p>
     </section>
@@ -1211,7 +1216,6 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
         <div class="rv"><dt>Παράνυμφοι του γαμπρού</dt><dd class="venue-name">Παντελής Τουφεξής, Κώστας Τουφεξής και Χέιμις Γουντ</dd></div>
         <div class="rv"><dt>Παράνυμφες της νύφης</dt><dd class="venue-name">Ελένη Τουφεξή, Πόπι Μπολτ και Ραμούντι Κότατζ</dd></div>
         <div class="rv"><dt>Κοριτσάκι με τα λουλούδια</dt><dd class="venue-name">Σοφία Κοντορίνη</dd></div>
-        <div class="rv"><dt>Παιδί με τις βέρες</dt><dd class="venue-name">Θα ανακοινωθεί</dd></div>
       </dl>
     </section>
     <section class="band" id="el-travel" data-sec="travel" aria-labelledby="el-travel-h">
