@@ -852,6 +852,21 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
 /* on wide screens the page heading is at its largest, so the card's copy is a touch smaller */
 @media (min-width: 760px){ .mini{ transform:scale(.36); } }
 
+/* Menu and Close wear the same fine gold pill as the corner RSVP */
+.nav-trigger, .nav-close, .dlg-close{
+  min-height:40px; padding:0 18px 0 calc(18px + .3em); border:.75px solid var(--gold); border-radius:999px;
+  background:rgba(253,251,247,.72); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+  box-shadow:0 6px 18px -10px rgba(120,96,58,.35); display:grid; place-items:center;
+}
+.nav-trigger{ top:max(10px, calc(env(safe-area-inset-top) + 2px)); }
+.nav-close, .dlg-close{ top:max(10px, calc(env(safe-area-inset-top) + 2px)); right:max(14px, env(safe-area-inset-right)); }
+.nav-trigger span{ padding-bottom:0; }
+.nav-trigger span::after{ display:none; }
+.nav-trigger:active{ opacity:1; transform:scale(.97); }
+@media (hover:hover){ .nav-trigger:hover, .nav-close:hover, .dlg-close:hover{ background:var(--ink); border-color:var(--ink); color:var(--paper); } }
+@media (min-width: 760px){ .dlg-close{ top:12px; right:16px; } }
+
+
 @supports (view-transition-name: none){
   ::view-transition-old(root),::view-transition-new(root){ animation-duration:260ms; animation-timing-function:var(--ease-std); }
 }
@@ -992,7 +1007,7 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
       <dl class="kv" data-rv-group>
         <div class="rv"><dt>Getting here</dt><dd>The church is in Northbridge, ten minutes on foot from Perth station and twenty minutes by car from the airport. The Pan Pacific is on Adelaide Terrace in the city, a few minutes further by car.</dd></div>
         <div class="rv"><dt>Parking</dt><dd>At the church, street parking fills up on a Saturday; the State Library car park on Francis Street is a few minutes away. At the Pan Pacific Perth, guests enjoy 40% off self-parking: collect a parking barcode from the gift table and scan it at the exit. Valet parking is also available for $65 per car, per day. Parking entry is via Hill Street and is subject to availability.</dd></div>
-        <div class="rv"><dt>Staying</dt><dd>If you wish to stay at the Pan Pacific Hotel on the night of our wedding, our guests save up to 30% on their stay.<a class="btn btn-ghost btn-sm kv-btn" href="https://www.panpacific.com/en/hotels-and-resorts/pp-perth/offers/embrace-exclusive-savings.html" target="_blank" rel="noopener">Book at the guest rate</a></dd></div>
+        <div class="rv"><dt>Staying</dt><dd>If you wish to stay at the Pan Pacific Hotel on the night of our wedding, our guests save up to 30% on their stay.<a class="btn btn-ghost btn-sm kv-btn" href="https://www.panpacific.com/en/hotels-and-resorts/pp-perth/offers/embrace-exclusive-savings.html" target="_blank" rel="noopener">Book at our guest rate</a></dd></div>
         <div class="rv"><dt>Weather</dt><dd>Late February is hot and dry: around 32 degrees in the afternoon and 18 at night.</dd></div>
       </dl>
     </section>
@@ -1237,7 +1252,7 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
       <dl class="kv" data-rv-group>
         <div class="rv"><dt>Πώς θα έρθετε</dt><dd>Η εκκλησία βρίσκεται στο Νόρθμπριτζ, δέκα λεπτά με τα πόδια από τον κεντρικό σταθμό της Πέρθης και είκοσι λεπτά με το αυτοκίνητο από το αεροδρόμιο. Το Παν Πασίφικ βρίσκεται στην Αδελέιντ Τέρας, στο κέντρο της πόλης, λίγα λεπτά πιο πέρα με το αυτοκίνητο.</dd></div>
         <div class="rv"><dt>Πάρκινγκ</dt><dd>Στην εκκλησία οι γύρω δρόμοι γεμίζουν το Σάββατο. Το πάρκινγκ της Πολιτειακής Βιβλιοθήκης στην οδό Φράνσις είναι λίγα λεπτά μακριά. Στο Παν Πασίφικ Πέρθη οι καλεσμένοι έχουν έκπτωση 40% στο πάρκινγκ: πάρτε έναν κωδικό στάθμευσης από το τραπέζι των δώρων και σκανάρετέ τον στην έξοδο. Υπάρχει και υπηρεσία βαλέ με 65 δολάρια ανά αυτοκίνητο την ημέρα. Η είσοδος του πάρκινγκ είναι από την οδό Χιλ, ανάλογα με τη διαθεσιμότητα.</dd></div>
-        <div class="rv"><dt>Διαμονή</dt><dd>Αν θέλετε να μείνετε στο ξενοδοχείο Παν Πασίφικ τη νύχτα του γάμου μας, οι καλεσμένοι μας έχουν έκπτωση έως 30% στη διαμονή τους.<a class="btn btn-ghost btn-sm kv-btn" href="https://www.panpacific.com/en/hotels-and-resorts/pp-perth/offers/embrace-exclusive-savings.html" target="_blank" rel="noopener">Κράτηση με την τιμή καλεσμένων</a></dd></div>
+        <div class="rv"><dt>Διαμονή</dt><dd>Αν θέλετε να μείνετε στο ξενοδοχείο Παν Πασίφικ τη νύχτα του γάμου μας, οι καλεσμένοι μας έχουν έκπτωση έως 30% στη διαμονή τους.<a class="btn btn-ghost btn-sm kv-btn" href="https://www.panpacific.com/en/hotels-and-resorts/pp-perth/offers/embrace-exclusive-savings.html" target="_blank" rel="noopener">Κράτηση με την τιμή των καλεσμένων μας</a></dd></div>
         <div class="rv"><dt>Καιρός</dt><dd>Τέλη Φεβρουαρίου ο καιρός είναι ζεστός και ξηρός: γύρω στους 32 βαθμούς το απόγευμα και 18 τη νύχτα.</dd></div>
       </dl>
     </section>
