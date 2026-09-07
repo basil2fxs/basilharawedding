@@ -892,19 +892,6 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
 @media (min-width: 760px){ .dlg-close{ top:12px; right:16px; } }
 
 
-/* metallic champagne gold: titles, names, numbers, the monogram, the hairlines */
-:root{ --gold-metal:linear-gradient(104deg,#96743F 0%,#C4A263 20%,#EAD6A3 40%,#B99659 58%,#E6CF95 78%,#9E7C45 100%); }
-.h-script, .name, .name-el, .script-line, .date-num, .cd-n, .letter-names{
-  background:var(--gold-metal); -webkit-background-clip:text; background-clip:text; color:transparent; -webkit-text-fill-color:transparent;
-}
-.letter-names span{ background:none; color:var(--ink); -webkit-text-fill-color:var(--ink); }
-.monogram, .monogram use{ fill:url(#goldMetal); }
-.orn, .join i, .letter-rule{ background:var(--gold-metal); opacity:.85; }
-:root{ --gold-metal-soft:linear-gradient(104deg,#B39159 0%,#D4B87E 30%,#E6D19C 50%,#C9A96A 72%,#DDC48A 100%); }
-.btn, .nav-rsvp .btn, .choice input:checked + span{ background:var(--gold-metal-soft); color:#2E2210; border-color:#B9965A; }
-.btn:hover{ background:var(--gold-metal-soft); filter:brightness(.96); }
-.btn-ghost, .btn-ghost:hover{ background:transparent; filter:none; color:var(--ink); }
-
 /* the envelope label: blind-embossed into the paper, no rule */
 .addr{ top:81%; }
 .addr .lbl{ color:#8A785C; font-size:clamp(13px,4vw,18px); letter-spacing:.32em; padding-left:.32em; padding-top:2px; padding-bottom:4px;
@@ -912,18 +899,6 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
 .addr .lbl::after{ display:none; }
 
 
-/* gold foil, letterpressed: the small capitals share the metal (a denser mix so they stay legible);
-   every gilded glyph sits in a shallow impression; the prose is pressed into the paper too */
-:root{ --gold-metal-text:linear-gradient(104deg,#8C6B36 0%,#B8955A 30%,#D9BE86 50%,#A98650 70%,#C9A96A 100%); }
-.date-word{
-  background:var(--gold-metal-text); -webkit-background-clip:text; background-clip:text; color:transparent; -webkit-text-fill-color:transparent;
-}
-.h-script, .name, .name-el, .script-line, .date-num, .cd-n, .letter-names, .date-word{
-  filter:drop-shadow(0 .6px 0 rgba(255,255,255,.85)) drop-shadow(0 -.4px .35px rgba(70,50,20,.22));
-}
-/* the small capitals: solid antique gold, pressed, so they stay crisp at eleven pixels */
-.caps, .caps-sm, .lbl-sm, .cd-l, .faq-k, .kv dt, .sched .t, .details .caps, .hero .caps, .sec-head .caps{ color:#8B6A36; }
-.caps, .caps-sm, .lbl-sm, .cd-l, .faq-k, .kv dt, .sched .t, .prose, .lede, .kv dd, .sched .e, .faq .a, .faq summary, .details, .rsvp-body, .foot, .rsvp-note, .hint{ text-shadow:0 .6px 0 rgba(255,255,255,.75); }
 @media (max-width:340px){ .choice span{ padding-inline:12px; letter-spacing:.14em; } }
 
 
