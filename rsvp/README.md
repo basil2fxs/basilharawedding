@@ -73,9 +73,9 @@ guest**:
 
 The website side is the `RSVP_GFORM` block near the bottom of `index.html`: the Form's
 `formResponse` address plus one `entry.NNNN` id per question. If you ever change the Form's
-questions, the ids change too; they can be read from the Form's public page (or ask Claude).
+questions, the ids change too; they can be read from the Form's public page.
 
-The first reply in the Form is a test sent while wiring it up ("Test reply from Claude"); delete it.
+The first reply in the Form is a test sent while wiring it up; delete it.
 
 The Form's "Language" question was left as multiple choice, so the site does not fill it in.
 The language a guest used is obvious from the Attending value (English or Greek text). To record
