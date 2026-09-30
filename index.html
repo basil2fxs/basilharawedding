@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; base-uri 'none'; object-src 'none'; form-action 'none'; script-src 'sha256-vuvxLXz1vImBhvIAOTG4EB7rIyJHX9pMgWHtbcOJSGI=' 'sha256-zj7OiCM0saxmBczQwmzDCLgcwpNjs4P0BJVCruUJ/58='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://script.google.com https://script.googleusercontent.com https://docs.google.com; manifest-src 'self'; media-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; base-uri 'none'; object-src 'none'; form-action 'none'; script-src 'sha256-vuvxLXz1vImBhvIAOTG4EB7rIyJHX9pMgWHtbcOJSGI=' 'sha256-6ftVIZ0K6n5Kr4oQhN4By8qZkksncYy2QIIC94K7W0c='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://script.google.com https://script.googleusercontent.com https://docs.google.com; manifest-src 'self'; media-src 'none'; upgrade-insecure-requests">
 <meta name="theme-color" content="#FDFBF7">
 <meta name="color-scheme" content="light only">
 <meta name="description" content="Join Basil and Hara on the 27th of February 2027">
@@ -904,6 +904,71 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
 @media (max-width:340px){ .choice span{ padding-inline:12px; letter-spacing:.14em; } }
 
 
+/* ---------------------------------------------------------------------
+   CORNER CONTROLS, larger and clearer (30 Sep 2026): RSVP is the one filled
+   button; Menu and the Close buttons are the gold pill, and the menu word
+   carries two short gold lines so it reads as a menu at a glance
+   --------------------------------------------------------------------- */
+.nav-trigger, .rsvp-jump, .nav-close, .dlg-close{
+  min-height:46px; padding:0 22px 0 calc(22px + .24em); border-width:1px;
+  font-size:12.5px; font-weight:500; letter-spacing:.24em;
+}
+.nav-trigger, .nav-close, .dlg-close{
+  color:var(--ink-strong); background:rgba(253,251,247,.9);
+  box-shadow:0 8px 22px -12px rgba(120,96,58,.55);
+}
+.nav-trigger{ display:flex; align-items:center; justify-content:center; gap:10px; padding:0 calc(20px - .24em) 0 20px; }
+.nav-trigger .menu-ico{ display:block; width:16px; height:9px; flex:none; overflow:visible; }
+.nav-trigger .menu-ico path{ fill:none; stroke:var(--gold); stroke-width:1.5; stroke-linecap:round; }
+.rsvp-jump{ background:var(--ink); border-color:var(--ink); color:var(--paper); box-shadow:0 10px 24px -12px rgba(94,71,32,.7); }
+.rsvp-jump.is-done{ background:rgba(253,251,247,.9); border-color:var(--gold); color:var(--ink-strong); box-shadow:0 8px 22px -12px rgba(120,96,58,.55); }
+@media (hover:hover){
+  .rsvp-jump:hover{ background:var(--ink-strong); border-color:var(--ink-strong); color:var(--paper); }
+  .nav-trigger:hover .menu-ico path{ stroke:currentColor; }
+}
+
+/* ---------------------------------------------------------------------
+   AFTER THE OPEN: a quiet cue that the invitation carries on below.
+   It fades the moment the page moves.
+   --------------------------------------------------------------------- */
+.scroll-cue{
+  position:fixed; z-index:15; left:50%; bottom:max(12px, calc(env(safe-area-inset-bottom) + 6px));
+  display:flex; flex-direction:column; align-items:center; gap:9px;
+  margin:0; padding:12px 22px 10px; border:0; border-radius:999px; cursor:pointer;
+  background:radial-gradient(closest-side, rgba(253,251,247,.94), rgba(253,251,247,0));
+  font:inherit; font-size:11.5px; font-weight:500; letter-spacing:.26em; line-height:1; text-transform:uppercase; color:var(--ink);
+  opacity:0; visibility:hidden; pointer-events:none; transform:translate3d(-50%,10px,0);
+  transition:opacity 900ms var(--ease-fade), transform 1100ms var(--ease-place), visibility 0s 1100ms;
+  touch-action:manipulation; -webkit-tap-highlight-color:transparent;
+}
+.scroll-cue > span{ padding-left:.26em; white-space:nowrap; }
+.scroll-cue.is-shown{ opacity:1; visibility:visible; pointer-events:auto; transform:translate3d(-50%,0,0);
+  transition:opacity 900ms var(--ease-fade), transform 1100ms var(--ease-place), visibility 0s; }
+.scroll-cue svg{ display:block; width:18px; height:10px; overflow:visible; animation:cuebob 2.6s var(--ease-std) infinite; }
+.scroll-cue path{ fill:none; stroke:var(--gold); stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
+.scroll-cue:focus-visible{ outline:1px solid var(--gold); outline-offset:2px; }
+@keyframes cuebob{ 0%,100%{ transform:translate3d(0,0,0); opacity:.5; } 50%{ transform:translate3d(0,5px,0); opacity:1; } }
+/* where the first screen's words run to the bottom edge, the cue becomes a small paper pill so it never sits on the text */
+.scroll-cue.on-content{
+  flex-direction:row; gap:10px; padding:0 20px 0 calc(20px + .26em); min-height:40px;
+  background:rgba(253,251,247,.94); border:1px solid var(--gold); -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+  box-shadow:0 8px 22px -12px rgba(120,96,58,.55);
+}
+.scroll-cue.on-content > span{ padding-left:0; }
+.scroll-cue.on-content svg{ width:14px; height:8px; }
+html.is-sealed .scroll-cue{ display:none; }
+
+/* ---------------------------------------------------------------------
+   THE ENVELOPE LABELS, larger and darker so every guest can read them.
+   They sit low on the bottom flap, inside its point.
+   --------------------------------------------------------------------- */
+.addr{ top:auto; bottom:3.6%; }
+.addr .lbl{
+  font-size:clamp(16px,5.2vw,23px); font-weight:500; letter-spacing:.24em; padding-left:.24em; padding-top:0; padding-bottom:0;
+  color:var(--ink-strong); text-shadow:0 1px 0 rgba(255,255,255,.85);
+}
+
+
 @supports (view-transition-name: none){
   ::view-transition-old(root),::view-transition-new(root){ animation-duration:260ms; animation-timing-function:var(--ease-std); }
 }
@@ -1479,8 +1544,9 @@ html:not(.is-sealed) .nav-trigger, html:not(.is-sealed) .rsvp-jump{ opacity:1; v
 </main>
 
 <!-- Navigation -->
-<button class="nav-trigger" type="button" aria-haspopup="dialog" aria-controls="nav"><span class="lang-en" lang="en">Menu</span><span class="lang-el" lang="el">Μενού</span></button>
-<button class="rsvp-jump" type="button" data-rsvp-open><span class="lang-en" lang="en" data-done="Replied">RSVP</span><span class="lang-el" lang="el" data-done="Απαντήσατε">Επιβεβαίωση παρουσίας</span></button>
+<button class="nav-trigger" type="button" aria-haspopup="dialog" aria-controls="nav"><svg class="menu-ico" viewBox="0 0 16 9" aria-hidden="true" focusable="false"><path d="M1 1.25h14M1 7.75h14"/></svg><span class="lang-en" lang="en">Menu</span><span class="lang-el" lang="el">Μενού</span></button>
+<button class="rsvp-jump" type="button" data-rsvp-open><span class="lang-en" lang="en" data-done="Replied">RSVP</span><span class="lang-el" lang="el" data-done="Απαντήσατε">Απαντήστε</span></button>
+<button class="scroll-cue" type="button"><span class="lang-en" lang="en">Scroll down</span><span class="lang-el" lang="el">Κάντε κύλιση</span><svg viewBox="0 0 18 10" aria-hidden="true" focusable="false"><path d="M1.5 1.5 9 8.5l7.5-7"/></svg></button>
 
 <dialog id="nav" aria-labelledby="nav-l">
   <span id="nav-l" class="vh"><span class="lang-en" lang="en">Menu</span><span class="lang-el" lang="el">Μενού</span></span>
@@ -1811,6 +1877,7 @@ function unlock(){
   initReveals();
   var h1 = $$('#site h1').filter(function(h){ return h.offsetParent !== null; })[0];
   if (h1) { try { h1.focus({ preventScroll:true }); } catch(e){} }
+  if (Guide) Guide.begin();
 }
 
 /* ---------- fonts ---------- */
@@ -2066,11 +2133,91 @@ function initReveals(){
   }, 2500);
 }
 
+/* ---------- after the open: a "scroll down" cue, then the invitation drifts down by itself
+   until the guest takes over. Their own scroll stops it for good; a tap only pauses it. ---------- */
+var Guide = (function(){
+  var cue = $('.scroll-cue'), begun = false, running = false, over = false, held = false,
+      raf = 0, last = 0, pos = 0, v = 0, pace = 1, sampledAt = 0, resumeT = 0, touchY = null;
+  var KEYS = { ArrowDown:1, ArrowUp:1, PageDown:1, PageUp:1, Home:1, End:1, ' ':1, Spacebar:1, Tab:1 };
+  var ACTIVE = 'a, button, input, textarea, select, label, summary, dialog, [role="button"]';
+  function maxY(){ return Math.max(0, document.documentElement.scrollHeight - window.innerHeight); }
+  function cruise(){ return Math.max(24, Math.min(42, window.innerHeight * 0.046)); }       // px per second
+  function sample(){
+    // a little slower where there is text to read, a little quicker over pictures and space
+    var el = document.elementFromPoint(window.innerWidth / 2, window.innerHeight * 0.6);
+    pace = el && el.closest && el.closest('p, li, dt, dd, summary, h2, .kv, .sched, .details, .faq') ? 0.62 : 1.18;
+  }
+  function frame(t){
+    raf = 0;
+    if (!running) return;
+    if (Math.abs(window.scrollY - pos) > 3){ stop(); return; }          // something else moved the page: the guest is in charge
+    var dt = last ? Math.min(0.05, (t - last) / 1000) : 0; last = t;
+    if (t - sampledAt > 250){ sampledAt = t; sample(); }
+    v += (cruise() * pace - v) * Math.min(1, dt / 1.2);                  // eases in, and between speeds, over about a second
+    pos = Math.min(maxY(), pos + v * dt);
+    window.scrollTo(0, pos);
+    if (pos >= maxY() - 0.5){ stop(); return; }
+    raf = requestAnimationFrame(frame);
+  }
+  function go(){
+    if (!begun || over || running || held || document.hidden || document.querySelector('dialog[open]')) return;
+    running = true; last = 0; v = 0; pos = window.scrollY; sample();
+    raf = requestAnimationFrame(frame);
+  }
+  function halt(){ running = false; if (raf) cancelAnimationFrame(raf); raf = 0; }
+  function stop(){ if (!begun) return; over = true; halt(); clearTimeout(resumeT); }
+  function hold(){ halt(); held = true; clearTimeout(resumeT); }
+  function release(ms){ clearTimeout(resumeT); resumeT = setTimeout(function(){ held = false; go(); }, ms); }
+  function hideCue(){ if (cue) cue.classList.remove('is-shown'); }
+  // the guest's own hand
+  window.addEventListener('wheel', stop, { passive:true });
+  window.addEventListener('keydown', function(e){ if (KEYS[e.key]) stop(); });
+  document.addEventListener('touchstart', function(e){
+    if (!begun || over) return;
+    if (e.target.closest && e.target.closest(ACTIVE)){ stop(); return; }
+    touchY = e.touches && e.touches[0] ? e.touches[0].clientY : null; hold();
+  }, { passive:true });
+  document.addEventListener('touchmove', function(e){
+    if (!begun || over || touchY === null || !e.touches || !e.touches[0]) return;
+    if (Math.abs(e.touches[0].clientY - touchY) > 10) stop();
+  }, { passive:true });
+  ['touchend', 'touchcancel'].forEach(function(ev){
+    document.addEventListener(ev, function(){ touchY = null; if (begun && !over && held) release(3500); }, { passive:true });
+  });
+  document.addEventListener('pointerdown', function(e){
+    if (!begun || over || e.pointerType === 'touch') return;
+    if (e.target.closest && e.target.closest(ACTIVE)){ stop(); return; }
+    hold(); release(3500);
+  });
+  document.addEventListener('visibilitychange', function(){ if (document.hidden) halt(); else if (begun && !over) release(1500); });
+  window.addEventListener('scroll', function(){ if (window.scrollY > 80) hideCue(); }, { passive:true });
+  if (cue) cue.addEventListener('click', function(){
+    stop(); hideCue();
+    window.scrollTo({ top: Math.round(window.innerHeight * 0.82), behavior:'smooth' });
+  });
+  return {
+    begin: function(){
+      if (begun) return; begun = true;
+      setTimeout(function(){
+        if (!cue || window.scrollY > 24) return;
+        // is there clear paper under the first screen's last line? if not, the cue wears its pill
+        var root = $$('.lang-root').filter(function(r){ return r.offsetParent !== null; })[0];
+        var hi = root ? $('.hero-in', root) : null;
+        var bottom = hi ? hi.getBoundingClientRect().bottom : 0;
+        cue.classList.toggle('on-content', bottom > window.innerHeight - 78);
+        cue.classList.add('is-shown');
+      }, 900);
+      setTimeout(function(){ if (window.scrollY < 40) go(); else stop(); }, 3400);
+    }
+  };
+})();
+
 /* ---------- boot by tier ---------- */
 if (TIER === 'C'){
   holdScript();
   prepareHeroStagger();
   initReveals();
+  Guide.begin();
 } else if (TIER === 'B'){
   var storedLang = store.get('bh.lang') === 'el' ? 'el' : 'en';
   holdScript();
