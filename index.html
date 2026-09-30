@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; base-uri 'none'; object-src 'none'; form-action 'none'; script-src 'sha256-vuvxLXz1vImBhvIAOTG4EB7rIyJHX9pMgWHtbcOJSGI=' 'sha256-9Sxl1+IDEhle6u0uetod3byJejk7HkspgkhVCCVGlP8='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://script.google.com https://script.googleusercontent.com https://docs.google.com; manifest-src 'self'; media-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; base-uri 'none'; object-src 'none'; form-action 'none'; script-src 'sha256-vuvxLXz1vImBhvIAOTG4EB7rIyJHX9pMgWHtbcOJSGI=' 'sha256-bQkSG22HDWmL9iag6x3e3pF2Y63u6XbIl3TcPXAozbU='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://script.google.com https://script.googleusercontent.com https://docs.google.com; manifest-src 'self'; media-src 'none'; upgrade-insecure-requests">
 <meta name="theme-color" content="#FDFBF7">
 <meta name="color-scheme" content="light only">
 <meta name="description" content="Join Basil and Hara on the 27th of February 2027">
@@ -1056,6 +1056,17 @@ html.is-sealed .scroll-cue{ display:none; }
 /* the reminder: the cue as a small pill that lifts once to catch the eye */
 .scroll-cue.is-nudge.is-shown{ animation:cuenudge 1600ms var(--ease-place) 1; }
 @keyframes cuenudge{ 0%{ transform:translate3d(-50%,14px,0) } 45%{ transform:translate3d(-50%,-5px,0) } 70%{ transform:translate3d(-50%,1px,0) } 100%{ transform:translate3d(-50%,0,0) } }
+
+
+/* the invitation sits at the top with room under the corner buttons; the photo follows right under the date */
+.hero{ min-height:0; padding-top:max(clamp(84px,14vh,150px), calc(env(safe-area-inset-top) + 76px)); padding-bottom:clamp(28px,4.5vh,52px); }
+/* the scroll cue takes the fleuron's place between the date and the photo, so it never sits on the picture */
+.scroll-cue.in-gap{ position:absolute; bottom:auto; flex-direction:row; gap:10px; padding:7px 16px; transform:translate3d(-50%,calc(-50% + 8px),0); }
+.scroll-cue.in-gap.is-shown{ transform:translate3d(-50%,-50%,0); }
+.scroll-cue.in-gap svg{ width:14px; height:8px; }
+.scroll-cue.in-gap.is-nudge.is-shown{ animation:cuenudgegap 1600ms var(--ease-place) 1; }
+@keyframes cuenudgegap{ 0%{ transform:translate3d(-50%,calc(-50% + 12px),0) } 45%{ transform:translate3d(-50%,calc(-50% - 4px),0) } 70%{ transform:translate3d(-50%,calc(-50% + 1px),0) } 100%{ transform:translate3d(-50%,-50%,0) } }
+html.js .band .orn.cue-over{ opacity:0; }
 
 
 @supports (view-transition-name: none){
@@ -2246,18 +2257,44 @@ var Guide = (function(){
   function finish(){ done = true; drift = false; halt(); clearTimeout(resumeT); clearTimeout(nudgeT); }
   function hold(){ halt(); held = true; clearTimeout(resumeT); }
   function release(ms){ clearTimeout(resumeT); resumeT = setTimeout(function(){ held = false; go(); }, ms); }
+  var gapOrn = null;
+  function visibleRoot(){ return $$('.lang-root').filter(function(r){ return r.offsetParent !== null; })[0]; }
+  // the cue takes the fleuron's place between the date and the photo whenever that spot is on screen
+  function placeInGap(){
+    var root = visibleRoot(), orn = root ? $('.band[data-sec="photo"] > .orn', root) : null;
+    var r = orn ? orn.getBoundingClientRect() : null;
+    if (!r || !r.height || r.top < 72 || r.bottom > window.innerHeight - 48){ cue.classList.remove('in-gap'); cue.style.top = ''; return null; }
+    cue.classList.add('in-gap');
+    cue.style.top = Math.round(r.top + r.height / 2 + window.scrollY) + 'px';
+    return orn;
+  }
   function showCue(pill){
     if (!cue) return;
-    var root = $$('.lang-root').filter(function(r){ return r.offsetParent !== null; })[0];
-    var hi = root ? $('.hero-in', root) : null;
-    var bottom = hi ? hi.getBoundingClientRect().bottom : 0;
-    // over words, or as a reminder, the cue wears its pill; over clear paper it is just the words
-    cue.classList.toggle('on-content', pill || bottom > window.innerHeight - 78);
+    if (gapOrn){ gapOrn.classList.remove('cue-over'); gapOrn = null; }
+    gapOrn = placeInGap();
+    if (gapOrn){ gapOrn.classList.add('cue-over'); cue.classList.remove('on-content'); }
+    else {
+      // at the foot of the screen: over words or the photo, or as a reminder, the cue wears its pill
+      var root = visibleRoot(), zone = window.innerHeight - 78, busy = false;
+      if (root) $$('.hero-in > *, .band > *', root).forEach(function(el){
+        if (busy) return;
+        var r = el.getBoundingClientRect();
+        if (r.width && r.height && r.bottom > zone && r.top < window.innerHeight) busy = true;
+      });
+      cue.classList.toggle('on-content', pill || busy);
+    }
     cue.classList.remove('is-nudge'); void cue.offsetWidth;
     if (pill) cue.classList.add('is-nudge');
     cue.classList.add('is-shown');
   }
-  function hideCue(){ if (cue) cue.classList.remove('is-shown', 'is-nudge'); }
+  function hideCue(){
+    if (cue) cue.classList.remove('is-shown', 'is-nudge');
+    if (gapOrn){ gapOrn.classList.remove('cue-over'); gapOrn = null; }
+  }
+  window.addEventListener('resize', function(){
+    if (!cue || !cue.classList.contains('is-shown') || !cue.classList.contains('in-gap')) return;
+    var o = placeInGap(); if (!o) hideCue();
+  });
   // the guest takes over: the drift stops, and a little later we look again
   function takeover(){ taken = true; drift = false; halt(); held = false; clearTimeout(resumeT); watch(); }
   function watch(){
