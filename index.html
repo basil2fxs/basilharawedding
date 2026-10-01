@@ -1069,6 +1069,10 @@ html.is-sealed .scroll-cue{ display:none; }
 html.js .band .orn.cue-over{ opacity:0; }
 
 
+/* sections held back for now (Our Families, Our Bridal Party): hidden in the markup, kept for later */
+.band[hidden]{ display:none !important; }
+
+
 @supports (view-transition-name: none){
   ::view-transition-old(root),::view-transition-new(root){ animation-duration:260ms; animation-timing-function:var(--ease-std); }
 }
@@ -1324,7 +1328,7 @@ html.js .band .orn.cue-over{ opacity:0; }
         <span class="btn">Add your photos</span>
       </a>
     </section>
-    <section class="band" id="en-families" data-sec="families" aria-labelledby="en-families-h">
+    <section class="band" id="en-families" data-sec="families" aria-labelledby="en-families-h" hidden>
       <span class="orn rv"></span>
       <div class="sec-head rv"><h2 class="h-script" id="en-families-h">Our Families</h2></div>
       <dl class="kv fam" data-rv-group>
@@ -1332,7 +1336,7 @@ html.js .band .orn.cue-over{ opacity:0; }
         <div class="rv"><dt>Parents of the bride</dt><dd class="venue-name">George &amp; Olympia Kontorinis</dd></div>
       </dl>
     </section>
-    <section class="band" id="en-party" data-sec="party" aria-labelledby="en-party-h">
+    <section class="band" id="en-party" data-sec="party" aria-labelledby="en-party-h" hidden>
       <span class="orn rv"></span>
       <div class="sec-head rv"><h2 class="h-script" id="en-party-h">Our Bridal Party</h2></div>
       <dl class="kv fam" data-rv-group data-rv-step="70" data-rv-cap="6">
@@ -1359,9 +1363,6 @@ html.js .band .orn.cue-over{ opacity:0; }
     </section>
     <footer class="band foot" id="en-foot">
       <svg class="monogram foot-mono rv" viewBox="0 0 920 688" aria-hidden="true" focusable="false"><use href="#mono"/></svg>
-      <p class="script-line rv">Basil &amp; Hara</p>
-      <p class="caps rv">27 February 2027, Perth, Western Australia</p>
-      <p class="thanks rv">With love and thanks to our families.</p>
     </footer>
   </div>
 
@@ -1549,7 +1550,7 @@ html.js .band .orn.cue-over{ opacity:0; }
         <span class="btn">Ανεβάστε φωτογραφίες</span>
       </a>
     </section>
-    <section class="band" id="el-families" data-sec="families" aria-labelledby="el-families-h">
+    <section class="band" id="el-families" data-sec="families" aria-labelledby="el-families-h" hidden>
       <span class="orn rv"></span>
       <div class="sec-head rv"><h2 class="h-script" id="el-families-h">Οι οικογένειές μας</h2></div>
       <dl class="kv fam" data-rv-group>
@@ -1557,7 +1558,7 @@ html.js .band .orn.cue-over{ opacity:0; }
         <div class="rv"><dt>Γονείς της νύφης</dt><dd class="venue-name">Γιώργος &amp; Ολυμπία Κοντορίνη</dd></div>
       </dl>
     </section>
-    <section class="band" id="el-party" data-sec="party" aria-labelledby="el-party-h">
+    <section class="band" id="el-party" data-sec="party" aria-labelledby="el-party-h" hidden>
       <span class="orn rv"></span>
       <div class="sec-head rv"><h2 class="h-script" id="el-party-h">Στο πλευρό μας</h2></div>
       <dl class="kv fam" data-rv-group data-rv-step="70" data-rv-cap="6">
@@ -1584,9 +1585,6 @@ html.js .band .orn.cue-over{ opacity:0; }
     </section>
     <footer class="band foot" id="el-foot">
       <svg class="monogram foot-mono rv" viewBox="0 0 920 688" aria-hidden="true" focusable="false"><use href="#mono"/></svg>
-      <p class="script-line rv">Βασίλης &amp; Χαρά</p>
-      <p class="caps rv">27 Φεβρουαρίου 2027, Περθ, Δυτική Αυστραλία</p>
-      <p class="thanks rv">Με αγάπη και ευγνωμοσύνη στις οικογένειές μας.</p>
     </footer>
   </div>
 </main>
