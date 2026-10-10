@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; base-uri 'none'; object-src 'none'; form-action 'none'; script-src 'sha256-vuvxLXz1vImBhvIAOTG4EB7rIyJHX9pMgWHtbcOJSGI=' 'sha256-gd7mfE750c1f4sKwtOWtMVsicytv5IiB3AI1CLb5LqU='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://script.google.com https://script.googleusercontent.com https://docs.google.com; manifest-src 'self'; media-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; base-uri 'none'; object-src 'none'; form-action 'none'; script-src 'sha256-vuvxLXz1vImBhvIAOTG4EB7rIyJHX9pMgWHtbcOJSGI=' 'sha256-/RN4GVQ1BYQMiL0RoVa1ZtAuVTqjTLSsBYV1PcBRy5Y='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://script.google.com https://script.googleusercontent.com https://docs.google.com; manifest-src 'self'; media-src 'none'; upgrade-insecure-requests">
 <meta name="theme-color" content="#FDFBF7">
 <meta name="color-scheme" content="light only">
 <meta name="description" content="Join Basil and Hara on the 27th of February 2027">
@@ -2165,9 +2165,9 @@ function openEnvelope(lang, K){
     var from = 'translate3d(' + (m.left - t.left).toFixed(2) + 'px,' + (m.top - t.top).toFixed(2) + 'px,0) scale(' + (m.width / t.width).toFixed(4) + ')';
     var flip = host.animate([{ transform:from }, { transform:'translate3d(0,0,0) scale(1)' }], { duration:GROW, fill:'forwards', easing:EASE });
     flip.id = 'open-flip';
-    // the monogram printed above the heading rides along and dissolves as the page settles (the page carries no logo)
+    // the monogram printed above the heading stays on the card: it dissolves as the unfold begins, so it never reaches the top of the page
     var monoCard = $('.mono-card', host);
-    if (monoCard && monoCard.animate) monoCard.animate([{ opacity:1 }, { opacity:0 }], { duration:Math.round(GROW*0.45), delay:Math.round(GROW*0.55), fill:'forwards', easing:'cubic-bezier(.4,0,.2,1)' });
+    if (monoCard && monoCard.animate) monoCard.animate([{ opacity:1 }, { opacity:0 }], { duration:Math.round(GROW*0.14), fill:'forwards', easing:'cubic-bezier(.4,0,.2,1)' });
     // the card itself unfolds from exactly where it is to the whole screen
     var now = getComputedStyle(letter).transform;
     var grow = letter.animate([{ transform: now && now !== 'none' ? now : cardAt(LIFT, 0) }, { transform: COVER || cardAt(LIFT, 0) }], { duration:GROW, fill:'forwards', easing:EASE });
