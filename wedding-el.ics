@@ -1,0 +1,30 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Basil and Hara//Wedding//EL
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:ceremony-20270227@basilharawedding.com
+DTSTAMP:20261012T000000Z
+DTSTART:20270227T053000Z
+DTEND:20270227T071500Z
+SUMMARY:Βασίλης και Χαρά: τελετή γάμου
+LOCATION:Ιερός Ναός Αγίων Κωνσταντίνου και Ε
+ λένης\, 20 Parker Street\, Northbridge WA 6003
+DESCRIPTION:Προσέλευση στη 1:30 μ.μ. Η τελετή ξεκ
+ ινά στη 1:45 μ.μ.
+URL:https://basilharawedding.com
+END:VEVENT
+BEGIN:VEVENT
+UID:reception-20270227@basilharawedding.com
+DTSTAMP:20261012T000000Z
+DTSTART:20270227T103000Z
+DTEND:20270227T160000Z
+SUMMARY:Βασίλης και Χαρά: γαμήλια δεξίωση
+LOCATION:Pan Pacific Hotel\, Golden Ballroom\, 207 Adelaide Terrace\, Pert
+ h WA 6000
+DESCRIPTION:Υποδοχή με ποτά και καναπεδάκια σ
+ τις 6:30 μ.μ. Γαμήλια δεξίωση στις 7:00 μ.μ.
+URL:https://basilharawedding.com
+END:VEVENT
+END:VCALENDAR

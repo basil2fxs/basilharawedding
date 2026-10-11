@@ -1116,6 +1116,11 @@ html.js .band .orn.cue-over{ opacity:0; }
 
 .cd-wish{ margin-top:clamp(18px,3vh,26px); }
 .cd.is-today + .cd-wish, .cd.is-past + .cd-wish{ display:none; }
+
+/* add to calendar under the countdown; directions under each venue */
+.cd-cal{ margin-top:clamp(16px,3vh,22px); }
+.cd.is-today ~ .cd-cal, .cd.is-past ~ .cd-cal{ display:none; }
+.dir-btn{ margin-top:14px; }
 @supports (view-transition-name: none){
   ::view-transition-old(root),::view-transition-new(root){ animation-duration:260ms; animation-timing-function:var(--ease-std); }
 }
@@ -1213,6 +1218,7 @@ html.js .band .orn.cue-over{ opacity:0; }
         </div>
         <div class="cd-past">Married.</div>
       </div>
+      <a class="btn btn-ghost btn-sm cd-cal rv" href="/wedding.ics">Add to calendar</a>
     </section>
     <section class="band" id="en-ceremony" data-sec="ceremony" aria-labelledby="en-ceremony-h">
       <span class="orn rv"></span>
@@ -1221,6 +1227,7 @@ html.js .band .orn.cue-over{ opacity:0; }
       <div class="details rv">
         <p class="venue-name">Greek Orthodox Cathedral of Saints Constantine and Helene</p>
         <span class="caps addr-line"><a href="https://maps.google.com/?q=Greek+Orthodox+Cathedral+of+Saints+Constantine+and+Helene,+20+Parker+Street,+Northbridge+WA+6003,+Australia" target="_blank" rel="noopener">20 Parker Street, Northbridge WA 6003</a></span>
+        <a class="btn btn-ghost btn-sm dir-btn" href="https://maps.google.com/?q=Greek+Orthodox+Cathedral+of+Saints+Constantine+and+Helene,+20+Parker+Street,+Northbridge+WA+6003,+Australia" target="_blank" rel="noopener">Directions</a>
       </div>
       <p class="when rv">Please arrive to be seated at 1:30&nbsp;pm<br>The ceremony will start at 1:45&nbsp;pm</p>
       <div class="details officiants-block rv">
@@ -1235,6 +1242,7 @@ html.js .band .orn.cue-over{ opacity:0; }
       <div class="details rv">
         <p class="venue-name">Pan Pacific Perth, Golden Ballroom</p>
         <span class="caps addr-line"><a href="https://maps.google.com/?q=Pan+Pacific+Perth,+207+Adelaide+Terrace,+Perth+WA+6000" target="_blank" rel="noopener">207 Adelaide Terrace, Perth WA 6000</a></span>
+        <a class="btn btn-ghost btn-sm dir-btn" href="https://maps.google.com/?q=Pan+Pacific+Perth,+207+Adelaide+Terrace,+Perth+WA+6000" target="_blank" rel="noopener">Directions</a>
       </div>
       <p class="when rv">Pre-dinner drinks and canapés from 6:30&nbsp;pm<br>Reception from 7:00&nbsp;pm</p>
     </section>
@@ -1427,6 +1435,7 @@ html.js .band .orn.cue-over{ opacity:0; }
         <div class="cd-past">Παντρευτήκαμε!</div>
       </div>
       <p class="lede rv cd-wish">Ανυπομονούμε να σας δούμε!</p>
+      <a class="btn btn-ghost btn-sm cd-cal rv" href="/wedding-el.ics">Αποθήκευση στο ημερολόγιο</a>
     </section>
     <section class="band" id="el-ceremony" data-sec="ceremony" aria-labelledby="el-ceremony-h">
       <span class="orn rv"></span>
@@ -1435,6 +1444,7 @@ html.js .band .orn.cue-over{ opacity:0; }
       <div class="details rv">
         <p class="venue-name">Ιερός Ναός Αγίων Κωνσταντίνου και Ελένης</p>
         <span class="caps addr-line"><a href="https://maps.google.com/?q=Greek+Orthodox+Cathedral+of+Saints+Constantine+and+Helene,+20+Parker+Street,+Northbridge+WA+6003,+Australia" target="_blank" rel="noopener">20 Parker Street, Northbridge WA 6003</a></span>
+        <a class="btn btn-ghost btn-sm dir-btn" href="https://maps.google.com/?q=Greek+Orthodox+Cathedral+of+Saints+Constantine+and+Helene,+20+Parker+Street,+Northbridge+WA+6003,+Australia" target="_blank" rel="noopener">Οδηγίες διαδρομής</a>
       </div>
       <p class="when rv">1:30 μ.μ. Παρακαλούμε να προσέλθετε για να καθίσετε<br>1:45 μ.μ. Η τελετή ξεκινά</p>
       <div class="details officiants-block rv">
@@ -1449,6 +1459,7 @@ html.js .band .orn.cue-over{ opacity:0; }
       <div class="details rv">
         <p class="venue-name">Pan Pacific Hotel, Golden Ballroom</p>
         <span class="caps addr-line"><a href="https://maps.google.com/?q=Pan+Pacific+Perth,+207+Adelaide+Terrace,+Perth+WA+6000" target="_blank" rel="noopener">207 Adelaide Terrace, Perth WA 6000</a></span>
+        <a class="btn btn-ghost btn-sm dir-btn" href="https://maps.google.com/?q=Pan+Pacific+Perth,+207+Adelaide+Terrace,+Perth+WA+6000" target="_blank" rel="noopener">Οδηγίες διαδρομής</a>
       </div>
       <p class="when rv">6:30 μ.μ. Υποδοχή με ποτά και καναπεδάκια<br>7:00 μ.μ. Γαμήλια δεξίωση</p>
     </section>

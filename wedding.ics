@@ -1,0 +1,30 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Basil and Hara//Wedding//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:ceremony-20270227@basilharawedding.com
+DTSTAMP:20261012T000000Z
+DTSTART:20270227T053000Z
+DTEND:20270227T071500Z
+SUMMARY:Basil and Hara: wedding ceremony
+LOCATION:Greek Orthodox Cathedral of Saints Constantine and Helene\, 20 Pa
+ rker Street\, Northbridge WA 6003
+DESCRIPTION:Please arrive to be seated at 1:30 pm. The ceremony starts at 
+ 1:45 pm.
+URL:https://basilharawedding.com
+END:VEVENT
+BEGIN:VEVENT
+UID:reception-20270227@basilharawedding.com
+DTSTAMP:20261012T000000Z
+DTSTART:20270227T103000Z
+DTEND:20270227T160000Z
+SUMMARY:Basil and Hara: wedding reception
+LOCATION:Pan Pacific Perth\, Golden Ballroom\, 207 Adelaide Terrace\, Pert
+ h WA 6000
+DESCRIPTION:Pre-dinner drinks and canapes from 6:30 pm. Reception from 7:0
+ 0 pm.
+URL:https://basilharawedding.com
+END:VEVENT
+END:VCALENDAR
