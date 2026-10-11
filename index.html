@@ -1113,6 +1113,9 @@ html.js .band .orn.cue-over{ opacity:0; }
 
 /* "RSVP" in English is set like the Greek headings (Garamond italic): the copperplate capitals made it hard to read */
 #en-rsvp-h, #en-rsvp-dlg-h{ font-family:var(--serif); font-style:italic; font-size:clamp(2rem,8.2vw,3.2rem); letter-spacing:.02em; line-height:1.15; }
+
+.cd-wish{ margin-top:clamp(18px,3vh,26px); }
+.cd.is-today + .cd-wish, .cd.is-past + .cd-wish{ display:none; }
 @supports (view-transition-name: none){
   ::view-transition-old(root),::view-transition-new(root){ animation-duration:260ms; animation-timing-function:var(--ease-std); }
 }
@@ -1423,6 +1426,7 @@ html.js .band .orn.cue-over{ opacity:0; }
         </div>
         <div class="cd-past">Παντρευτήκαμε!</div>
       </div>
+      <p class="lede rv cd-wish">Ανυπομονούμε να σας δούμε!</p>
     </section>
     <section class="band" id="el-ceremony" data-sec="ceremony" aria-labelledby="el-ceremony-h">
       <span class="orn rv"></span>
@@ -1472,7 +1476,7 @@ html.js .band .orn.cue-over{ opacity:0; }
       <div class="sec-head rv"><h2 class="h-script" id="el-travel-h">Χρήσιμες πληροφορίες</h2></div>
       <dl class="kv" data-rv-group>
         <div class="rv"><dt>Πάρκινγκ</dt><dd><p><span class="kv-k">Εκκλησία</span>Το Σάββατο δύσκολα βρίσκει κανείς θέση στους δρόμους γύρω από την εκκλησία. Το πιο κοντινό πάρκινγκ είναι το <a href="https://maps.google.com/?q=City+of+Perth+Parking+Aberdeen+Street,+121+Aberdeen+Street,+Northbridge+WA+6003" target="_blank" rel="noopener">Aberdeen Street</a> του City of Perth, δύο λεπτά με τα πόδια, με είσοδο από Aberdeen Street και Francis Street (85 θέσεις, 8 δολάρια για όλη τη μέρα το Σάββατο). Τα πάρκινγκ της State Library στη Francis Street και της Roe Street είναι πέντε λεπτά με τα πόδια και έχουν πολύ περισσότερες θέσεις.</p><p><span class="kv-k">Δεξίωση</span>Στο Pan Pacific οι καλεσμένοι μας έχουν έκπτωση 40% στο πάρκινγκ: πάρτε ένα barcode από το τραπέζι των ευχών και σκανάρετέ το στην έξοδο. Υπάρχει και valet parking με 65 δολάρια την ημέρα. Η είσοδος είναι από τη Hill Street, ανάλογα με τη διαθεσιμότητα.</p></dd></div>
-        <div class="rv"><dt>Διαμονή</dt><dd><p>Για όσους θέλουν να μείνουν στο Pan Pacific το βράδυ του γάμου, οι καλεσμένοι μας έχουν έκπτωση έως 30%.</p><a class="btn btn-ghost btn-sm kv-btn" href="https://www.panpacific.com/en/hotels-and-resorts/pp-perth/offers/embrace-exclusive-savings.html" target="_blank" rel="noopener">Κράτηση με έκπτωση</a></dd></div>
+        <div class="rv"><dt>Διαμονή</dt><dd><p>Για τη διαμονή σας προτείνουμε το Pan Pacific: οι καλεσμένοι μας έχουν έκπτωση έως 30% για το βράδυ του γάμου.</p><a class="btn btn-ghost btn-sm kv-btn" href="https://www.panpacific.com/en/hotels-and-resorts/pp-perth/offers/embrace-exclusive-savings.html" target="_blank" rel="noopener">Κράτηση με έκπτωση</a></dd></div>
       </dl>
     </section>
     <section class="band" id="el-rsvp" data-sec="rsvp" aria-labelledby="el-rsvp-h">
