@@ -1110,6 +1110,9 @@ html.js .band .orn.cue-over{ opacity:0; }
 .letter-in{ padding:16.7% 0 0; justify-content:flex-start; }
 .letter-in .mini{ width:46%; }
 [lang="el"] .sched .t{ text-transform:none; }
+
+/* "RSVP" in English is set like the Greek headings (Garamond italic): the copperplate capitals made it hard to read */
+#en-rsvp-h, #en-rsvp-dlg-h{ font-family:var(--serif); font-style:italic; font-size:clamp(2rem,8.2vw,3.2rem); letter-spacing:.02em; line-height:1.15; }
 @supports (view-transition-name: none){
   ::view-transition-old(root),::view-transition-new(root){ animation-duration:260ms; animation-timing-function:var(--ease-std); }
 }
