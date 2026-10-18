@@ -1145,6 +1145,12 @@ html.js .band .orn.cue-over{ opacity:0; }
 .add-guest .plus{ width:40px; height:40px; background:var(--gold); border-color:var(--gold); color:var(--paper); font-size:1.6rem; }
 .add-guest:hover, .add-guest:focus-visible{ background:var(--ink); color:var(--paper); border-color:var(--ink); box-shadow:inset 0 0 0 3px var(--ink), inset 0 0 0 3.75px rgba(253,251,247,.45); }
 .add-guest:hover .plus, .add-guest:focus-visible .plus{ background:var(--paper); border-color:var(--paper); color:var(--ink); }
+
+/* the plus is drawn, not typed, so it sits dead centre in its circle */
+.add-guest .plus{ font-size:0; padding:0; position:relative; }
+.add-guest .plus::before, .add-guest .plus::after{ content:""; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); background:currentColor; border-radius:1px; }
+.add-guest .plus::before{ width:16px; height:1.5px; }
+.add-guest .plus::after{ width:1.5px; height:16px; }
 @supports (view-transition-name: none){
   ::view-transition-old(root),::view-transition-new(root){ animation-duration:260ms; animation-timing-function:var(--ease-std); }
 }
