@@ -1124,7 +1124,7 @@ html.js .band .orn.cue-over{ opacity:0; }
 /* ---------------------------------------------------------------------
    DESKTOP (12 Oct 2026): wide screens only, phones and tablets untouched.
    Bigger envelopes on the desk, a slightly larger invitation when the screen is tall,
-   Ceremony and Reception side by side, a larger portrait.
+   a larger portrait. Everything stays in one column.
    --------------------------------------------------------------------- */
 @media (min-width: 1100px){
   .desk{ width:min(84vw, 1400px); gap:clamp(40px,6vw,96px); }
@@ -1132,10 +1132,6 @@ html.js .band .orn.cue-over{ opacity:0; }
   .addr .lbl{ font-size:20px; }
   .lang-root .hero .hero-in{ max-width:min(40rem, 70vh); }
   .portrait{ max-width:20rem; }
-  .lang-root{ display:grid; grid-template-columns:1fr 1fr; column-gap:clamp(24px,4vw,64px); align-items:start; max-width:1400px; margin-inline:auto; }
-  .lang-root > *{ grid-column:1 / -1; }
-  .lang-root > .band[data-sec="ceremony"]{ grid-column:1; }
-  .lang-root > .band[data-sec="reception"]{ grid-column:2; }
 }
 
 /* the calendar chooser under the countdown */
