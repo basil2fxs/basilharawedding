@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; base-uri 'none'; object-src 'none'; form-action 'none'; script-src 'sha256-vuvxLXz1vImBhvIAOTG4EB7rIyJHX9pMgWHtbcOJSGI=' 'sha256-/RN4GVQ1BYQMiL0RoVa1ZtAuVTqjTLSsBYV1PcBRy5Y='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://script.google.com https://script.googleusercontent.com https://docs.google.com; manifest-src 'self'; media-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; base-uri 'none'; object-src 'none'; form-action 'none'; script-src 'sha256-vuvxLXz1vImBhvIAOTG4EB7rIyJHX9pMgWHtbcOJSGI=' 'sha256-B2p1ABEqrFNOLMTygHdjF67HW5VzjPApHArsJXT9qbo='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://script.google.com https://script.googleusercontent.com https://docs.google.com; manifest-src 'self'; media-src 'none'; upgrade-insecure-requests">
 <meta name="theme-color" content="#FDFBF7">
 <meta name="color-scheme" content="light only">
 <meta name="description" content="Join Basil and Hara on the 27th of February 2027">
@@ -1338,7 +1338,7 @@ html.js .band .orn.cue-over{ opacity:0; }
                     </button>
                     <div class="guest-body">
                       <p class="hint"></p>
-                      <input type="text" data-name="name" data-label="Guest" aria-label="Guest 1" autocomplete="off" placeholder="Full name">
+                      <input type="text" data-name="name" maxlength="80" data-label="Guest" aria-label="Guest 1" autocomplete="off" placeholder="Full name">
                       <div class="guest-row guest-att"><span class="lbl-sm">Joining us?</span>
                         <div class="choices">
                           <label class="choice"><input type="radio" data-name="att" name="att_en_1" value="Joyfully accepts" data-att="yes"><span>Joyfully accepts</span></label>
@@ -1352,7 +1352,7 @@ html.js .band .orn.cue-over{ opacity:0; }
                           <label class="choice"><input type="radio" data-name="ev" name="ev_en_1" value="Both" checked data-default><span>Both</span></label>
                         </div>
                       </div>
-                      <input type="text" data-name="diet" aria-label="Dietary needs or allergies" placeholder="Dietary needs or allergies">
+                      <input type="text" data-name="diet" maxlength="200" aria-label="Dietary needs or allergies" placeholder="Dietary needs or allergies">
                       <button type="button" class="guest-remove" hidden>Remove this guest</button>
                     </div>
                   </div>
@@ -1362,16 +1362,16 @@ html.js .band .orn.cue-over{ opacity:0; }
               </div>
               <div class="field" style="--i:5" data-req="contact" data-err="Please enter a valid email address or mobile number">
                 <label class="lbl" for="en-contact">Email or mobile</label>
-                <input type="text" id="en-contact" name="contact" autocomplete="email" inputmode="email" required placeholder="So we can reach you">
+                <input type="text" id="en-contact" name="contact" maxlength="120" autocomplete="email" inputmode="email" required placeholder="So we can reach you">
                 <p class="hint"></p>
               </div>
               <div class="field field-song" style="--i:6">
                 <label class="lbl" for="en-song">What's a song that will get you on the dance floor? <small>(optional)</small></label>
-                <input type="text" id="en-song" name="song">
+                <input type="text" id="en-song" name="song" maxlength="200">
               </div>
               <div class="field" style="--i:7">
                 <label class="lbl" for="en-msg">A message <small>(optional)</small></label>
-                <textarea id="en-msg" name="message" rows="2"></textarea>
+                <textarea id="en-msg" name="message" rows="2" maxlength="1000"></textarea>
               </div>
               <div class="submit" style="--i:8"><button class="btn" type="submit" data-label="Send" data-wait="Sending...">Send</button></div>
               <p class="rsvp-err" role="alert">A few details are missing. The fields are marked in red.</p>
@@ -1560,7 +1560,7 @@ html.js .band .orn.cue-over{ opacity:0; }
                     </button>
                     <div class="guest-body">
                       <p class="hint"></p>
-                      <input type="text" data-name="name" data-label="Άτομο" aria-label="Άτομο 1" autocomplete="off" placeholder="Ονοματεπώνυμο">
+                      <input type="text" data-name="name" maxlength="80" data-label="Άτομο" aria-label="Άτομο 1" autocomplete="off" placeholder="Ονοματεπώνυμο">
                       <div class="guest-row guest-att"><span class="lbl-sm">Θα έρθει;</span>
                         <div class="choices">
                           <label class="choice"><input type="radio" data-name="att" name="att_el_1" value="Θα έρθει με χαρά" data-att="yes"><span>Θα έρθει με χαρά</span></label>
@@ -1574,7 +1574,7 @@ html.js .band .orn.cue-over{ opacity:0; }
                           <label class="choice"><input type="radio" data-name="ev" name="ev_el_1" value="Και στα δύο" checked data-default><span>Και στα δύο</span></label>
                         </div>
                       </div>
-                      <input type="text" data-name="diet" aria-label="Διατροφικοί περιορισμοί ή αλλεργίες" placeholder="Διατροφικοί περιορισμοί ή αλλεργίες">
+                      <input type="text" data-name="diet" maxlength="200" aria-label="Διατροφικοί περιορισμοί ή αλλεργίες" placeholder="Διατροφικοί περιορισμοί ή αλλεργίες">
                       <button type="button" class="guest-remove" hidden>Αφαίρεση ατόμου</button>
                     </div>
                   </div>
@@ -1584,16 +1584,16 @@ html.js .band .orn.cue-over{ opacity:0; }
               </div>
               <div class="field" style="--i:5" data-req="contact" data-err="Γράψτε ένα έγκυρο email ή έναν αριθμό κινητού">
                 <label class="lbl" for="el-contact">Email ή κινητό</label>
-                <input type="text" id="el-contact" name="contact" autocomplete="email" inputmode="email" required placeholder="Για να επικοινωνήσουμε μαζί σας">
+                <input type="text" id="el-contact" name="contact" maxlength="120" autocomplete="email" inputmode="email" required placeholder="Για να επικοινωνήσουμε μαζί σας">
                 <p class="hint"></p>
               </div>
               <div class="field field-song" style="--i:6">
                 <label class="lbl" for="el-song">Ποιο τραγούδι θα σας σηκώσει στην πίστα; <small>(προαιρετικό)</small></label>
-                <input type="text" id="el-song" name="song">
+                <input type="text" id="el-song" name="song" maxlength="200">
               </div>
               <div class="field" style="--i:7">
                 <label class="lbl" for="el-msg">Ένα μήνυμα για εμάς <small>(προαιρετικό)</small></label>
-                <textarea id="el-msg" name="message" rows="2"></textarea>
+                <textarea id="el-msg" name="message" rows="2" maxlength="1000"></textarea>
               </div>
               <div class="submit" style="--i:8"><button class="btn" type="submit" data-label="Αποστολή απάντησης" data-wait="Αποστολή...">Αποστολή απάντησης</button></div>
               <p class="rsvp-err" role="alert">Λείπουν κάποια στοιχεία. Δείτε τα πεδία με κόκκινο.</p>
@@ -2679,6 +2679,15 @@ function mailtoFor(payload){
   var subject = 'RSVP - ' + (payload.guests[0] ? payload.guests[0].name : '');
   return 'mailto:' + RSVP_EMAIL + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(lines.join('\n'));
 }
+// an Australian number is sent with its usual spaces (0412 345 678), so a spreadsheet never reads it as a number and drops the 0
+function tidyPhone(v){
+  var d = String(v || '').replace(/[\s().-]/g, '');
+  if (/^04\d{8}$/.test(d)) return d.slice(0, 4) + ' ' + d.slice(4, 7) + ' ' + d.slice(7);
+  if (/^0[2378]\d{8}$/.test(d)) return d.slice(0, 2) + ' ' + d.slice(2, 6) + ' ' + d.slice(6);
+  if (/^\+614\d{8}$/.test(d)) return '+61 ' + d.slice(3, 6) + ' ' + d.slice(6, 9) + ' ' + d.slice(9);
+  if (/^\+61[2378]\d{8}$/.test(d)) return '+61 ' + d.slice(3, 4) + ' ' + d.slice(4, 8) + ' ' + d.slice(8);
+  return v;
+}
 function markReplied(lang){
   var root = $('.lang-root.lang-' + lang), cta = root ? $('.rsvp-cta', root) : null; if (cta) cta.classList.add('is-done');
   var jump = $('.rsvp-jump'); if (jump){ jump.classList.add('is-done'); $$('span[data-done]', jump).forEach(function(sp){ sp.textContent = sp.getAttribute('data-done'); }); }
@@ -2730,11 +2739,17 @@ document.addEventListener('click', function(e){
   sendPayload(form, payload, true);
 });
 // a reply that never got confirmed is retried quietly whenever the page is open again or the connection returns
+var retrying = false;
 function retryPending(){
-  if (!RSVP_ENDPOINT || sendingNow) return;
+  if (!RSVP_ENDPOINT || sendingNow || retrying) return;
   var list = Pending.list(); if (!list.length) return;
-  var p = list[0];
-  deliver(p).then(function(){ Pending.remove(p.id); markReplied(p.language); if (Pending.list().length) retryPending(); }).catch(function(){});
+  retrying = true;
+  var i = 0;
+  (function next(){
+    if (i >= list.length){ retrying = false; return; }
+    var p = list[i++];
+    deliver(p).then(function(){ Pending.remove(p.id); markReplied(p.language); }, function(){}).then(next);
+  })();
 }
 setTimeout(retryPending, 2500);
 window.addEventListener('online', function(){ setTimeout(retryPending, 1000); });
@@ -2890,6 +2905,7 @@ $$('form.rsvp').forEach(function(form){
       return;
     }
     wrap.classList.remove('has-err');
+    if (!isEmail(cv)) cv = tidyPhone(cv);
     var btn = $('.submit .btn', form);
     var song = (fd.get('song') || '').trim(), message = (fd.get('message') || '').trim(), stamp = new Date().toISOString();
     var withTag = (lang === 'el' ? 'Μαζί με: ' : 'With: ') + gs[0].name;
