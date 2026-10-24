@@ -12,6 +12,16 @@
 // then Deploy > New deployment > Web app, execute as Me, access Anyone, and put the /exec URL into
 // RSVP_ENDPOINT near the bottom of index.html. Re-deploy (Manage deployments > edit > new version)
 // after changing doPost, or the live endpoint keeps running the old code.
+//
+// Version 3 (24 Oct 2026, after a full test run): guest text is written as plain text, so a mobile
+// typed 0412345678 keeps its 0, "1/2" or "March 4" stay words instead of becoming dates, and a name
+// starting with "=" is never run as a formula; messages are kept to 1000 characters (were cut at
+// 500); a reply that cannot get the write lock is answered "busy" so the site retries, instead of
+// writing unlocked; the per-device and per-address limits are higher, so one person can send replies
+// for several households. Opening the URL shows "v": 3 so a redeploy can be checked from outside.
+// Version 4 (same night): plain text alone does not stop a leading "=" from being read as a formula,
+// so any value starting with "=" is written with Sheets' quote prefix (hidden, the cell holds the text).
+var VERSION = 4;
 
 var BACKUP_NAME = 'Wedding RSVPs.csv';
 var FALLBACK_BACKUP_NAME = 'Wedding RSVPs (form fallback).csv';
@@ -26,7 +36,7 @@ var HEADER = ['Received', 'Reply id', 'Names', 'Attending', 'Number attending', 
 // endpoint they find. Keep it in step with SITE_KEY in index.html.
 var SITE_KEY = 'e9f79141bd31ab49ad854635fd10ab6a';
 // How much one device (a token the site keeps in the browser) and everyone together may send.
-var LIMITS = { device_hour: 3, device_day: 6, contact_day: 4, all_10min: 40 };
+var LIMITS = { device_hour: 8, device_day: 20, contact_day: 10, all_10min: 40 };
 var ATTENDING = { en: ['Joyfully accepts', 'Regretfully declines'], el: ['Θα έρθει με χαρά', 'Δυστυχώς δεν θα μπορέσει'] };
 var EVENTS = { en: ['Ceremony', 'Reception', 'Both', ''], el: ['Στο Μυστήριο', 'Στη δεξίωση', 'Και στα δύο', ''] };
 
@@ -83,7 +93,7 @@ function throttle_(data) {
 // ---------------------------------------------------------------- the endpoint
 function doPost(e) {
   var lock = LockService.getScriptLock();
-  lock.tryLock(20000);
+  if (!lock.tryLock(25000)) return json_({ result: 'error', message: 'busy' });   // never write without the lock; the site retries
   try {
     var data;
     try { data = JSON.parse((e && e.postData && e.postData.contents) || '{}'); }
@@ -105,12 +115,16 @@ function doPost(e) {
     if (slow) return reject_(slow);
 
     var now = new Date(), rows = [], first = data.guests[0];
-    var withTag = (data.language === 'el' ? 'Μαζί με: ' : 'With: ') + s_(first.name);
+    var withTag = (data.language === 'el' ? 'Μαζί με: ' : 'With: ') + String(first.name == null ? '' : first.name).slice(0, 80);
     data.guests.slice(0, 20).forEach(function (g, i) {
       rows.push([now, id, s_(g.name), s_(g.attending), Number(g.count) || 0, s_(g.events), s_(g.dietary),
                  s_(data.contact), i === 0 ? s_(data.song) : '', i === 0 ? s_(data.message) : withTag,
                  s_(data.language), s_(data.submitted), data.test ? 'test' : 'website']);
     });
+    // plain text everywhere a guest typed (B:D, F:M), so nothing is turned into a number, a date or a formula;
+    // A stays a date and E a number, so SUM(E:E) is still the headcount
+    sheet.getRange(last + 1, 2, rows.length, 3).setNumberFormat('@');
+    sheet.getRange(last + 1, 6, rows.length, HEADER.length - 5).setNumberFormat('@');
     sheet.getRange(last + 1, 1, rows.length, HEADER.length).setValues(rows);
     SpreadsheetApp.flush();
     if (!data.test) { try { backupResponses(); } catch (err2) {} }
@@ -124,10 +138,11 @@ function doPost(e) {
 
 // Opening the web app URL in a browser just confirms it is alive. It never returns any reply.
 function doGet() {
-  return json_({ result: 'ok', message: 'RSVP endpoint is live' });
+  return json_({ result: 'ok', message: 'RSVP endpoint is live', v: VERSION });
 }
 
-function s_(v) { return v == null ? '' : String(v).slice(0, 500); }
+// every value goes in as typed text: at most 1000 characters, and a leading "=" gets the quote prefix
+function s_(v) { var t = v == null ? '' : String(v).slice(0, 1000); return t.charAt(0) === '=' ? "'" + t : t; }
 
 function getSheet_(ss, name) {
   var sh = ss.getSheetByName(name) || ss.insertSheet(name);

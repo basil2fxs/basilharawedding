@@ -21,7 +21,18 @@ How a reply cannot get lost:
   Brain commits the replies to the private Brain repo.
 
 Endpoint URL (deployment "Website reply endpoint", 7 Sep 2026): the `RSVP_ENDPOINT` value near
-the bottom of `index.html`. After editing `doPost` in the Apps Script editor, publish a new
+the bottom of `index.html`. Opening it in a browser shows `"v": 4` (version 4 of `Code.gs`, deployed 24 Oct 2026).
+
+Version 3 (24 Oct 2026, after a full test of every path): guest text is written into the Sheet as
+plain text, so a mobile typed 0412345678 keeps its 0, a dietary note like "1/2" or a song like
+"March 4" is not turned into a date, and a name starting with "=" is never run as a formula;
+messages keep up to 1000 characters (they were cut at 500); a reply that cannot get the write lock
+within 25 seconds is answered "busy" (the site retries) instead of being written unlocked. Version 4
+(same day): plain text alone does not stop a leading "=" from becoming a formula, so such a value is
+written with Sheets' quote prefix (hidden; the cell shows and holds the text). The site
+itself (same day) limits each field to what the endpoint accepts, sends Australian numbers with
+their usual spaces, and its quiet retry works through every saved reply instead of stopping at the
+first one that fails. After editing `doPost` in the Apps Script editor, publish a new
 version (Deploy > Manage deployments > pencil > Version: New) or the live endpoint keeps the old code.
 A "Test" tab in the Sheet holds rows written by test runs (payloads with `test: true`); delete it
 whenever you like.
@@ -96,9 +107,9 @@ What an attacker can reach, and what stops them:
 - **A hidden trap field** sits in the form off-screen; people never see it, bots fill it. A reply
   with it filled is answered "ok" and thrown away. A reply sent within two seconds of opening the
   page is dropped by the page itself.
-- **Rate limits** (counters in the script cache, holding no personal data): 3 replies per device
-  per hour, 6 per device per day, 4 per contact address per day, 40 replies from everyone per ten
-  minutes. Google Apps Script cannot see the sender's IP address, so the device token stands in
+- **Rate limits** (counters in the script cache, holding no personal data): 8 replies per device
+  per hour, 20 per device per day, 10 per contact address per day, 40 replies from everyone per ten
+  minutes (raised in version 3 so one person can send replies for several households). Google Apps Script cannot see the sender's IP address, so the device token stands in
   for it; a determined attacker can mint tokens, which is why the global limit exists. Over the
   limit the site shows "Not sent yet" with Try again and Send by email, so a real guest is never
   lost, only delayed.
